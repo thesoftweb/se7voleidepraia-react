@@ -3,14 +3,9 @@ import { useContext } from 'react';
 import { RequireAuth } from './contexts/Auth/RequireAuth';
 import { AuthContext } from './contexts/Auth/AuthContext';
 
-
-
 import { MainRoutes } from './routes/MainRoutes';
-import { Route, Routes, Link } from 'react-router-dom';
 
 import './App.css';
-import { Login } from './pages/Login';
-import { Private } from './pages/Private';
 
 function App() {
   const auth = useContext(AuthContext);
