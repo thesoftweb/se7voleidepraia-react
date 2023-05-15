@@ -4,10 +4,16 @@ const request2 = axios.create({
     baseURL: "https://emilyfumo.com"
 })
 
-export const TurmaFake = await [
-    { aula: 'manhã', categoria: 'sub18' },
-    { aula: 'tarde', categoria: 'sub18' },
-    { aula: 'noite', categoria: 'sub18' }
+export const TurmaFake = [
+    { aula: 'Seg-Qua-Sext', categoria: '15 As 17' },
+    { aula: 'Ter-Qui-Sab', categoria: '15 As 17' },
+    { aula: 'noite', categoria: 's15 As 17' },
+    { aula: 'noite', categoria: 's15 As 17' },
+    { aula: 'noite', categoria: 's15 As 17' },
+
+
+
+
 ];
 
 export const TurmaApi = () => ({

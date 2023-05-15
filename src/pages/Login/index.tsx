@@ -2,6 +2,9 @@ import { ChangeEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 
+
+import { Button, Container, Formulario, Img, Input, Logo, } from "./styled";
+
 export const Login = () => {
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
@@ -29,20 +32,26 @@ export const Login = () => {
     }
 
     return (
-        <div>
-            <input
-                type="text"
-                value={email}
-                onChange={handleEmailInput}
-                placeholder="Digite seu e-mail"
-            />
-            <input
-                type="password"
-                value={password}
-                onChange={handlePasswordInput}
-                placeholder="Digite sua senha"
-            />
-            <button onClick={handleLogin}>Logar</button>
-        </div>
+        <Container>
+            <Logo>
+                <Img src="./src/assets/setvolei.png" alt="" />
+            </Logo>
+            <Formulario>
+                <Input
+                    type="text"
+                    value={email}
+                    onChange={handleEmailInput}
+                    placeholder="Digite seu CPF" />
+
+                <Input
+                    type="password"
+                    value={password}
+                    onChange={handlePasswordInput}
+                    placeholder="Digite sua senha"
+                />
+                <Button onClick={handleLogin}>Login</Button>
+
+            </Formulario>
+        </Container>
     );
 }

@@ -8,9 +8,15 @@ type Props = {
 
 export const TurmasItem = ({ aulas, categoria }: Props) => {
     return (
-        <Link to={`/alunos/`} className="turma">
-            <div><p><span>{aulas} </span>{categoria}</p></div>
-        </Link >
+        <div className="teste">
+            <Link to={`/alunos/`} className="turma">
+                <div className="text">
+                    <p>Nome da turma <br />
+                        <span>{aulas} | {categoria}</span>
+                    </p>
+                </div>
+            </Link >
+        </div>
     )
 }
 
