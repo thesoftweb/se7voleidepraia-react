@@ -9,20 +9,17 @@ export const Login = () => {
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
+    const [cpf, setCpf] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleEmailInput = (event: ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.target.value);
-    }
 
-    const handlePasswordInput = (event: ChangeEvent<HTMLInputElement>) => {
-        setPassword(event.target.value);
-    }
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-    const handleLogin = async () => {
-        if (email && password) {
-            const isLogged = await auth.signin(email, password);
+        if (cpf && password) {
+            const isLogged = await auth.signin(cpf, password);
+
+            console.log(isLogged);
             if (isLogged) {
                 navigate('/turma');
             } else {
@@ -39,14 +36,14 @@ export const Login = () => {
             <Formulario>
                 <Input
                     type="text"
-                    value={email}
-                    onChange={handleEmailInput}
+                    value={cpf}
+                    onChange={(e) => setCpf(e.target.value)}
                     placeholder="Digite seu CPF" />
 
                 <Input
                     type="password"
                     value={password}
-                    onChange={handlePasswordInput}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="Digite sua senha"
                 />
                 <Button onClick={handleLogin}>Login</Button>

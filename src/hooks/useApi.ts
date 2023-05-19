@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://api.google.com'
+    baseURL: 'http://app.se7voleidepraia.com.br/api'
 });
 
 export const useApi = () => ({
@@ -12,12 +12,10 @@ export const useApi = () => ({
         const response = await api.post('/validate', { token });
         return response.data;
     },
-    signin: async (email: string, password: string) => {
-        return {
-            user: { id: 3, name: 'José', email: 'jose@gmail.com' },
-            token: '123456789'
-        };
-        const response = await api.post('/signin', { email, password });
+    signin: async (cpf: string, password: string) => {
+
+        const response = await api.post('/auth/teachers', { cpf, password });
+
         return response.data;
     },
     logout: async () => {
