@@ -22,18 +22,19 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
     const signin = async (cpf: string, password: string) => {
 
-        console.log('signin', cpf, password);
+        try {
+            console.log('signin', cpf, password);
+            const data = await api.signin(cpf, password);
 
-        const data = await api.signin(cpf, password);
+            if (data.user && data.token) {
+                setUser(data.user);
+                setToken(data.token);
+            }
+            return true;
+        } catch (error) {
+            return false;
+        }
 
-        console.log('signin', data);
-        // if (data.user && data.token) {
-        //     setUser(data.user);
-        //     setToken(data.token);
-        //     return true;
-        // }
-
-        return true;
     }
 
     const signout = async () => {

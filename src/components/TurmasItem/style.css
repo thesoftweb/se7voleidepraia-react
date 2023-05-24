@@ -1,8 +1,7 @@
 .turma {
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
-    padding: 1px;
-    margin: 25px;
+    margin: 15px;
     cursor: pointer;
     display: block;
     text-decoration: none;
@@ -27,8 +26,4 @@
 .text span {
     font-size: 20px;
     font-weight: 300;
-}
-
-.teste {
-    height: auto;
 }

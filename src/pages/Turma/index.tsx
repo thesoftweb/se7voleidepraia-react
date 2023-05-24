@@ -8,10 +8,12 @@ import { useContext } from 'react';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
 
 import { Button, Container, Content, Header, H1, H2 } from './styled';
+import { useNavigate } from "react-router-dom";
 
 export const Turma = () => {
     const [loading, setLoading] = useState(false);
     const [list, setList] = useState<Album[]>([]);
+    const navigate = useNavigate();
 
     const auth = useContext(AuthContext);
 
@@ -28,8 +30,9 @@ export const Turma = () => {
         setLoading(false);
     }
     const handleLogout = async () => {
-        await auth.signout();
-        window.location.href = window.location.href;
+        // await auth.signout();
+        // window.location.href = window.location.href;
+        navigate('/');
     }
 
     return (

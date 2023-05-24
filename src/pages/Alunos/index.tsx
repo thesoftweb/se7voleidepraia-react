@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { AlunoFake } from "../../fake/AlunoFake";
 
 
-import { Container, Header, H1, Lista, Perfil, Img, Label, Input } from "./styled";
+import { Container, Header, H1, Lista, H2 } from "./styled";
 import { Aluno } from "../../types/Aluno";
 import { AlunosItem } from "../../components/AlunosItem";
 
@@ -26,22 +26,24 @@ export const Alunos = () => {
         setLoading(false);
     }
 
-
     return (
         <Container>
             <Header>
                 <H1>Nome da Turma</H1>
                 <h2></h2>
             </Header>
-            {loading && "Carregando.."}
+            <Lista>
+                <H2>Alunos:</H2>
+                {loading && "Carregando.."}
 
-            {list.map((item, index) => (
-                <AlunosItem
-                    key={index}
-                    img={item.img}
-                    nome={item.nome}
-                />
-            ))}
+                {list.map((item, index) => (
+                    <AlunosItem
+                        key={index}
+                        img={item.img}
+                        nome={item.nome}
+                    />
+                ))}
+            </Lista>
         </Container>
     );
 }

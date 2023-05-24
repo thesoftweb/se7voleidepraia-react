@@ -7,11 +7,13 @@ type Props = {
 
 export const AlunosItem = ({ img, nome }: Props) => {
     return (
-        <div className="lista">
-            <div className="perfil">
+        <div className="profile-card">
+            <div className="profile-content">
                 <img className="foto" src={img} alt="" />
-                <label className="nome">{nome}</label>
-                <input type="checkbox" />
+                <label className='nome'>{nome}</label>
+            </div>
+            <div className="checkbox-wrapper">
+                <input type="checkbox" id="checkbox1" />
             </div>
         </div>
     )

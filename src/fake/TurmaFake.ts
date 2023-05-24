@@ -7,11 +7,6 @@ const request2 = axios.create({
 export const TurmaFake = [
     { aula: 'Seg-Qua-Sext', categoria: '15 As 17' },
     { aula: 'Ter-Qui-Sab', categoria: '15 As 17' },
-    { aula: 'noite', categoria: 's15 As 17' },
-    { aula: 'noite', categoria: 's15 As 17' },
-    { aula: 'noite', categoria: 's15 As 17' },
-
-
 
 
 ];

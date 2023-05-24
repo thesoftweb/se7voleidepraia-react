@@ -2,22 +2,22 @@ import styled from "styled-components";
 
 export const Container = styled.div`
 height:100%;
-background-color: #0093E9;
+background-color: white;
 `;
 
 export const Header = styled.div`
     height: 180px;
-    background-color: #0093E9;
+    background-color: white;
     display: flex;  
     align-items: center;  
-    color: white;
+    color: #2D3192;
     padding: 20px;
     font-family: 'Poppins', sans-serif;
 `;
 
 export const Content = styled.div`
-height: 100%;
-display: flex;
+height: 100vh;
+display: flex; 
 flex-direction: column;
 border-radius:70px 0 0 0;
 background-color:#2D3192;
@@ -25,11 +25,9 @@ background-color:#2D3192;
 `
 
 export const H1 = styled.h1`
-margin: 10px auto;
 font-family: 'Poppins', sans-serif;
 font-weight: 600;
 margin-left:30px;
-
 `;
 export const H2 = styled.h2`
 color:white;

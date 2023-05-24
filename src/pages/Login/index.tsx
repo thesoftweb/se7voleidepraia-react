@@ -11,21 +11,20 @@ export const Login = () => {
 
     const [cpf, setCpf] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
+    const handleLogin = async () => {
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+        // if (!cpf || !password) {
+        //     setError('Digite cpf e senha')
+        // }
+        // const isLogged = await auth.signin(cpf, password);
 
-        if (cpf && password) {
-            const isLogged = await auth.signin(cpf, password);
-
-            console.log(isLogged);
-            if (isLogged) {
-                navigate('/turma');
-            } else {
-                alert("Não deu certo.");
-            }
-        }
+        // if (!isLogged) {
+        //     setError('Usuario ou senha invalidos')
+        //     return;
+        // }
+        navigate('/turma');
     }
 
     return (
@@ -34,6 +33,7 @@ export const Login = () => {
                 <Img src="./src/assets/setvolei.png" alt="" />
             </Logo>
             <Formulario>
+                <p>{error}</p>
                 <Input
                     type="text"
                     value={cpf}
@@ -47,7 +47,6 @@ export const Login = () => {
                     placeholder="Digite sua senha"
                 />
                 <Button onClick={handleLogin}>Login</Button>
-
             </Formulario>
         </Container>
     );
