@@ -16,10 +16,10 @@ export const MainRoutes = () => {
         { path: '/turma', element: <Turma /> },
         { path: '/alunos', element: <Alunos /> },
 
-        { path: '/matricula-online', element: <Matricula /> },
+        // { path: '/matricula-online', element: <Matricula /> },
 
-        { path: '/matricula-online/step1', element: <Etapa1 /> },
-        { path: '/matricula-online/step1/step2', element: <Etapa2 /> },
-        { path: '/matricula-online/step1/step2/step3', element: <Etapa1 /> }
+        { path: '/matricula-online', element: <Etapa1 /> },
+        { path: '/matricula-online/step2', element: <Etapa2 /> },
+
     ]);
 }

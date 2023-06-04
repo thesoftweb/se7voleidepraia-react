@@ -7,8 +7,7 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: #2D3192;
-    
+    background-color: #2D3192; 
 `;
 export const Logo = styled.div`
     margin-bottom:40px;
@@ -31,6 +30,7 @@ export const Img = styled.img`
 export const Formulario = styled.div`
     display: flex;
     flex-direction: column;
+    
 
     @media (max-width: 950px) {
     
@@ -45,11 +45,14 @@ export const Input = styled.input`
     border: none;
     text-decoration: none;
     border-radius: 12px;
-    background-color:#96958a;
+    background-color:white;
+    
+    
 
     ::placeholder {
+        font-weight:300;
         color: black;
-        font-weight:bold;
+        
     }
 
     @media (max-width: 950px) {
@@ -66,6 +69,7 @@ export const Button = styled.button`
     transition: background .3s;
     background-color: ;
     font-weight: bolder;
+    
 
     @media (max-width: 950px) {
         padding: 20px;
