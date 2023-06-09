@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { Container, Content } from './styled';
 import { FormActions, useForm } from '../../../contexts/Auth/FormContext';
+import { FormTheme } from '../../FormTheme';
 
 export const Etapa1 = () => {
     const navigate = useNavigate();
     const { state, dispatch } = useForm();
-
 
     const handleUnidadeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const unidade = (event.target.value);
@@ -43,12 +43,23 @@ export const Etapa1 = () => {
     return (
         <Container>
             <Content>
-                <div className='logo'>
-                    <img src="../src/assets/setvolei.png" alt="" />
-                    <h1>SEJA BEM-VINDO!</h1>
-                    <p>Selecione os campos abaixo para realizar a sua matricula.</p>
-                </div>
-                <form >
+                <FormTheme
+                    title='SEJA BEM-VINDO!'
+                    text='Selecione os campos ao lado para realizar a sua matricula.'
+                    src='./src/assets/setvolei.png'
+                />
+                <form>
+                    <div className='infoMobile'>
+                        <img className='logoMobile' src="./src/assets/setvolei.png" alt="" />
+                        <h1>SEJA BEM-VINDO!</h1>
+                        <p>Selecione os campos abaixo para realizar a sua matricula.</p>
+                    </div>
+                    <div className='infoPc'>
+                        <h1>
+                            Preencha os dados abaixo.
+                        </h1>
+                        <p>Certifique-se de selecionar corretamente.</p>
+                    </div>
                     <label>UNIDADE</label>
                     <select value={state.unidade} onChange={handleUnidadeChange} >
                         <option value="">SELECIONE</option>

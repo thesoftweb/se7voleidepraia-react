@@ -2,9 +2,10 @@ import React from 'react';
 
 
 import { useNavigate, Link } from 'react-router-dom';
-import { Container, Content, Form, Label, Input } from '../Etapa2/styled';
+import { Container, Content } from '../Etapa2/styled';
 import { useForm } from '../../../contexts/Auth/FormContext';
 import { ChangeEvent, useEffect } from 'react';
+import { FormTheme } from '../../FormTheme';
 
 
 export const Etapa2 = () => {
@@ -27,12 +28,25 @@ export const Etapa2 = () => {
     return (
         <Container>
             <Content>
-                <div className='logo'>
-                    <img src="../src/assets/setvolei.png" alt="" />
-                    <h1>QUASE LÁ...</h1>
-                    <p>Preencha os campos abaixo para realizar a segunda etapa da sua matricula.</p>
-                </div>
+                <FormTheme
+                    title='QUASE LÁ...'
+                    text='Você está quase finalizando
+                a sua matrícula.'
+                    src='../src/assets/setvolei.png'
+                />
                 <form action="">
+                    <div className='InfoMobile'>
+                        <img className='logoMobile' src="../src/assets/setvolei.png" alt="" />
+                        <h1>QUASE LÁ...</h1>
+                        <p>Preencha os dados abaixo para realizar a sua matricula.</p>
+                    </div>
+                    <div className='Teste'>
+                        <h1>
+                            Preencha os dados abaixo.
+                        </h1>
+                        <p>Certifique-se de preencher corretamente.</p>
+
+                    </div>
                     <input placeholder='DIGITE SEU NOME' type="text" />
                     <input placeholder='DIGITE SUA IDADE' type="text" />
                     <input placeholder='DIGITE SEU EMAIL' type="text" />

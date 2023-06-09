@@ -2,45 +2,15 @@ import styled from "styled-components";
 
 export const Container = styled.div`
 background-color: #2D3192;
-height: 100vh;
 font-family: 'Poppins', sans-serif;
-
 `;
 
 export const Content = styled.div`
 height: 100vh;
-background-color: #2D3192;
+background-color: #F2F2F2;
 display: flex;
 align-items: center;
 justify-content: center;
-flex-direction:column;
-
-
-
-
-.logo{  
-    display: flex;  
-    align-items: center;  
-    flex-direction:column;  
-    color: white;
-    margin-top:50px;
-
-    @media(max-width: 950px) {
-        @media (max-width: 950px) {
-            margin-top:-80px;
-        }
-        text-align: center;
-        margin:20px;
-        
-
-        h1{
-            font
-        }
-        p{
-            font-size:18px;
-
-        }
-    }
 
     img{
         width:100px;
@@ -48,37 +18,83 @@ flex-direction:column;
     }
     p{
         margin-top:-20px;
+    }
 
+    @media (max-width: 950px) {
+        background-color: #2D3192;
     }
 }
 
-
 form{       
-    height:400px;
     margin-top:-30px;
-    color: white;
-    display: flex;
+    color:#2D3192;
+    display:flex;
     align-items: center;
     justify-content: center;  
     flex-direction: column; 
-    font-size:20px;
+    font-size:15px;
+    flex:1;
+
+    @media (max-width: 950px) {
+        color:white;
+
+        
+    }
+
+    .infoMobile{
+        display:none;
+
+        @media (max-width: 950px) {
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;    
+            text-align:center;
+            
+            p{
+                font-size:25px;
+            }
+        }
+    }
+    
+    .infoPc{
+      
+        h1{
+            
+            margin-bottom:20px;
+        }
+        
+        @media(max-width:950px){
+            
+                text-align:center;
+                display:none;
+            }
+        }
+    }
 
    label{
     font-weight: 600;
     font-size:18px;
    }
     select{
+        background-color:#2D3192;
         height: 45px;
         width: 280px;
         margin-bottom:20px;
         position: relative;
         border-radius: 30px;
         text-align: center;
-        color:#2D3192;  
+        color:#B2B4DD;    
+
+        @media (max-width: 950px) {
+            background-color: white;
+            color:#2D3192;
+        }
     }
+
     option{
         font-family: 'Poppins', sans-serif;
-        color:#2D3192;  
+        color:#B2B4DD;  
         font-size:15px;
     }
 
@@ -97,15 +113,9 @@ form{
             background-color:grey;
         }
     }
-
+}
 `;
 
-export const Form = styled.form`
-display: flex;
-align - items: center;
-justify - content: center;
 
-
-`;
 
 

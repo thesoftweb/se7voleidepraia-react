@@ -1,36 +1,35 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-background-image:url('https://img.freepik.com/fotos-gratis/vista-lateral-de-mulher-e-homem-jogando-volei-de-praia_23-2148662639.jpg?w=740&t=st=1685406562~exp=1685407162~hmac=504e7bdf15d287a997a05d9744a741fb49173ff4fb2279fb20870f4f6492f365');
-background-size: 100% 100%;
-width: 100%;
-height: 100vh;
-color: black;
-position: relative;
-display: flex;
-align-items: center;
-justify-content: center;
-z-index: 1;
-
-::after {
-    content: '';
-    background-color: black;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    opacity: .8;
-    z-index: -1;
-}`;
-
 export const Content = styled.div`
-width: 400px;
-height: 400px;
-background-color: white;
-display: flex;
-align items: center;
-justify-content: center;
-flex-direction: column;
-border-radius: 20px;
+width: 50%;
+
+@media (max-width: 950px) {
+    display: none;
+
+    .formLeft{
+        display:none;
+    }      
+}
+
+.formLeft{ 
+    display:flex;
+    justify-content:center;
+    height:100vh;
+    background-color:#2D3192;
+    border-radius:0 1218px 1260px 0 ;
+    flex:1;
+    color:white;
+    text-align:center;
+    flex-direction:column;
+    
+    img{
+        margin-bottom:100px; 
+        width:120px;
+        height:120px;
+    }
+    h1{
+        margin-top:-80px; 
+    }   
+}
+
 `;

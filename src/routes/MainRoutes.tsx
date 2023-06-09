@@ -6,6 +6,7 @@ import { Turma } from '../pages/Turma';
 import { Matricula } from '../pages/Matricula';
 import { Etapa1 } from '../components/FormWizard/Etapa1';
 import { Etapa2 } from '../components/FormWizard/Etapa2';
+import { FormTheme } from '../components/FormTheme';
 
 
 
@@ -20,6 +21,9 @@ export const MainRoutes = () => {
 
         { path: '/matricula-online', element: <Etapa1 /> },
         { path: '/matricula-online/step2', element: <Etapa2 /> },
+
+        { path: '/teste', element: <FormTheme /> },
+
 
     ]);
 }
