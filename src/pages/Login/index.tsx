@@ -1,7 +1,6 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
-
 
 import { Button, Container, Formulario, Img, Input, Logo, } from "./styled";
 
@@ -14,7 +13,6 @@ export const Login = () => {
     const [error, setError] = useState('');
 
     const handleLogin = async () => {
-
         // if (!cpf || !password) {
         //     setError('Digite cpf e senha')
         // }
