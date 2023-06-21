@@ -18,7 +18,7 @@ export const Login = () => {
         // if (!cpf || !password) {
         //     setError('Digite cpf e senha')
         // }
-        // const isLogged = await auth.signin(cpf, password);
+        const isLogged = await auth.signin(cpf, password);
 
         // if (!isLogged) {
         //     setError('Usuario ou senha invalidos')
