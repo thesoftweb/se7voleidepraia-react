@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     }, [api]);
 
     const signin = async (cpf: string, password: string) => {
-
         try {
             console.log('signin', cpf, password);
             const data = await api.signin(cpf, password);

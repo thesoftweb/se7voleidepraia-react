@@ -5,8 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Container, Content } from '../Etapa2/styled';
 import { useForm } from '../../../contexts/Auth/FormContext';
 import { ChangeEvent, useEffect } from 'react';
-import { FormTheme } from '../../FormTheme';
-
+import { FormLeft } from '../../FormTheme';
 
 export const Etapa2 = () => {
 
@@ -28,7 +27,7 @@ export const Etapa2 = () => {
     return (
         <Container>
             <Content>
-                <FormTheme
+                <FormLeft
                     title='QUASE LÁ...'
                     text='Você está quase finalizando
                 a sua matrícula.'

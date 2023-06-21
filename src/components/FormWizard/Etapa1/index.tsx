@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Container, Content } from './styled';
 import { FormActions, useForm } from '../../../contexts/Auth/FormContext';
-import { FormTheme } from '../../FormTheme';
+import { FormLeft } from '../../FormTheme';
 
 export const Etapa1 = () => {
     const navigate = useNavigate();
@@ -43,7 +43,7 @@ export const Etapa1 = () => {
     return (
         <Container>
             <Content>
-                <FormTheme
+                <FormLeft
                     title='SEJA BEM-VINDO!'
                     text='Selecione os campos ao lado para realizar a sua matricula.'
                     src='./src/assets/setvolei.png'
