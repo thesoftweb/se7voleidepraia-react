@@ -6,7 +6,8 @@ const api = axios.create({
 
 export const useApi = () => ({
     validateToken: async (token: string) => {
-        const response = await api.post('/validate', { token });
+
+        const response = await api.post('/secret', { token });
         return response.data;
     },
     signin: async (cpf: string, password: string) => {
@@ -15,7 +16,15 @@ export const useApi = () => ({
     },
     logout: async () => {
         return { status: true };
-
     }
 });
+
+export const useForm = () => ({
+    categoria: async () => {
+        const response = await api.get('/courses');
+        return response.data;
+
+    }
+
+})
 

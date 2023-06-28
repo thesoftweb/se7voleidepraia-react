@@ -1,41 +1,45 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { Container, Content } from './styled';
-import { FormActions, useForm } from '../../../contexts/Auth/FormContext';
-import { FormLeft } from '../../FormTheme';
+import { FormActions, useForm } from '../../../contexts/Form/FormContext';
+import { FormLeft } from '../../FormLeft';
 
-export const Etapa1 = () => {
+export const Step2 = () => {
     const navigate = useNavigate();
     const { state, dispatch } = useForm();
 
-    const handleUnidadeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const unidade = (event.target.value);
-        dispatch({ type: 'SET_UNIDADE', payload: unidade });
+    useEffect(() => {
+        if (state.name === '') {
+            navigate('/matricula-online');
+        } else {
+            dispatch({
+                type: FormActions.setCurrentStep,
+                payload: 2
+            });
+        }
+    }, []);
+
+
+    const handleUnidadeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
+        dispatch({ type: FormActions.setUnidade, payload: e.target.value });
     };
 
-    const handleCategoriaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const categoria = (event.target.value);
-        dispatch({ type: 'SET_CATEGORIA', payload: categoria });
-    };
+    const handleCategoriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 
-    const handleTurmaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const turma = (event.target.value);
-        dispatch({ type: 'SET_TURMA', payload: turma });
+        dispatch({ type: FormActions.setCategoria, payload: e.target.value });
     };
 
     const handleSubmit = () => {
         if (state.unidade !== '' && state.categoria !== '' && state.turma !== '') {
-            navigate('/matricula-online/step2');
+            navigate('/matricula-online/step3');
         } else {
             if (state.unidade === '') {
                 alert('Selecione a unidade');
             }
             if (state.categoria === '') {
                 alert('Selecione a categoria');
-            }
-            if (state.turma === '') {
-                alert('Selecione a turma');
             }
         }
     };
@@ -44,9 +48,10 @@ export const Etapa1 = () => {
         <Container>
             <Content>
                 <FormLeft
-                    title='SEJA BEM-VINDO!'
-                    text='Selecione os campos ao lado para realizar a sua matricula.'
-                    src='./src/assets/setvolei.png'
+                    title='QUASE LÁ...'
+                    text='Você está quase finalizando
+                 a sua matrícula.'
+                    src='../src/assets/setvolei.png'
                 />
                 <form>
                     <div className='infoMobile'>
@@ -60,26 +65,25 @@ export const Etapa1 = () => {
                         </h1>
                         <p>Certifique-se de selecionar corretamente.</p>
                     </div>
-                    <label>UNIDADE</label>
+                    <label>SELECIONE UMA UNIDADE</label>
                     <select value={state.unidade} onChange={handleUnidadeChange} >
                         <option value="">SELECIONE</option>
                         <option value="opcao1">Opção 1</option>
                         <option value="opcao2">Opção 2</option>
                         <option value="opcao3">Opção 3</option>
                     </select>
-                    <label>CATEGORIA</label>
+                    <label>SELECIONE UMA CATEGORIA</label>
                     <select value={state.categoria} onChange={handleCategoriaChange}>
                         <option value="">SELECIONE</option>
                         <option value="opcao1"> Juvenil</option>
                         <option value="opcao2"> Adulto</option>
                     </select>
-                    <label>TURMA</label>
-                    <select value={state.turma} onChange={handleTurmaChange}>
-                        <option value="">SELECIONE</option>
-                        <option value="opcao1"> manha</option>
-                        <option value="opcao2"> tarde</option>
-                    </select>
-                    <button onClick={handleSubmit}>PRÓXIMO</button>
+
+
+                    <div className='Buttons'>
+                        <Link to="/matricula-online" className='backButton'>Voltar</Link>
+                        <button onClick={handleSubmit}>AVANÇAR</button>
+                    </div>
                 </form>
             </Content>
         </Container >

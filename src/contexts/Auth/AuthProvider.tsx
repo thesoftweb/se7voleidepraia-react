@@ -33,7 +33,6 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
         } catch (error) {
             return false;
         }
-
     }
 
     const signout = async () => {

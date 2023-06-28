@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 
 import { Button, Container, Formulario, Img, Input, Logo, } from "./styled";
+import { insertMaskInCpf } from "../../hooks/mask";
 
 export const Login = () => {
     const auth = useContext(AuthContext);
@@ -13,16 +14,17 @@ export const Login = () => {
     const [error, setError] = useState('');
 
     const handleLogin = async () => {
+
         // if (!cpf || !password) {
         //     setError('Digite cpf e senha')
         // }
-        const isLogged = await auth.signin(cpf, password);
+        // const isLogged = await auth.signin(cpf, password);
 
         // if (!isLogged) {
         //     setError('Usuario ou senha invalidos')
         //     return;
         // }
-        navigate('/turma');
+        navigate('/turma')
     }
 
     return (
@@ -34,7 +36,7 @@ export const Login = () => {
                 <p>{error}</p>
                 <Input
                     type="text"
-                    value={cpf}
+                    value={insertMaskInCpf(cpf)}
                     onChange={(e) => setCpf(e.target.value)}
                     placeholder="Digite seu CPF" />
 

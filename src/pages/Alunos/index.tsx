@@ -12,6 +12,9 @@ import { AlunosItem } from "../../components/AlunosItem";
 
 
 export const Alunos = () => {
+
+
+
     const [loading, setLoading] = useState(false);
     const [list, setList] = useState<Aluno[]>([]);
 
