@@ -6,7 +6,6 @@ import { createRoot } from 'react-dom/client';
 import { AuthProvider } from './contexts/Auth/AuthProvider';
 import { FormProvider } from './contexts/Form/FormContext';
 
-
 const container = document.getElementById('app');
 const root = createRoot(container!);
 
@@ -19,7 +18,6 @@ root.render(
         </BrowserRouter>
       </AuthProvider>
     </FormProvider>
-
   </>
 )
 

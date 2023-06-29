@@ -17,9 +17,6 @@ export const Step1 = () => {
         });
     }, []);
 
-
-
-
     const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch({ type: FormActions.setName, payload: e.target.value });
     }

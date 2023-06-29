@@ -7,9 +7,9 @@ import "./App.css"
 function App() {
 	return (
 		<div className='App'>
-			<RequireAuth>
-				<MainRoutes />
-			</RequireAuth>
+
+			<MainRoutes />
+
 		</div>
 	);
 }

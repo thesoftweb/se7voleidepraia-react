@@ -15,15 +15,15 @@ export const Login = () => {
 
     const handleLogin = async () => {
 
-        // if (!cpf || !password) {
-        //     setError('Digite cpf e senha')
-        // }
-        // const isLogged = await auth.signin(cpf, password);
+        if (!cpf || !password) {
+            setError('Digite cpf e senha')
+        }
+        const isLogged = await auth.signin(cpf, password);
 
-        // if (!isLogged) {
-        //     setError('Usuario ou senha invalidos')
-        //     return;
-        // }
+        if (!isLogged) {
+            setError('Usuario ou senha invalidos')
+            return;
+        }
         navigate('/turma')
     }
 
