@@ -4,6 +4,7 @@ import { AuthContext } from "../../contexts/Auth/AuthContext";
 
 import { Button, Container, Formulario, Img, Input, Logo, } from "./styled";
 import { insertMaskInCpf } from "../../hooks/mask";
+import logo from '../../assets/setvolei.png';
 
 export const Login = () => {
     const auth = useContext(AuthContext);
@@ -30,7 +31,7 @@ export const Login = () => {
     return (
         <Container>
             <Logo>
-                <Img src="./src/assets/setvolei.png" alt="" />
+                <Img src={logo} alt="" />
             </Logo>
             <Formulario>
                 <p>{error}</p>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://app.se7voleidepraia.com.br/api'
+    baseURL: 'https://app.se7voleidepraia.com.br/api'
 });
 
 export const useApi = () => ({
