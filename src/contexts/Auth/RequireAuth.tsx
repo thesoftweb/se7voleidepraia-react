@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { Login } from "../../pages/Login";
 import { AuthContext } from "./AuthContext";
+import { Login } from "../../pages/Login";
 
 export const RequireAuth = ({ children }: { children: JSX.Element }) => {
     const auth = useContext(AuthContext);
@@ -9,4 +9,4 @@ export const RequireAuth = ({ children }: { children: JSX.Element }) => {
         // return <Login />;
     }
     return children;
-}
+} 
