@@ -4,10 +4,14 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Container, Content } from './styled';
 import { FormActions, useForm } from '../../../contexts/Form/FormContext';
 import { FormLeft } from '../../FormLeft';
+import { useUnidades } from '../../../hooks/useUnidades';
 
 export const Step2 = () => {
     const navigate = useNavigate();
     const { state, dispatch } = useForm();
+
+    const { units } = useUnidades();
+    console.log("Units", units)
 
     useEffect(() => {
         if (state.name === '') {
@@ -19,7 +23,6 @@ export const Step2 = () => {
             });
         }
     }, []);
-
 
     const handleUnidadeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 
@@ -33,7 +36,7 @@ export const Step2 = () => {
 
     const handleSubmit = () => {
         if (state.unidade !== '' && state.categoria !== '' && state.turma !== '') {
-            navigate('/matricula-online/step3');
+            navigate('/matricula-online/step2/step3');
         } else {
             if (state.unidade === '') {
                 alert('Selecione a unidade');
@@ -65,12 +68,16 @@ export const Step2 = () => {
                         </h1>
                         <p>Certifique-se de selecionar corretamente.</p>
                     </div>
+
+
                     <label>SELECIONE UMA UNIDADE</label>
                     <select value={state.unidade} onChange={handleUnidadeChange} >
-                        <option value="">SELECIONE</option>
-                        <option value="opcao1">Opção 1</option>
-                        <option value="opcao2">Opção 2</option>
-                        <option value="opcao3">Opção 3</option>
+                        <option>SELECIONE</option>
+
+                        {units.map((item, key) => (
+                            <option>{item.name}</option>
+                        ))}
+
                     </select>
                     <label>SELECIONE UMA CATEGORIA</label>
                     <select value={state.categoria} onChange={handleCategoriaChange}>
@@ -78,7 +85,6 @@ export const Step2 = () => {
                         <option value="opcao1"> Juvenil</option>
                         <option value="opcao2"> Adulto</option>
                     </select>
-
 
                     <div className='Buttons'>
                         <Link to="/matricula-online" className='backButton'>Voltar</Link>

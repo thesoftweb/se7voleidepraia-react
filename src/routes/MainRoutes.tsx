@@ -6,6 +6,8 @@ import { Turma } from '../pages/Turma';
 
 import { Step1 } from '../components/FormWizard/Step1';
 import { Step2 } from '../components/FormWizard/Step2';
+import { Step3 } from '../components/FormWizard/Step3';
+
 import { RequireAuth } from '../contexts/Auth/RequireAuth';
 
 export const MainRoutes = () => {
@@ -17,6 +19,7 @@ export const MainRoutes = () => {
 
             <Route path='/matricula-online' element={<Step1 />} />
             <Route path='/matricula-online/step2' element={<Step2 />} />
+            <Route path='/matricula-online/step3' element={<Step3 />} />
         </Routes>
     )
 }

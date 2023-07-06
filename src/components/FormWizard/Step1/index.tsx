@@ -6,7 +6,6 @@ import { FormLeft } from '../../FormLeft';
 import { insertMaskInPhone } from '../../../hooks/mask';
 
 export const Step1 = () => {
-
     const navigate = useNavigate();
     const { state, dispatch } = useForm();
 
