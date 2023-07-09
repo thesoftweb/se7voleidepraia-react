@@ -82,7 +82,7 @@ form{
         width: 280px;
         margin-bottom:20px;
         position: relative;
-        border-radius: 30px;
+        border-radius: 8px;
         text-align: center;
         color:#B2B4DD;    
 
@@ -108,7 +108,7 @@ form{
             font-weight: bold;
             padding: 15px 35px;
             border: 0;
-            border-radius: 20px;
+            border-radius: 8px;
             cursor: pointer;
             margin-right:20px;
             text-decoration: none;
@@ -124,7 +124,7 @@ form{
             font-weight: bold;
             padding: 15px 35px;
             border: 0;
-            border-radius: 20px;
+            border-radius: 8px;
             cursor: pointer;
             
         

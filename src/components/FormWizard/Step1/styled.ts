@@ -86,15 +86,14 @@ form{
         width: 280px;
         margin-bottom:20px;
         position: relative;
-        border-radius: 30px;
-        text-align: center;
+        border-radius: 8px;
         color:#B2B4DD;  
 
         @media (max-width: 950px) {
             background-color:white;
         }
         ::placeholder{
-            color:#B2B4DD;    
+            color:#999    
         }
         
     }
