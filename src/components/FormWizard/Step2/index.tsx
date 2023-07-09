@@ -7,6 +7,7 @@ import { FormLeft } from '../../FormLeft';
 import { useUnidades } from '../../../hooks/useUnidades';
 
 import logo from "../../../assets/setvolei.png";
+import { Turmas } from '../../../types/Turmas';
 
 export const Step2 = () => {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const Step2 = () => {
     //dados pra consulta
     const [selUnit, setSelUnit] = useState('');
     const [selCategory,setSelCategory] = useState('');
-    const [turmas,setTurmas] = useState([]);
+    const [turmas,setTurmas] = useState<Turmas[]>([]);;
 
     const { units } = useUnidades();
     // console.log("Units", units)
