@@ -4,6 +4,7 @@ import { FormActions, useForm } from '../../../contexts/Form/FormContext';
 import { ChangeEvent, useEffect } from 'react';
 import { FormLeft } from '../../FormLeft';
 import { insertMaskInPhone } from '../../../hooks/mask';
+import logo from "../../../assets/setvolei.png";
 
 export const Step1 = () => {
     const navigate = useNavigate();
@@ -57,13 +58,13 @@ export const Step1 = () => {
                 <FormLeft
                     title='SEJA BEM-VINDO!'
                     text='Selecione os campos ao lado para realizar a sua matricula.'
-                    src='./src/assets/setvolei.png'
+                    src={logo}
                 />
                 <form action="">
                     <div className='InfoMobile'>
-                        <img className='logoMobile' src="../src/assets/setvolei.png" alt="" />
-                        <h1>QUASE LÁ...</h1>
-                        <p>Preencha os dados abaixo para realizar a sua matricula.</p>
+                        <img className='logoMobile' src={logo} alt="" />
+                        <h1>SEJA BEM-VINDO!</h1>
+                        <p>Selecione os campos ao lado para realizar a sua matricula.</p>
                     </div>
                     <div className='Teste'>
                         <h1>

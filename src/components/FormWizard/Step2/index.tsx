@@ -13,10 +13,15 @@ export const Step2 = () => {
     const navigate = useNavigate();
     const { state, dispatch } = useForm();
 
+    const [selecionada, setSelecionada] = useState(false);
+
+    const handleClique = () => {
+        setSelecionada(!selecionada);
+    };
+
     //dados pra consulta
-    const [selUnit, setSelUnit] = useState('');
-    const [selCategory,setSelCategory] = useState('');
-    const [turmas,setTurmas] = useState<Turmas[]>([]);;
+
+    const [turmas, setTurmas] = useState<Turmas[]>([]);;
 
     const { units } = useUnidades();
     // console.log("Units", units)
@@ -33,20 +38,16 @@ export const Step2 = () => {
     }, []);
 
     const handleUnidadeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-
-        setSelUnit(e.target.value);
-        //dispatch({ type: FormActions.setUnidade, payload: e.target.value });
+        dispatch({ type: FormActions.setUnidade, payload: e.target.value });
     };
 
     const handleCategoriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-
-        setSelCategory(e.target.value)
-        //dispatch({ type: FormActions.setCategoria, payload: e.target.value });
+        dispatch({ type: FormActions.setCategoria, payload: e.target.value });
     };
 
     const handleSubmit = () => {
-        if (state.unidade !== '' && state.categoria !== '' && state.turma !== '') {
-            navigate('/matricula-online/step2/step3');
+        if (state.unidade !== '' && state.categoria !== '' && state.name !== '' && state.email !== '' && state.idade !== 0 && state.telefone) {
+            navigate('/matricula-online/step3');
         } else {
             if (state.unidade === '') {
                 alert('Selecione a unidade');
@@ -59,22 +60,33 @@ export const Step2 = () => {
 
     const fetchTurmas = async () => {
 
-        console.log(selUnit,selCategory);
+        console.log("states", state.unidade, state.categoria);
 
-        let url = `https://app.se7voleidepraia.com.br/api/courses?unit_id=${selUnit}&category=${selCategory}`;
-        
-        console.log('URL pra consultar turmas dinamica: '+url);
-        
+        let url = `https://app.se7voleidepraia.com.br/api/courses?unit_id=${state.unidade}&category=${state.categoria}&`;
+
+        console.log('URL pra consultar turmas dinamica: ' + url);
+
         const request = await fetch(url);
 
-        const {data} = await request.json();
+        const { data } = await request.json();
 
-        console.log(data);
+        console.log("Oque tem", data);
 
         setTurmas(data);
     }
 
-
+    const confirmaTurmas = () => {
+        if (state.unidade !== '' && state.categoria !== '') {
+            fetchTurmas();
+        } else {
+            if (state.unidade === '') {
+                alert('Selecione a unidade');
+            }
+            if (state.categoria === '') {
+                alert('Selecione a categoria');
+            }
+        }
+    }
 
     return (
         <Container>
@@ -100,7 +112,7 @@ export const Step2 = () => {
 
 
                     <label>SELECIONE UMA UNIDADE</label>
-                    <select value={selUnit} onChange={handleUnidadeChange} >
+                    <select value={state.unidade} onChange={handleUnidadeChange} >
                         <option>SELECIONE</option>
 
                         {units.map((item, key) => (
@@ -109,30 +121,28 @@ export const Step2 = () => {
 
                     </select>
                     <label>SELECIONE UMA CATEGORIA</label>
-                    <select value={selCategory} onChange={handleCategoriaChange}>
+                    <select value={state.categoria} onChange={handleCategoriaChange}>
                         <option value="">SELECIONE</option>
                         <option value="kids">Crianças</option>
                         <option value="teens">Adolecentes</option>
                         <option value="adult">Adultos</option>
                         <option value="competitive">Competitivo</option>
                     </select>
-                            
-                    <div className='Buttons' onClick={fetchTurmas}>Ver turmas</div>
+
+                    <div className='turmaButton' onClick={confirmaTurmas}>Ver turmas</div>
+                    <div className={`borda ${selecionada ? 'selecionada' : ''}`} onClick={handleClique}>
+                        {
+                            turmas.map((item, key) => (
+                                <li value={state.turma} key={item.id}>{item.name} | {item.category} | {item.unit} </li>
+                            ))
+                        }
+                    </div>
 
                     <div className='Buttons'>
 
                         <Link to="/matricula-online" className='backButton'>Voltar</Link>
                         <button onClick={handleSubmit}>AVANÇAR</button>
                     </div>
-
-
-                    <ul>
-                        { 
-                            turmas.map((item,key) => (
-                                <li key={item.id}>{item.name} | {item.category} | {item.unit} </li>
-                            ))
-                        }
-                    </ul>
                 </form>
             </Content>
         </Container >

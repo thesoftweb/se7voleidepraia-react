@@ -70,6 +70,42 @@ form{
                 display:none;
             }
         }
+        .turmaButton{
+            background-color:grey;   
+            color: black;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 30px;
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right:20px;
+            text-decoration: none;
+        }
+        .borda {
+            border: 2px solid grey;
+            background-color:white;
+            height:50px;
+            width:auto;
+            
+            margin:20px;
+          }
+          
+          .borda.selecionada {
+            border-color: red;
+          }
+        .turmaItem{
+            background-color:white;
+            height:50px;
+            width:auto;
+            border: 2px solid black;
+            margin:20px;
+           
+            li{
+                
+            }
+           
+        }
     }
 
    label{

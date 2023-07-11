@@ -88,6 +88,7 @@ form{
         position: relative;
         border-radius: 8px;
         color:#B2B4DD;  
+        padding-left:20px;
 
         @media (max-width: 950px) {
             background-color:white;
