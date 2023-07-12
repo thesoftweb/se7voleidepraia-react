@@ -52,7 +52,18 @@ form{
         color:white;
 
     }
+    .MenorIdade{
+       text-align:center;
+       background-color:grey;
+       margin-bottom:10px;
 
+       input{
+        height: 45px;
+        width: 150px;
+        margin-left:5px;
+        margin-right:5px;
+       }
+    }
     .InfoMobile{
         display:none;
 

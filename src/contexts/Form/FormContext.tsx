@@ -1,12 +1,25 @@
 import { ReactNode, createContext, useContext, useReducer } from "react";
 
 type State = {
-
     currentStep: number;
     name: string;
     email: string;
-    idade: number;
-    telefone: string;
+    birth_date: string;
+    cpf: string;
+
+    resp_name: string;
+    resp_email: string;
+    resp_telefone: string;
+
+    course_id: number;
+    plan_id: number;
+    unit_id: number;
+
+    postal_code: string;
+    street_name: string;
+    city_name: string;
+    neighbourhood_name: string;
+    state_name: string;
 
     unidade: string;
     categoria: string;
@@ -37,13 +50,27 @@ const initialData: State = {
     currentStep: 0,
     name: '',
     email: '',
-    idade: 0,
-    telefone: '',
+    birth_date: '',
+
+    resp_name: '',
+    resp_email: '',
+    resp_telefone: '',
+
+    cpf: '',
+
+    course_id: 2,
+    plan_id: 1,
+    unit_id: 1,
+
+    postal_code: '',
+    street_name: '',
+    city_name: '',
+    neighbourhood_name: '',
+    state_name: '',
 
     unidade: '',
     categoria: '',
     turma: '',
-
 }
 // Context
 const FormContext = createContext<ContextType | undefined>(undefined);
@@ -53,8 +80,16 @@ export enum FormActions {
     setCurrentStep,
     setName,
     setEmail,
-    setIdade,
+    setBirth_date,
     setTelefone,
+
+    setResp_Name,
+    setResp_Email,
+    setResp_Telefone,
+
+
+
+    setResponsavelFinanceiro,
 
     setUnidade,
     setCategoria,
@@ -68,10 +103,21 @@ const formReducer = (state: State, action: Action) => {
             return { ...state, name: action.payload };
         case FormActions.setEmail:
             return { ...state, email: action.payload };
-        case FormActions.setIdade:
-            return { ...state, idade: action.payload };
+        case FormActions.setBirth_date:
+            return { ...state, birth_date: action.payload };
         case FormActions.setTelefone:
             return { ...state, telefone: action.payload };
+
+        case FormActions.setResp_Name:
+            return { ...state, resp_name: action.payload };
+
+        case FormActions.setResp_Email:
+            return { ...state, resp_email: action.payload };
+
+
+
+
+
 
         case FormActions.setCategoria:
             return { ...state, categoria: action.payload };

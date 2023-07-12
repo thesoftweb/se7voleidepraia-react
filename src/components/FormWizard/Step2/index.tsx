@@ -18,7 +18,6 @@ export const Step2 = () => {
     const handleClique = () => {
         setSelecionada(!selecionada);
     };
-
     //dados pra consulta
 
     const [turmas, setTurmas] = useState<Turmas[]>([]);;
