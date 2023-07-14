@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Enrollment } from '../types/Enrollment';
 
 const api = axios.create({
     baseURL: 'https://app.se7voleidepraia.com.br/api'
@@ -27,4 +28,6 @@ export const useForm = () => ({
     }
 
 })
+
+
 

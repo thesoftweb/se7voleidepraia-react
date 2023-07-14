@@ -1,0 +1,116 @@
+import { useState } from "react";
+import { Button } from "../../Shared/Buttons";
+import { Header } from "../../Shared/Header";
+import { Logo } from "../../Shared/Logo";
+import "./styles.css";
+import { useForm } from "../../../contexts/Form/FormContext";
+import { useApi } from "../../../hooks/useApi";
+
+export const Step4 = () => {
+  const [title, setTitle] = useState("Confirme seus dados de matrícula");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [link, setLink] = useState("");
+
+  const { state, dispatch } = useForm();
+
+  console.log(state);
+
+  const handleSubmitEnrollment = async () => {
+    setLoading(true);
+    console.log("ENVIAR MATRICULA");
+
+    fetch("http://se7volei.test/api/enrollment", {
+      method: "POST",
+      body: JSON.stringify({
+        name: state.name,
+        email: state.email,
+        birth_date: state.birth_date,
+        cpf: state.cpf,
+        course_id: state.course_id,
+        plan_id: state.plan_id,
+        unit_id: state.unit_id,
+        postal_code: "000.000.000-99",
+        street_name: "nome da rua",
+        city_name: "cidade",
+        neighborhood_name: "bairro",
+        state_name: "estado",
+      }),
+    })
+      .then((data) => {
+        console.log(data);
+        data.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setSuccess(true);
+        setLoading(false);
+        setLink(data);
+      });
+  };
+
+  const handleAssasCheckout = () => {
+    console.log("REDIRECT TO ASAAS");
+  };
+
+  return (
+    <div className="container">
+      <Logo />
+      <Header title="Quase lá" subtitle={title} />
+      {!loading && !success && (
+        <>
+          <div className="infos">
+            <InfoDetail label={"Nome:"} value={state.name} />
+            <InfoDetail label={"Data nasc.:"} value={state.birth_date} />
+            <InfoDetail label={"Telefone:"} value={state.phone} />
+            <InfoDetail label={"Email:"} value={state.email} />
+            <InfoDetail label={"Unidade:"} value={"Unidade"} />
+            <InfoDetail label={"Turma:"} value={"Turma 1"} />
+            <InfoDetail label={"Plano:"} value={"Semestral"} />
+            <InfoDetail label={"Valor do plano:"} value={"89.90"} />
+          </div>
+          <div className="buttons">
+            <Button
+              label="Confimar Matrícula"
+              color=""
+              onClick={handleSubmitEnrollment}
+            />
+          </div>
+        </>
+      )}
+
+      {loading && (
+        <>
+          <h2>Enviando dados aguarde...</h2>
+        </>
+      )}
+
+      {success && !loading && (
+        <>
+          <Button
+            label="Pagar R$99.99"
+            color=""
+            onClick={handleAssasCheckout}
+          />
+          <a href={link} target="_blank">
+            Clique aqui para pagar
+          </a>
+        </>
+      )}
+    </div>
+  );
+};
+
+type InfoDetailProps = {
+  label: string;
+  value: string;
+};
+
+export const InfoDetail = ({ label, value }: InfoDetailProps) => {
+  return (
+    <div className="info-detail">
+      <span className="label-info">{label}</span>
+      <span className="value-info">{value}</span>
+    </div>
+  );
+};

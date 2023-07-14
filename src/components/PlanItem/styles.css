@@ -1,0 +1,17 @@
+.plan {
+    width: 100%;
+
+    border: 1px solid #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    margin-top: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.plan-title {
+    font-weight: bold;
+}

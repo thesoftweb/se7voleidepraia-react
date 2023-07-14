@@ -1,0 +1,30 @@
+.infos {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.info-detail {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #fff;
+    padding: 10px;
+}
+
+.label-info {
+    text-align: right;
+    font-weight: 400;
+}
+
+.value-info {
+    text-align: left;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}

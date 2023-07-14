@@ -1,0 +1,26 @@
+input {
+    background-color:#2D3192;
+    border:none;
+    height: 45px;
+    width: 280px;
+    margin-bottom:20px;
+    position: relative;
+    border-radius: 8px;
+    color:#B2B4DD;  
+    padding-left:20px;
+
+    @media (max-width: 950px) {
+        background-color:white;
+    }
+    ::placeholder{
+        color:#999    
+    }
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 980px;
+}
