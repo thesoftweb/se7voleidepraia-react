@@ -1,5 +1,5 @@
 .button {
-    background-color:#67CCC5;
+    background-color: #67CCC5;
     color: white;
     font-size: 14px;
     font-weight: bold;
@@ -7,4 +7,5 @@
     border: 0;
     border-radius: 8px;
     cursor: pointer;
+
 }

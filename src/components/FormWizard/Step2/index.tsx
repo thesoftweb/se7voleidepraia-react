@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-// import { Container, Content, TurmaItem } from "./styled";
 import { FormActions, useForm } from "../../../contexts/Form/FormContext";
-import { FormLeft } from "../../FormLeft";
+
 import { useUnidades } from "../../../hooks/useUnidades";
 
 import logo from "../../../assets/setvolei.png";
@@ -15,11 +14,13 @@ import "./style.css";
 import { Button } from "../../Shared/Buttons";
 import { PlanItem } from "../../PlanItem";
 
+import "./style.css";
+
 export const Step2 = () => {
   const navigate = useNavigate();
   const { state, dispatch } = useForm();
   const [turmas, setTurmas] = useState<Turmas[]>([]);
-  const [selecionada, setSelecionada] = useState(0);
+  const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const { units } = useUnidades();
 
   useEffect(() => {
@@ -101,9 +102,15 @@ export const Step2 = () => {
     }
   };
 
+  // const handleCourseSelected = (id: number) => {
+  //   console.log("iddd", id);
+  //   setSelecionada(id);
+  //   dispatch({ type: FormActions.setCourse_Id, payload: id });
+  // };
+
   const handleCourseSelected = (id: number) => {
-    console.log(id);
-    setSelecionada(id);
+    console.log("id", id)
+    setSelectedPlan(id);
     dispatch({ type: FormActions.setCourse_Id, payload: id });
   };
 
@@ -136,24 +143,19 @@ export const Step2 = () => {
 
       <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
 
-      <div className={`borda ${selecionada ? "selecionada" : ""}`}>
+      <div className=''>
+
         {turmas.map((item, key) => (
-          // <li
-          //   value={state.course_id}
-          //   key={item.id}
-          //   onClick={() => handleCourseSelected(item.id)}
-          //   style={{item.id == selecionada ? "course-item-active" : "course-item"}}
-          // >
-          //   {item.name} | {item.unit}{" "}
-          // </li>
           <PlanItem
+            key={item.id}
             title={item.name}
             amount={item.unit}
-            onClick={() => handleCourseSelected(item.id)}
-            active={selecionada}
+            isSelected={selectedPlan === item.id}
+            onSelect={() => handleCourseSelected(item.id)}
           />
         ))}
       </div>
+
 
       <div className="buttons">
         <Button label="Voltar" color="red" onClick={handlePrevStep} />

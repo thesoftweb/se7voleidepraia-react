@@ -1,19 +1,20 @@
 input {
-    background-color:#2D3192;
-    border:none;
+    background-color: white;
+    border: none;
     height: 45px;
     width: 280px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
     position: relative;
     border-radius: 8px;
-    color:#B2B4DD;  
-    padding-left:20px;
+    color: #B2B4DD;
+    padding-left: 20px;
 
     @media (max-width: 950px) {
-        background-color:white;
+        background-color: white;
     }
-    ::placeholder{
-        color:#999    
+
+    ::placeholder {
+        color: #999;
     }
 }
 
@@ -23,4 +24,5 @@ input {
     justify-content: center;
     align-items: center;
     max-width: 980px;
+
 }

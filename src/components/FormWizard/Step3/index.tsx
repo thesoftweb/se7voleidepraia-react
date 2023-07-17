@@ -13,6 +13,7 @@ import { FormActions, useForm } from "../../../contexts/Form/FormContext";
 export const Step3 = () => {
   const navigate = useNavigate();
   const { state, dispatch } = useForm();
+  const [selectedPlanValor, setSelectedPlanValor] = useState<number | null>(null);
   //TODO: Fetch plans from api https://app.se7voleidepraia.com.br/api/plans | GET
   //const [plans, setPlan] = useState<Plan[]>([]);
   console.log(state);
@@ -29,6 +30,7 @@ export const Step3 = () => {
 
   const handlePlanSelected = (id: number) => {
     console.log("Plano escolhido " + id);
+    setSelectedPlanValor(id)
     dispatch({ type: FormActions.setPlan_Id, payload: id });
   };
 
@@ -43,20 +45,22 @@ export const Step3 = () => {
         <PlanItem
           title="Plano Mensal"
           amount="R$ 120.99"
-          onClick={() => handlePlanSelected(1)}
+          isSelected={selectedPlanValor === 1}
+          onSelect={() => handlePlanSelected(1)}
         />
         <PlanItem
           title="Plano Trimestral"
           amount="R$ 105.99"
-          onClick={() => handlePlanSelected(2)}
+          isSelected={selectedPlanValor === 2}
+          onSelect={() => handlePlanSelected(2)}
         />
         <PlanItem
           title="Plano Semestral"
           amount="R$ 89.99"
-          onClick={() => handlePlanSelected(3)}
+          isSelected={selectedPlanValor === 3}
+          onSelect={() => handlePlanSelected(3)}
         />
       </div>
-
       <div className="buttons">
         <Button label="Voltar" color="red" onClick={handlePrevStep} />
         <Button label="Avançar" color="#67CCC5" onClick={handleNextStep} />

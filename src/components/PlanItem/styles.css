@@ -1,6 +1,5 @@
 .plan {
     width: 100%;
-
     border: 1px solid #fff;
     display: flex;
     flex-direction: column;
@@ -14,4 +13,11 @@
 
 .plan-title {
     font-weight: bold;
+}
+
+
+
+.plan-selected {
+    background-color: #fff;
+    color: #2D3192;
 }

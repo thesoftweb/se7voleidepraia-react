@@ -72,8 +72,9 @@ export enum FormActions {
   setEmail,
   setBirth_date,
   setCpf,
-  setTelefone,
+  setPhone,
   setIsMenor,
+
   setCategory,
   setUnit_Id,
   setCourse_Id,
@@ -100,8 +101,8 @@ const formReducer = (state: State, action: Action) => {
       return { ...state, birth_date: action.payload };
     case FormActions.setCpf:
       return { ...state, cpf: action.payload };
-    case FormActions.setTelefone:
-      return { ...state, telefone: action.payload };
+    case FormActions.setPhone:
+      return { ...state, phone: action.payload };
     case FormActions.setIsMenor:
       return { ...state, isMenor: action.payload };
     case FormActions.setResp_Name:
