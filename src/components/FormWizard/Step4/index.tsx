@@ -2,65 +2,55 @@ import { useState } from "react";
 import { Button } from "../../Shared/Buttons";
 import { Header } from "../../Shared/Header";
 import { Logo } from "../../Shared/Logo";
-import "./styles.css";
 import { useForm } from "../../../contexts/Form/FormContext";
-import { useApi } from "../../../hooks/useApi";
-import { compareAsc, format } from 'date-fns'
+import { format } from "date-fns";
 import { Link } from "react-router-dom";
+
+import "./styles.css";
 
 export const Step4 = () => {
   const [title, setTitle] = useState("Confirme seus dados de matrícula");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [link, setLink] = useState("");
-
   const { state, dispatch } = useForm();
-
-  console.log(state);
 
   const formatBirthDate = (birthDate: string): string => {
     const date = new Date(birthDate);
-    return format(date, 'dd/MM/yyyy');
+    return format(date, "dd/MM/yyyy");
   };
 
   const handleSubmitEnrollment = async () => {
-    setSuccess(true);
-    setLoading(false);
-
     console.log("ENVIAR MATRICULA");
 
-    // fetch("http://se7volei.test/api/enrollment", {
+    const request = await fetch("http://se7volei.test/api/enrollment", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        name: state.name,
+        email: state.email,
+        birth_date: state.birth_date,
+        cpf: state.cpf,
+        course_id: state.course_id,
+        plan_id: state.plan_id,
+        unit_id: state.unit_id,
+        postal_code: "000.000.000-99",
+        street_name: "nome da rua",
+        city_name: "cidade",
+        neighborhood_name: "bairro",
+        state_name: "estado",
+      }),
+    });
 
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     name: state.name,
-    //     email: state.email,
-    //     birth_date: state.birth_date,
-    //     cpf: state.cpf,
-    //     course_id: state.course_id,
-    //     plan_id: state.plan_id,
-    //     unit_id: state.unit_id,
-    //     postal_code: "000.000.000-99",
-    //     street_name: "nome da rua",
-    //     city_name: "cidade",
-    //     neighborhood_name: "bairro",
-    //     state_name: "estado",
-    //   }),
-    // })
-    //   .then((data) => {
-    //     console.log(data);
-    //     data.json();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //     setSuccess(true);
-    //     setLoading(false);
-    //     setLink(data);
-    //   });
-  };
+    const { data } = await request.json();
 
-  const handleAssasCheckout = () => {
-    console.log("REDIRECT TO ASAAS");
+    setSuccess(true);
+    setLoading(false);
+    setLink(data.link);
+    setTitle("Clique no botão abaixo e efetue sua pré-matrícula.");
   };
 
   return (
@@ -71,7 +61,10 @@ export const Step4 = () => {
         <>
           <div className="infos">
             <InfoDetail label={"Nome:"} value={state.name} />
-            <InfoDetail label={"Data nasc.:"} value={formatBirthDate(state.birth_date)} />
+            <InfoDetail
+              label={"Data nasc.:"}
+              value={formatBirthDate(state.birth_date)}
+            />
             <InfoDetail label={"Telefone:"} value={state.phone} />
             <InfoDetail label={"Email:"} value={state.email} />
             <InfoDetail label={"Unidade:"} value={"Unidade"} />
@@ -80,7 +73,6 @@ export const Step4 = () => {
             <InfoDetail label={"Valor do plano:"} value={"89.90"} />
           </div>
           <div className="buttons">
-
             <Button
               label="Confimar Matrícula"
               color=""
@@ -98,16 +90,9 @@ export const Step4 = () => {
 
       {success && !loading && (
         <>
-          {/* <Button
-            label="Pagar R$99.99"
-            color=""
-            onClick={handleAssasCheckout}
-          /> */}
-          <Link to={'hs'} target="_blank" onClick={handleAssasCheckout}>
-
+          <Link to={link} target="_blank">
             Clique aqui para pagar
           </Link>
-
         </>
       )}
     </div>

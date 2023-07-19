@@ -1,20 +1,22 @@
 import { Link } from "react-router-dom";
-import './style.css';
+import "./style.css";
 
 type Props = {
-    aulas: string,
-    categoria: string;
-}
+  aulas: string;
+  categoria: string;
+};
 
 export const TurmasItem = ({ aulas, categoria }: Props) => {
-    return (
-        <Link to={`/alunos/`} className="turma">
-            <div className="text">
-                <p>Nome da turma <br />
-                    <span>{aulas} | {categoria}</span>
-                </p>
-            </div>
-        </Link >
-    )
-}
-
+  return (
+    <Link to={`/alunos/`} className="turma">
+      <div className="text">
+        <p>
+          Nome da turma <br />
+          <span>
+            {aulas} | {categoria}
+          </span>
+        </p>
+      </div>
+    </Link>
+  );
+};

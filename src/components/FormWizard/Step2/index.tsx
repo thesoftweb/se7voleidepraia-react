@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import { FormActions, useForm } from "../../../contexts/Form/FormContext";
-
 import { useUnidades } from "../../../hooks/useUnidades";
-
-import logo from "../../../assets/setvolei.png";
 import { Turmas } from "../../../types/Turmas";
 import { Header } from "../../Shared/Header";
 import { Logo } from "../../Shared/Logo";
-
-import "./style.css";
 import { Button } from "../../Shared/Buttons";
 import { PlanItem } from "../../PlanItem";
 
@@ -34,13 +28,6 @@ export const Step2 = () => {
     }
   }, []);
 
-  // const handleClique = () => {
-
-  //   dispatch({ type: FormActions.setCourse, payload: 999 });
-
-  //   console.log(state);
-  // };
-
   const handleUnidadeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: FormActions.setUnit_Id, payload: e.target.value });
   };
@@ -48,13 +35,12 @@ export const Step2 = () => {
   const handleCategoriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: FormActions.setCategory, payload: e.target.value });
   };
+
   const handlePrevStep = () => {
     navigate("/matricula-online");
-    console.log("PREV STEP");
   };
 
   const handleNextStep = () => {
-    console.log("NEXT STEP");
     if (
       state.unit_id !== 1 &&
       state.course_id !== 1 &&
@@ -74,18 +60,9 @@ export const Step2 = () => {
   };
 
   const fetchTurmas = async () => {
-    console.log("states", state.unit_id, state.course_id);
-
     let url = `https://app.se7voleidepraia.com.br/api/courses?unit_id=${state.unit_id}&category=${state.category}&`;
-
-    console.log("URL pra consultar turmas dinamica: " + url);
-
     const request = await fetch(url);
-
     const { data } = await request.json();
-
-    console.log("Oque tem", data);
-
     setTurmas(data);
   };
 
@@ -102,14 +79,7 @@ export const Step2 = () => {
     }
   };
 
-  // const handleCourseSelected = (id: number) => {
-  //   console.log("iddd", id);
-  //   setSelecionada(id);
-  //   dispatch({ type: FormActions.setCourse_Id, payload: id });
-  // };
-
   const handleCourseSelected = (id: number) => {
-    console.log("id", id)
     setSelectedPlan(id);
     dispatch({ type: FormActions.setCourse_Id, payload: id });
   };
@@ -133,7 +103,7 @@ export const Step2 = () => {
         ))}
       </select>
       <label>SELECIONE UMA CATEGORIA</label>
-      <select value={state.course_id} onChange={handleCategoriaChange}>
+      <select value={state.category} onChange={handleCategoriaChange}>
         <option value="">SELECIONE</option>
         <option value="kids">Crianças</option>
         <option value="teens">Adolecentes</option>
@@ -143,8 +113,7 @@ export const Step2 = () => {
 
       <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
 
-      <div className=''>
-
+      <div className="courses-wrapper">
         {turmas.map((item, key) => (
           <PlanItem
             key={item.id}
@@ -155,7 +124,6 @@ export const Step2 = () => {
           />
         ))}
       </div>
-
 
       <div className="buttons">
         <Button label="Voltar" color="red" onClick={handlePrevStep} />

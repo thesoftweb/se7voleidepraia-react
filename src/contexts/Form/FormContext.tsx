@@ -111,6 +111,8 @@ const formReducer = (state: State, action: Action) => {
       return { ...state, resp_email: action.payload };
     case FormActions.setResp_cpf:
       return { ...state, resp_cpf: action.payload };
+    case FormActions.setResp_Telefone:
+      return { ...state, resp_phone: action.payload };
     case FormActions.setCategory:
       return { ...state, category: action.payload };
     case FormActions.setCourse_Id:

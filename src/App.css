@@ -8,6 +8,8 @@
     justify-content: start;
     align-items: center;
     height: 100vh;
+    width: 100%;
+    padding: 0 0 10px;
     background-color: #2D3192;
     color: #fff;
     font-family: 'Poppins', sans-serif;
