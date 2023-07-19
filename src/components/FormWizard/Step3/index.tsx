@@ -23,7 +23,7 @@ export const Step3 = () => {
   }, []);
 
   async function fetchPlans() {
-    const request = await fetch("http://se7volei.test/api/plans");
+    const request = await fetch("https://app.se7voleidepraia.com.br/api/plans");
     const { data } = await request.json();
     setPlans(data);
     setIsloading(false);

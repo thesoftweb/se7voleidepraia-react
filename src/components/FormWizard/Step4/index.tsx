@@ -23,27 +23,30 @@ export const Step4 = () => {
   const handleSubmitEnrollment = async () => {
     console.log("ENVIAR MATRICULA");
 
-    const request = await fetch("http://se7volei.test/api/enrollment", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        name: state.name,
-        email: state.email,
-        birth_date: state.birth_date,
-        cpf: state.cpf,
-        course_id: state.course_id,
-        plan_id: state.plan_id,
-        unit_id: state.unit_id,
-        postal_code: "000.000.000-99",
-        street_name: "nome da rua",
-        city_name: "cidade",
-        neighborhood_name: "bairro",
-        state_name: "estado",
-      }),
-    });
+    const request = await fetch(
+      "https://app.se7voleidepraia.com.br/api/enrollment",
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          name: state.name,
+          email: state.email,
+          birth_date: state.birth_date,
+          cpf: state.cpf,
+          course_id: state.course_id,
+          plan_id: state.plan_id,
+          unit_id: state.unit_id,
+          postal_code: "000.000.000-99",
+          street_name: "nome da rua",
+          city_name: "cidade",
+          neighborhood_name: "bairro",
+          state_name: "estado",
+        }),
+      }
+    );
 
     const { data } = await request.json();
 
