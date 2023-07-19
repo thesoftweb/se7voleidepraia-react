@@ -7,6 +7,7 @@ import { FormActions, useForm } from "../../../contexts/Form/FormContext";
 
 import { Logo } from "../../Shared/Logo";
 import "./styles.css";
+import { Plan } from "../../../types/Plan";
 
 export const Step3 = () => {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ export const Step3 = () => {
           </>
         )}
         {!isLoading &&
-          plans.map((item, key) => (
+          plans.map((item: Plan, key) => (
             <PlanItem
               key={item.id}
               title={item.name}
