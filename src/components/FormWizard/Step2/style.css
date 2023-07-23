@@ -1,3 +1,17 @@
+.form-step2 {
+    height: 100vh;
+}
+
+.testando {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: auto;
+}
+
+
 .course-item {
     list-style: none;
     margin: 10px;
@@ -38,8 +52,8 @@ option {
     width: 100%;
     margin-bottom: 20px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: center;
+    justify-content: center;
 }
 
 .plan-selected {
@@ -47,9 +61,15 @@ option {
     color: #2D3192;
 }
 
-.courses-wrapper{
+.courses-wrapper {
     display: flex;
     flex-direction: column;
     width: 800%;
     padding: 0 20px;
+}
+
+.mensagemTurma {
+    font-size: 20px;
+    font-weight: bolder;
+    margin-top: 40px;
 }

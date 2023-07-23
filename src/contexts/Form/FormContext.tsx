@@ -2,22 +2,29 @@ import { ReactNode, createContext, useContext, useReducer } from "react";
 
 type State = {
   currentStep: number;
+
   name: string;
   email: string;
   birth_date: string;
   cpf: string;
   phone: string;
+
   isMenor: boolean;
 
   resp_name: string;
-  resp_email: string;
   resp_phone: string;
   resp_cpf: string;
 
   category: string;
   course_id: number;
+
   plan_id: number;
   unit_id: number;
+
+  unitName: string;
+  className: string;
+  planName: string;
+  amount: string;
 
   postal_code: string;
   street_name: string;
@@ -40,21 +47,29 @@ type FormProviderProps = {
 
 const initialData: State = {
   currentStep: 0,
+
   name: "",
   email: "",
   birth_date: "",
   cpf: "",
   phone: "",
+
   isMenor: false,
+
+  resp_name: "",
+  resp_phone: "",
+  resp_cpf: "",
+
   category: "",
   course_id: 0,
+
   plan_id: 0,
   unit_id: 0,
 
-  resp_name: "",
-  resp_email: "",
-  resp_phone: "",
-  resp_cpf: "",
+  unitName: "",
+  className: "",
+  planName: "",
+  amount: "",
 
   postal_code: "",
   street_name: "",
@@ -73,18 +88,25 @@ export enum FormActions {
   setBirth_date,
   setCpf,
   setPhone,
+
   setIsMenor,
 
-  setCategory,
-  setUnit_Id,
-  setCourse_Id,
-  setPlan_Id,
-  setCourse,
-
   setResp_Name,
-  setResp_Email,
   setResp_Telefone,
   setResp_cpf,
+
+  setCategory,
+  setCourse_Id,
+  setCourse,
+
+  setUnit_Id,
+  setUnitName,
+
+  setPlan_Id,
+
+  setPlanName,
+  setAmount,
+  setClassName,
 
   setUnit,
   setPlan,
@@ -93,34 +115,58 @@ const formReducer = (state: State, action: Action) => {
   switch (action.type) {
     case FormActions.setCurrentStep:
       return { ...state, currentStep: action.payload };
+
     case FormActions.setName:
       return { ...state, name: action.payload };
+
     case FormActions.setEmail:
       return { ...state, email: action.payload };
+
     case FormActions.setBirth_date:
       return { ...state, birth_date: action.payload };
+
     case FormActions.setCpf:
       return { ...state, cpf: action.payload };
+
     case FormActions.setPhone:
       return { ...state, phone: action.payload };
+
     case FormActions.setIsMenor:
       return { ...state, isMenor: action.payload };
+
     case FormActions.setResp_Name:
       return { ...state, resp_name: action.payload };
-    case FormActions.setResp_Email:
-      return { ...state, resp_email: action.payload };
+
     case FormActions.setResp_cpf:
       return { ...state, resp_cpf: action.payload };
+
     case FormActions.setResp_Telefone:
       return { ...state, resp_phone: action.payload };
+
     case FormActions.setCategory:
       return { ...state, category: action.payload };
+
     case FormActions.setCourse_Id:
       return { ...state, course_id: action.payload };
+
     case FormActions.setPlan_Id:
       return { ...state, plan_id: action.payload };
+
     case FormActions.setUnit_Id:
       return { ...state, unit_id: action.payload };
+
+    case FormActions.setUnitName:
+      return { ...state, unitName: action.payload };
+
+    case FormActions.setPlanName:
+      return { ...state, planName: action.payload };
+
+    case FormActions.setClassName:
+      return { ...state, className: action.payload };
+
+    case FormActions.setAmount:
+      return { ...state, amount: action.payload };
+
     case FormActions.setCourse:
       return { ...state, course_id: action.payload };
     default:

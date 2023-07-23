@@ -6,6 +6,9 @@ import { Header } from "../../Shared/Header";
 import { Logo } from "../../Shared/Logo";
 import { Button } from "../../Shared/Buttons";
 import InputMask from "react-input-mask";
+import { Erros } from "../../../types/Erros";
+import { parse, isValid, getYear, getMonth, getDate } from 'date-fns';
+import { format } from "date-fns";
 
 import "./styles.css";
 
@@ -13,6 +16,7 @@ export const Step1 = () => {
   const navigate = useNavigate();
   const { state, dispatch } = useForm();
   const [isMenor, setIsMenor] = useState(state.isMenor);
+  const [errors, setErrors] = useState<Erros>({});
 
   useEffect(() => {
     dispatch({
@@ -31,19 +35,41 @@ export const Step1 = () => {
     dispatch({ type: FormActions.setEmail, payload: e.target.value });
   };
 
-  const formatDate = (date: Date): string => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear().toString();
-
+  const formatDate = (data: Date): string => {
+    const day = data.getDate().toString().padStart(2, "0");
+    const month = (data.getMonth() + 1).toString().padStart(2, "0");
+    const year = data.getFullYear().toString();
     return `${day}/${month}/${year}`;
   };
+  // const formatBirthDate = (birthDate: string): string => {
+  //   const date = new Date(birthDate);
+  //   return format(date, "dd/MM/yyyy");
+  // };
+
+
 
   const handleIdadeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: FormActions.setBirth_date, payload: e.target.value });
     const currentDate = new Date();
     const birthDate = new Date(e.target.value);
-    const age = currentDate.getFullYear() - birthDate.getFullYear();
+    let age = currentDate.getFullYear() - birthDate.getFullYear();
+
+    // Verifica se o mês de nascimento é maior que o mês atual
+    // ou se é o mesmo mês, mas o dia de nascimento é maior que o dia atual
+    // Nesses casos, ainda não fez aniversário, então subtrai 1 da idade
+    const currentMonth = currentDate.getMonth();
+    const birthMonth = birthDate.getMonth();
+    const currentDay = currentDate.getDate();
+    const birthDay = birthDate.getDate();
+
+    if (
+      birthMonth > currentMonth ||
+      (birthMonth === currentMonth && birthDay > currentDay)
+    ) {
+      age--;
+    }
+    console.log('IDADE', age);
+
+    dispatch({ type: FormActions.setBirth_date, payload: e.target.value });
 
     if (age >= 18) {
       dispatch({ type: FormActions.setIsMenor, payload: false });
@@ -51,7 +77,13 @@ export const Step1 = () => {
       setIsMenor(true);
       dispatch({ type: FormActions.setIsMenor, payload: true });
     }
+
+
   };
+
+
+
+
 
   const handleCpfChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: FormActions.setCpf, payload: e.target.value });
@@ -59,10 +91,6 @@ export const Step1 = () => {
 
   const handleRespNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: FormActions.setResp_Name, payload: e.target.value });
-  };
-
-  const handleRespEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: FormActions.setResp_Email, payload: e.target.value });
   };
 
   const handleTelefoneChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -78,18 +106,34 @@ export const Step1 = () => {
   };
 
   const handleSubmit = () => {
-    if (state.name !== "" && state.email !== "" && state.birth_date !== "") {
+    const newErrors: Erros = {};
+    if (
+      state.name !== "" &&
+      state.email !== "" &&
+      state.birth_date !== "" &&
+      state.phone !== "" &&
+      state.cpf !== ""
+
+    ) {
       navigate("/matricula-online/step2");
     } else {
+
       if (state.name === "") {
-        alert("PREENCHA SEU NOME");
+        newErrors.name = "PREENCHA SEU NOME";
       }
       if (state.email === "") {
-        alert("PREENCHA SEU EMAIL");
+        newErrors.email = "PREENCHA SEU EMAIL";
+      }
+      if (state.phone === "") {
+        newErrors.phone = "PREENCHA SEU TELEFONE";
       }
       if (state.birth_date === "") {
-        alert("PREENCHA SUA DATA DE NASCIMENTO");
+        newErrors.birth_date = "PREENCHA SUA DATA DE NASCIMENTO";
       }
+      if (state.cpf === "") {
+        newErrors.cpf = "PREENCHA SEU CPF";
+      }
+      setErrors(newErrors);
     }
   };
 
@@ -98,18 +142,16 @@ export const Step1 = () => {
       <Logo />
       <Header title="Seja bem-vindo" subtitle="Preencha seus dados pessoais" />
       <div className="form-wrapper">
+
+        {errors && <span className="error-message">{errors.name}</span>}
         <input
           placeholder="DIGITE SEU NOME"
           type="text"
           value={state.name}
           onChange={handleNameChange}
         />
-        <input
-          placeholder="DIGITE SEU EMAIL"
-          type="email"
-          value={state.email}
-          onChange={handleEmailChange}
-        />
+
+        {errors && <span className="error-message">{errors.phone}</span>}
         <InputMask
           mask="(99) 99999-9999"
           placeholder="DIGITE SEU TELEFONE"
@@ -117,23 +159,42 @@ export const Step1 = () => {
           value={state.phone}
           onChange={handleTelefoneChange}
         />
+
+        {errors && <span className="error-message">{errors.birth_date}</span>}
         <input
-          placeholder="DIGITE SUA IDADE"
           type="date"
+          placeholder="DATA DE NASCIMENTO"
           value={state.birth_date}
           onChange={handleIdadeChange}
+        />
+        {/* <InputMask
+          mask="99/99/9999"
+          placeholder="DATA DE NASCIMENTO"
+          type="text"
+          value={state.birth_date}
+          onChange={handleIdadeChange}
+        /> */}
+
+        {errors && <span className="error-message">{errors.email}</span>}
+        <input
+          placeholder="DIGITE SEU EMAIL"
+          type="email"
+          value={state.email}
+          onChange={handleEmailChange}
         />
       </div>
 
       <div className="form-wraper">
+
         {!isMenor && (
           <InputMask
             mask="999.999.999-99"
-            placeholder="CPF do Responsável"
+            placeholder="DIGITE SEU CPF"
             type="text"
             value={state.cpf}
             onChange={handleCpfChange}
           />
+
         )}
       </div>
       {isMenor && (
@@ -143,12 +204,6 @@ export const Step1 = () => {
             type="text"
             value={state.resp_name}
             onChange={handleRespNameChange}
-          />
-          <input
-            placeholder="E-mail do Responsável"
-            type="email"
-            value={state.resp_email}
-            onChange={handleRespEmailChange}
           />
           <InputMask
             mask="999.999.999-99"

@@ -34,12 +34,18 @@ export const Step3 = () => {
   };
 
   const handleNextStep = () => {
+
     navigate("/matricula-online/step4");
   };
 
-  const handlePlanSelected = (id: number) => {
+  const handlePlanSelected = (id: number, amount: string, planName: string) => {
+    console.log("Plano escolhido " + id);
     setSelectedPlanValor(id);
     dispatch({ type: FormActions.setPlan_Id, payload: id });
+    dispatch({ type: FormActions.setPlanName, payload: planName });
+    dispatch({ type: FormActions.setAmount, payload: amount }); // Defina o nome do plano selecionado no estado global FormContext
+
+
   };
 
   return (
@@ -50,25 +56,28 @@ export const Step3 = () => {
         subtitle="O plano semestral mais utilizado"
       />
       <div className="plan-wrapper">
-        {isLoading && (
-          <>
-            <p>Carregando Planos...</p>
-          </>
-        )}
-        {!isLoading &&
-          plans.map((item: Plan, key) => (
-            <PlanItem
-              key={item.id}
-              title={item.name}
-              amount={item.amount}
-              isSelected={selectedPlanValor === item.id}
-              onSelect={() => handlePlanSelected(item.id)}
-            />
-          ))}
-      </div>
-      <div className="buttons">
-        <Button label="Voltar" color="red" onClick={handlePrevStep} />
-        <Button label="Avançar" color="#67CCC5" onClick={handleNextStep} />
+        <div className="plan-step3">
+          {isLoading && (
+            <>
+              <p>Carregando Planos...</p>
+            </>
+          )}
+          {!isLoading &&
+            plans.map((item: Plan, key) => (
+              <PlanItem
+                key={item.id}
+                title={item.name}
+                amount={item.amount}
+                isSelected={selectedPlanValor === item.id}
+                onSelect={() => handlePlanSelected(item.id, item.amount, item.name)}
+              />
+            ))}
+
+          <div className="buttons">
+            <Button label="Voltar" color="red" onClick={handlePrevStep} />
+            <Button label="Avançar" color="#67CCC5" onClick={handleNextStep} />
+          </div>
+        </div>
       </div>
     </div>
   );

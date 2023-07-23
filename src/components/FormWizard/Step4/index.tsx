@@ -6,7 +6,9 @@ import { useForm } from "../../../contexts/Form/FormContext";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 
+
 import "./styles.css";
+import { Turmas } from "../../../types/Turmas";
 
 export const Step4 = () => {
   const [title, setTitle] = useState("Confirme seus dados de matrícula");
@@ -14,6 +16,9 @@ export const Step4 = () => {
   const [success, setSuccess] = useState(false);
   const [link, setLink] = useState("");
   const { state, dispatch } = useForm();
+  const [turmas, setTurmas] = useState<Turmas[]>([]);
+
+  console.log(state);
 
   const formatBirthDate = (birthDate: string): string => {
     const date = new Date(birthDate);
@@ -49,11 +54,12 @@ export const Step4 = () => {
     );
 
     const { data } = await request.json();
+    console.log(data);
 
     setSuccess(true);
     setLoading(false);
     setLink(data.link);
-    setTitle("Clique no botão abaixo e efetue sua pré-matrícula.");
+    setTitle("Efetue o pagamento da matrícula.");
   };
 
   return (
@@ -63,24 +69,26 @@ export const Step4 = () => {
       {!loading && !success && (
         <>
           <div className="infos">
-            <InfoDetail label={"Nome:"} value={state.name} />
-            <InfoDetail
-              label={"Data nasc.:"}
-              value={formatBirthDate(state.birth_date)}
-            />
-            <InfoDetail label={"Telefone:"} value={state.phone} />
-            <InfoDetail label={"Email:"} value={state.email} />
-            <InfoDetail label={"Unidade:"} value={"Unidade"} />
-            <InfoDetail label={"Turma:"} value={"Turma 1"} />
-            <InfoDetail label={"Plano:"} value={"Semestral"} />
-            <InfoDetail label={"Valor do plano:"} value={"89.90"} />
-          </div>
-          <div className="buttons">
-            <Button
-              label="Confimar Matrícula"
-              color=""
-              onClick={handleSubmitEnrollment}
-            />
+            <div className="stpe4">
+              <InfoDetail label={"Nome:"} value={state.name} />
+              <InfoDetail
+                label={"Data nasc.:"}
+                value={formatBirthDate(state.birth_date)}
+              />
+              <InfoDetail label={"Telefone:"} value={state.phone} />
+              <InfoDetail label={"Email:"} value={state.email} />
+              <InfoDetail label={"Unidade:"} value={state.unitName} />
+              <InfoDetail label={"Turma:"} value={state.className} />
+              <InfoDetail label={"Plano:"} value={state.planName} />
+              <InfoDetail label={"Valor do plano:"} value={state.amount} />
+            </div>
+            <div className="buttons">
+              <Button
+                label="Confimar Matrícula"
+                color=""
+                onClick={handleSubmitEnrollment}
+              />
+            </div>
           </div>
         </>
       )}
@@ -93,9 +101,13 @@ export const Step4 = () => {
 
       {success && !loading && (
         <>
-          <Link to={link} target="_blank">
-            Clique aqui para pagar
-          </Link>
+          <div className="pega">
+            <div className="pegamais">
+              <Link to={link} target="_blank">
+                Clique aqui para pagar
+              </Link>
+            </div>
+          </div>
         </>
       )}
     </div>

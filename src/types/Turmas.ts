@@ -1,6 +1,7 @@
 export type Turmas = {
     id: number,
-    name:string,
+    name: string,
     category: string,
-    unit: string
+    unit: string,
+    unit_name: string
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 interface Unit {
-    id:number;
+    id: number;
     name: string;
 }
 
