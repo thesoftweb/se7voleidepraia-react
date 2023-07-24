@@ -35,7 +35,9 @@ export const Step2 = () => {
   const handleUnidadeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: FormActions.setUnit_Id, payload: e.target.value });
 
-    const selectedUnit = units.find((unit) => unit.id === parseInt(e.target.value));
+    const selectedUnit = units.find(
+      (unit) => unit.id === parseInt(e.target.value)
+    );
     if (selectedUnit) {
       dispatch({ type: FormActions.setUnitName, payload: selectedUnit.name });
     }
@@ -43,8 +45,6 @@ export const Step2 = () => {
 
   const handleCategoriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: FormActions.setCategory, payload: e.target.value });
-
-
   };
 
   const handlePrevStep = () => {
@@ -54,7 +54,6 @@ export const Step2 = () => {
 
   const newErrors: Erros = {};
   const handleNextStep = () => {
-
     if (
       state.unit_id !== 0 &&
       state.course_id !== 0 &&
@@ -63,9 +62,7 @@ export const Step2 = () => {
       state.birth_date !== "" &&
       state.phone !== "" &&
       state.cpf !== ""
-
     ) {
-
       navigate("/matricula-online/step3");
     } else {
       if (state.unit_id === 0) {
@@ -75,7 +72,7 @@ export const Step2 = () => {
         newErrors.category = "SELECIONE A CATEGORIA";
       }
       setErrors(newErrors);
-      console.log(handleNextStep)
+      console.log(handleNextStep);
     }
   };
 
@@ -107,7 +104,6 @@ export const Step2 = () => {
     setSelectedPlan(id);
     dispatch({ type: FormActions.setCourse_Id, payload: id });
     dispatch({ type: FormActions.setClassName, payload: className });
-
   };
 
   return (
@@ -140,12 +136,9 @@ export const Step2 = () => {
             <option value="competitive">Competitivo</option>
           </select>
 
-
           <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
 
-          {unitName && (
-            <p className="mensagemTurma">Selecione sua turma </p>
-          )}
+          {unitName && <p className="mensagemTurma">Selecione sua turma </p>}
 
           <div className="courses-wrapper">
             {turmas.map((item, key) => (

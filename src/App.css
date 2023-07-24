@@ -14,3 +14,10 @@
     color: #fff;
     font-family: 'Poppins', sans-serif;
 }
+
+.error-message {
+    color: #cd3545;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: bolder;
+}

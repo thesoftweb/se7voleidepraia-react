@@ -31,12 +31,7 @@ input {
     }
 }
 
-.error-message {
-    color: black;
-    font-size: 14px;
-    margin-top: 5px;
-    font-weight: bolder;
-}
+
 
 .buttons-step1 {
     height: 100vh;
