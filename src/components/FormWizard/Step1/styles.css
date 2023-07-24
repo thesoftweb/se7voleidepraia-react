@@ -25,6 +25,10 @@ input {
     align-items: center;
     max-width: 980px;
     height: 100%;
+
+    @media (max-width: 950px) {
+        height: 100%;
+    }
 }
 
 .error-message {
@@ -32,4 +36,8 @@ input {
     font-size: 14px;
     margin-top: 5px;
     font-weight: bolder;
+}
+
+.buttons-step1 {
+    height: 100vh;
 }

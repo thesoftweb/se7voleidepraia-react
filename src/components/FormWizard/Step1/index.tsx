@@ -35,18 +35,16 @@ export const Step1 = () => {
     dispatch({ type: FormActions.setEmail, payload: e.target.value });
   };
 
-  const formatDate = (data: Date): string => {
-    const day = data.getDate().toString().padStart(2, "0");
-    const month = (data.getMonth() + 1).toString().padStart(2, "0");
-    const year = data.getFullYear().toString();
-    return `${day}/${month}/${year}`;
-  };
+  // const formatDate = (data: Date): string => {
+  //   const day = data.getDate().toString().padStart(2, "0");
+  //   const month = (data.getMonth() + 1).toString().padStart(2, "0");
+  //   const year = data.getFullYear().toString();
+  //   return `${day}/${month}/${year}`;
+  // };
   // const formatBirthDate = (birthDate: string): string => {
   //   const date = new Date(birthDate);
   //   return format(date, "dd/MM/yyyy");
   // };
-
-
 
   const handleIdadeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const currentDate = new Date();
@@ -77,13 +75,7 @@ export const Step1 = () => {
       setIsMenor(true);
       dispatch({ type: FormActions.setIsMenor, payload: true });
     }
-
-
   };
-
-
-
-
 
   const handleCpfChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: FormActions.setCpf, payload: e.target.value });
@@ -109,11 +101,10 @@ export const Step1 = () => {
     const newErrors: Erros = {};
     if (
       state.name !== "" &&
-      state.email !== "" &&
-      state.birth_date !== "" &&
       state.phone !== "" &&
+      state.birth_date !== "" &&
+      state.email !== "" &&
       state.cpf !== ""
-
     ) {
       navigate("/matricula-online/step2");
     } else {
@@ -182,47 +173,49 @@ export const Step1 = () => {
           value={state.email}
           onChange={handleEmailChange}
         />
-      </div>
 
-      <div className="form-wraper">
 
-        {!isMenor && (
-          <InputMask
-            mask="999.999.999-99"
-            placeholder="DIGITE SEU CPF"
-            type="text"
-            value={state.cpf}
-            onChange={handleCpfChange}
-          />
+        <div className="form-wraper">
 
-        )}
-      </div>
-      {isMenor && (
-        <div className="form-wrapper">
-          <input
-            placeholder="Nome do Responsável"
-            type="text"
-            value={state.resp_name}
-            onChange={handleRespNameChange}
-          />
-          <InputMask
-            mask="999.999.999-99"
-            placeholder="CPF do Responsável"
-            type="text"
-            value={state.resp_cpf}
-            onChange={handleRespCpfChange}
-          />
-          <InputMask
-            mask="(99) 99999-9999"
-            placeholder="Telefone do Responsável"
-            type="tel"
-            value={state.resp_phone}
-            onChange={handleRespPhoneChange}
-          />
+          {!isMenor && (
+            <InputMask
+              mask="999.999.999-99"
+              placeholder="DIGITE SEU CPF"
+              type="text"
+              value={state.cpf}
+              onChange={handleCpfChange}
+            />
+
+          )}
         </div>
-      )}
-      <div className="buttons-step1">
-        <Button onClick={handleSubmit} label="Avançar" />
+        {isMenor && (
+          <div className="form-wrapper">
+            <input
+              placeholder="Nome do Responsável"
+              type="text"
+              value={state.resp_name}
+              onChange={handleRespNameChange}
+            />
+            <InputMask
+              mask="999.999.999-99"
+              placeholder="CPF do Responsável"
+              type="text"
+              value={state.resp_cpf}
+              onChange={handleRespCpfChange}
+            />
+            <InputMask
+              mask="(99) 99999-9999"
+              placeholder="Telefone do Responsável"
+              type="tel"
+              value={state.resp_phone}
+              onChange={handleRespPhoneChange}
+            />
+          </div>
+        )}
+        <div className="buttons-step1">
+          <Button onClick={handleSubmit} label="Avançar" />
+        </div>
+
       </div>
     </div>
   );
