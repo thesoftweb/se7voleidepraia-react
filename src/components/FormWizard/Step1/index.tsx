@@ -7,7 +7,7 @@ import { Logo } from "../../Shared/Logo";
 import { Button } from "../../Shared/Buttons";
 import InputMask from "react-input-mask";
 import { Erros } from "../../../types/Erros";
-import { parse, isValid, getYear, getMonth, getDate } from 'date-fns';
+import { parse, isValid, getYear, getMonth, getDate } from "date-fns";
 import { format } from "date-fns";
 
 import "./styles.css";
@@ -65,7 +65,7 @@ export const Step1 = () => {
     ) {
       age--;
     }
-    console.log('IDADE', age);
+    console.log("IDADE", age);
 
     dispatch({ type: FormActions.setBirth_date, payload: e.target.value });
 
@@ -108,7 +108,6 @@ export const Step1 = () => {
     ) {
       navigate("/matricula-online/step2");
     } else {
-
       if (state.name === "") {
         newErrors.name = "PREENCHA SEU NOME";
       }
@@ -133,7 +132,6 @@ export const Step1 = () => {
       <Logo />
       <Header title="Seja bem-vindo" subtitle="Preencha seus dados pessoais" />
       <div className="form-wrapper">
-
         {errors && <span className="error-message">{errors.name}</span>}
         <input
           placeholder="DIGITE SEU NOME"
@@ -174,9 +172,7 @@ export const Step1 = () => {
           onChange={handleEmailChange}
         />
 
-
         <div className="form-wraper">
-
           {!isMenor && (
             <InputMask
               mask="999.999.999-99"
@@ -185,7 +181,6 @@ export const Step1 = () => {
               value={state.cpf}
               onChange={handleCpfChange}
             />
-
           )}
         </div>
         {isMenor && (
@@ -215,7 +210,6 @@ export const Step1 = () => {
         <div className="buttons-step1">
           <Button onClick={handleSubmit} label="Avançar" />
         </div>
-
       </div>
     </div>
   );
