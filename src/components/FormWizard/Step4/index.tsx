@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import "./styles.css";
 import { Turmas } from "../../../types/Turmas";
 import { error } from "console";
+import { Contrato } from "../../Shared/Contrato";
 
 export const Step4 = () => {
   const [title, setTitle] = useState("Confirme seus dados de matrícula");

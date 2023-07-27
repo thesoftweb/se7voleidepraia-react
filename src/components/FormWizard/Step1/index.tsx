@@ -184,8 +184,9 @@ export const Step1 = () => {
           onChange={handleEmailChange}
         />
 
-
+        {errors && <span className="error-message">{errors.cpf}</span>}
         <div className="form-wraper">
+
           {!isMenor && (
             <InputMask
               mask="999.999.999-99"
