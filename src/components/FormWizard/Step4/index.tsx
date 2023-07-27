@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 import "./styles.css";
 import { Turmas } from "../../../types/Turmas";
 import { error } from "console";
-import { Contrato } from "../../Shared/Contrato";
-
 
 export const Step4 = () => {
   const [title, setTitle] = useState("Confirme seus dados de matrícula");
@@ -19,7 +17,6 @@ export const Step4 = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [link, setLink] = useState("");
   const { state, dispatch } = useForm();
-  const [turmas, setTurmas] = useState<Turmas[]>([]);
   const [errors, setErrors] = useState("");
   const [showModal, setShowModal] = useState(false);
 
@@ -39,7 +36,7 @@ export const Step4 = () => {
     return format(date, "dd/MM/yyyy");
   };
 
-  const handleChange = (event: ht) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
   };
 
