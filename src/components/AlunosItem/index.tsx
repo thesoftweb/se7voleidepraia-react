@@ -1,8 +1,10 @@
 import './style.css';
 
 type Props = {
-    img: string,
+    id: number;
+    img: string;
     nome: string;
+    selecionado: boolean;
 }
 
 export const AlunosItem = ({ img, nome }: Props) => {
@@ -13,7 +15,7 @@ export const AlunosItem = ({ img, nome }: Props) => {
                 <label className='nome'>{nome}</label>
             </div>
             <div className="checkbox-wrapper">
-                <input type="checkbox" id="checkbox1" />
+                <input type="checkbox" id={"checkbox1"} />
             </div>
         </div>
     )

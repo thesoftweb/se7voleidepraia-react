@@ -10,11 +10,20 @@ import { PlanItem } from "../../PlanItem";
 
 import "./style.css";
 import { Erros } from "../../../types/Erros";
+import { Scheduler } from "timers/promises";
+
+
 
 export const Step2 = () => {
+
+  type Scheduler = {
+    day: string;
+  };
+
   const navigate = useNavigate();
   const { state, dispatch } = useForm();
   const [turmas, setTurmas] = useState<Turmas[]>([]);
+  const [scheduleInfo, setScheduleInfo] = useState<{ [key: number]: Scheduler[] }>({});
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [errors, setErrors] = useState<Erros>({});
   const [unitName, setUnitName] = useState(false);
@@ -80,10 +89,21 @@ export const Step2 = () => {
     console.log("states", state.unit_id, state.course_id);
     let url = `https://app.se7voleidepraia.com.br/api/courses?unit_id=${state.unit_id}&category=${state.category}&`;
     const request = await fetch(url);
-
     const { data } = await request.json();
+
     console.log("Oque tem", data);
+
     setTurmas(data);
+
+    const scheduleData = data.reduce(
+      (acc: { [key: number]: { day: string }[] }, curr: Turmas) => {
+        acc[curr.id] = curr.schedules;
+        return acc;
+      },
+      {}
+    );
+    setScheduleInfo(scheduleData);
+
     setUnitName(true);
   };
 
@@ -144,7 +164,9 @@ export const Step2 = () => {
             {turmas.map((item, key) => (
               <PlanItem
                 key={item.id}
+                hour={scheduleInfo[item.id]?.map((schedule) => schedule.day)}
                 title={item.name}
+
                 amount={item.unit}
                 isSelected={selectedPlan === item.id}
                 onSelect={() => handleCourseSelected(item.id, item.name)}

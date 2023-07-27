@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import "./styles.css";
 import { Turmas } from "../../../types/Turmas";
 import { error } from "console";
+import { Contrato } from "../../Shared/Contrato";
+
 
 export const Step4 = () => {
   const [title, setTitle] = useState("Confirme seus dados de matrícula");
@@ -19,6 +21,18 @@ export const Step4 = () => {
   const { state, dispatch } = useForm();
   const [turmas, setTurmas] = useState<Turmas[]>([]);
   const [errors, setErrors] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+
+
+  const handleCheckboxClick = () => {
+    setShowModal(true);
+  };
+
+  const handleAcceptTerms = () => {
+    setShowModal(false);
+    setIsChecked(true);
+  };
 
   const formatBirthDate = (birthDate: string): string => {
     const date = new Date(birthDate);
@@ -28,6 +42,7 @@ export const Step4 = () => {
   const handleChange = (event: ht) => {
     setIsChecked(event.target.checked);
   };
+
 
   const handleSubmitEnrollment = async () => {
     console.log("ENVIAR MATRICULA");
@@ -91,10 +106,19 @@ export const Step4 = () => {
               <InfoDetail label={"Valor do plano:"} value={state.amount} />
             </div>
             <div className="terms">
-              <Checkbox checked={isChecked} onChange={handleChange}>
+
+              <Checkbox checked={isChecked} onChange={handleCheckboxClick}>
                 Aceito os termos de uso
               </Checkbox>
-              {errors && <span className="error-message">{errors}</span>}
+              {showModal && (
+                <div className="modal">
+                  <div className="modal-content">
+                    <h3>Termos de Uso</h3>
+                    <Contrato />
+                    <Button label="Aceitar" onClick={handleAcceptTerms} />
+                  </div>
+                </div>
+              )}
             </div>
             <div className="buttons">
               <Button
@@ -105,26 +129,31 @@ export const Step4 = () => {
             </div>
           </div>
         </>
-      )}
+      )
+      }
 
-      {loading && (
-        <>
-          <h2>Enviando dados aguarde...</h2>
-        </>
-      )}
+      {
+        loading && (
+          <>
+            <h2>Enviando dados aguarde...</h2>
+          </>
+        )
+      }
 
-      {success && !loading && (
-        <>
-          <div className="pega">
-            <div className="pegamais">
-              <Link to={link} target="_blank">
-                Clique aqui para pagar
-              </Link>
+      {
+        success && !loading && (
+          <>
+            <div className="pega">
+              <div className="pegamais">
+                <Link to={link} target="_blank">
+                  Clique aqui para pagar
+                </Link>
+              </div>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )
+      }
+    </div >
   );
 };
 

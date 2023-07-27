@@ -77,6 +77,14 @@ export const Step1 = () => {
     }
   };
 
+  const validateCpf = (cpf: string): boolean => {
+    // Remover qualquer caractere que não seja número
+    const cleanCpf = cpf.replace(/\D/g, '');
+
+    // Verificar se o CPF possui 11 dígitos
+    return cleanCpf.length === 11;
+  };
+
   const handleCpfChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: FormActions.setCpf, payload: e.target.value });
   };
@@ -104,7 +112,8 @@ export const Step1 = () => {
       state.phone !== "" &&
       state.birth_date !== "" &&
       state.email !== "" &&
-      state.cpf !== ""
+      state.cpf !== "" &&
+      validateCpf(state.cpf)
     ) {
       navigate("/matricula-online/step2");
     } else {
@@ -123,6 +132,8 @@ export const Step1 = () => {
       }
       if (state.cpf === "") {
         newErrors.cpf = "PREENCHA SEU CPF";
+      } else if (!validateCpf(state.cpf)) {
+        newErrors.cpf = "CPF INVÁLIDO";
       }
       setErrors(newErrors);
     }
@@ -149,6 +160,7 @@ export const Step1 = () => {
           type="tel"
           value={state.phone}
           onChange={handleTelefoneChange}
+          required
         />
 
         {errors && <span className="error-message">{errors.birth_date}</span>}
@@ -173,8 +185,7 @@ export const Step1 = () => {
           value={state.email}
           onChange={handleEmailChange}
         />
-
-
+        {errors && <span className="error-message" >{errors.cpf}</span>}
         <div className="form-wraper">
 
           {!isMenor && (
@@ -184,8 +195,8 @@ export const Step1 = () => {
               type="text"
               value={state.cpf}
               onChange={handleCpfChange}
+              required
             />
-
           )}
         </div>
         {isMenor && (

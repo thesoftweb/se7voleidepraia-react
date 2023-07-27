@@ -1,6 +1,7 @@
 export type Plan = {
     id: number,
-    name:string,
+    name: string,
     installments?: number,
-    amount:string
+    amount: string,
+
 }

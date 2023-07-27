@@ -1,8 +1,11 @@
+import React from "react";
+
 import "./styles.css";
 
 type PlanProps = {
   title: string;
   amount: string;
+  hour?: string[] | undefined;
   isSelected?: boolean;
   onSelect: () => void;
 };
@@ -10,6 +13,7 @@ type PlanProps = {
 export const PlanItem = ({
   title,
   amount,
+  hour,
   isSelected,
   onSelect,
 }: PlanProps) => {
@@ -22,8 +26,21 @@ export const PlanItem = ({
       className={`plan ${isSelected ? "plan-selected" : ""}`}
       onClick={handleClique}
     >
+
       <div className="plan-title">{title}</div>
+      {Array.isArray(hour) && (
+        <div className="plan-hour">
+          {hour.map((schedule: string, index: number) => (
+            <React.Fragment key={index}>
+              {schedule}
+              <br />
+            </React.Fragment>
+          ))}
+        </div>
+      )}
       <div className="plan-amount">{amount}</div>
     </div>
+
+
   );
 };

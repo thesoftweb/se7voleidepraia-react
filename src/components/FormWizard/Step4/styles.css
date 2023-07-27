@@ -69,25 +69,53 @@ a {
     justify-items: center;
     cursor: pointer;
     user-select: none;
-  }
-  
-  .checkbox-style {
+}
+
+.checkbox-style {
     display: inline-block;
     width: 20px;
     height: 20px;
     border: 2px solid #fff;
     border-radius: 4px;
     margin-right: 5px;
-    background-color: ${(props) => (props.checked ? '#333' : 'transparent')};
-  }
-  
-  /* Esconder o checkbox original */
-  .checkbox-container input[type="checkbox"] {
+    background-color: ${isAccepted ? '#333' : 'transparent'};
+}
+
+/* Esconder o checkbox original */
+.checkbox-container input[type="checkbox"] {
     position: absolute;
     opacity: 0;
-  }
-  
-  /* Estilizar o novo elemento visual quando o checkbox estiver marcado */
-  .checkbox-container input[type="checkbox"]:checked + .checkbox-style {
+}
+
+/* Estilizar o novo elemento visual quando o checkbox estiver marcado */
+.checkbox-container input[type="checkbox"]:checked+.checkbox-style {
     background-color: #fff;
-  }
+}
+
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fundo escuro semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal h3 {
+    margin-bottom: 10px;
+}

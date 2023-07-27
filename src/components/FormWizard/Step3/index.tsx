@@ -26,6 +26,7 @@ export const Step3 = () => {
     const request = await fetch("https://app.se7voleidepraia.com.br/api/plans");
     const { data } = await request.json();
     setPlans(data);
+    console.log(data)
     setIsloading(false);
   }
 
@@ -34,8 +35,12 @@ export const Step3 = () => {
   };
 
   const handleNextStep = () => {
+    if (selectedPlanValor !== null) {
+      navigate("/matricula-online/step4");
 
-    navigate("/matricula-online/step4");
+    } else {
+      alert("Por favor, selecione um plano antes de prosseguir.");
+    }
   };
 
   const handlePlanSelected = (id: number, amount: string, planName: string) => {
@@ -43,9 +48,7 @@ export const Step3 = () => {
     setSelectedPlanValor(id);
     dispatch({ type: FormActions.setPlan_Id, payload: id });
     dispatch({ type: FormActions.setPlanName, payload: planName });
-    dispatch({ type: FormActions.setAmount, payload: amount }); // Defina o nome do plano selecionado no estado global FormContext
-
-
+    dispatch({ type: FormActions.setAmount, payload: amount });
   };
 
   return (
@@ -68,6 +71,7 @@ export const Step3 = () => {
                 key={item.id}
                 title={item.name}
                 amount={item.amount}
+
                 isSelected={selectedPlanValor === item.id}
                 onSelect={() => handlePlanSelected(item.id, item.amount, item.name)}
               />

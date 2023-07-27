@@ -3,5 +3,11 @@ export type Turmas = {
     name: string,
     category: string,
     unit: string,
-    unit_name: string
+    unit_name: string,
+    schedules: Schedule[];
+
+}
+
+interface Schedule {
+    day: string;
 }
