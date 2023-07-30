@@ -110,12 +110,19 @@ a {
 .modal-content {
     background-color: white;
     padding: 20px;
-    border-radius: 8px;
-    max-width: 400px;
+    max-width: 500px;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Outros estilos que você já tenha */
+    max-height: 400px;
+    /* Defina a altura máxima do modal, ajuste conforme necessário */
+    overflow-y: auto;
+    /* Habilita a barra de rolagem vertical quando necessário */
 }
 
 .modal h3 {
     margin-bottom: 10px;
+    color: black;
+    text-align: center;
+
 }

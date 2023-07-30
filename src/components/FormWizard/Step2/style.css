@@ -1,5 +1,12 @@
 .form-step2 {
-    height: 100vh;
+    height: 1000px;
+}
+
+.header-step2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .testando {
@@ -7,10 +14,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     width: auto;
 }
 
+.form-units {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
 
 .course-item {
     list-style: none;
@@ -33,7 +46,7 @@ select {
     position: relative;
     border-radius: 8px;
     text-align: center;
-    color: #B2B4DD;
+    color: black;
 
     @media (max-width: 950px) {
         background-color: white;
@@ -43,7 +56,7 @@ select {
 
 option {
     font-family: 'Poppins', sans-serif;
-    color: #B2B4DD;
+    color: black;
     font-size: 15px;
 }
 
@@ -66,7 +79,6 @@ option {
     flex-direction: column;
     width: 100%;
     padding: 0 20px;
-    height: 100%;
 
     @media (max-width: 950px) {
         height: 100%;

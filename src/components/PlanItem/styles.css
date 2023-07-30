@@ -5,7 +5,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     margin-top: 15px;
     border-radius: 8px;
     cursor: pointer;
@@ -13,10 +12,11 @@
 
 .plan-title {
     font-weight: bold;
+    margin-top: 10px;
 }
 
 .plan-hour {
-    flex-direction: column;
+    margin: 5px;
 }
 
 .plan-selected {

@@ -66,6 +66,7 @@ export const Step3 = () => {
             </>
           )}
           {!isLoading &&
+
             plans.map((item: Plan, key) => (
               <PlanItem
                 key={item.id}

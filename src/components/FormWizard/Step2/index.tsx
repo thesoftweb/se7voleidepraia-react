@@ -26,7 +26,7 @@ export const Step2 = () => {
   const [scheduleInfo, setScheduleInfo] = useState<{ [key: number]: Scheduler[] }>({});
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [errors, setErrors] = useState<Erros>({});
-  const [unitName, setUnitName] = useState(false);
+  const [showTurmas, setShowTurmas] = useState(false);
 
   const { units } = useUnidades();
 
@@ -104,7 +104,10 @@ export const Step2 = () => {
     );
     setScheduleInfo(scheduleData);
 
-    setUnitName(true);
+    if (data.length > 0) {
+      setShowTurmas(true);
+    }
+
   };
 
   const confirmaTurmas = () => {
@@ -128,51 +131,58 @@ export const Step2 = () => {
 
   return (
     <div className="container">
-      <Logo />
-      <Header
-        title="Preencha os dados abaixo"
-        subtitle="Certifique-se de selecionar corretamente"
-      />
+      <div className="header-step2">
+        <Logo />
+        <Header
+          title="Preencha os dados abaixo"
+          subtitle="Certifique-se de selecionar corretamente"
+        />
+      </div>
       <div className="form-step2">
         <div className="testando">
-          <label>SELECIONE UMA UNIDADE</label>
-          {errors && <span className="error-message">{errors.unit_id}</span>}
-          <select value={state.unit_id} onChange={handleUnidadeChange}>
-            <option>SELECIONE</option>
+          <div className="form-units">
+            <label>SELECIONE UMA UNIDADE</label>
+            {errors && <span className="error-message">{errors.unit_id}</span>}
+            <select value={state.unit_id} onChange={handleUnidadeChange}>
+              <option>SELECIONE</option>
 
-            {units.map((item, key) => (
-              <option value={item.id} key={item.id}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-          <label>SELECIONE UMA CATEGORIA</label>
-          {errors && <span className="error-message">{errors.category}</span>}
-          <select value={state.category} onChange={handleCategoriaChange}>
-            <option value="">SELECIONE</option>
-            <option value="kids">Crianças</option>
-            <option value="teens">Adolecentes</option>
-            <option value="adult">Adultos</option>
-            <option value="competitive">Competitivo</option>
-          </select>
+              {units.map((item, key) => (
+                <option value={item.id} key={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+            <label>SELECIONE UMA CATEGORIA</label>
+            {errors && <span className="error-message">{errors.category}</span>}
+            <select value={state.category} onChange={handleCategoriaChange}>
+              <option value="">SELECIONE</option>
+              <option value="kids">Crianças</option>
+              <option value="teens">Adolecentes</option>
+              <option value="adult">Adultos</option>
+              <option value="competitive">Competitivo</option>
+            </select>
+          </div>
 
           <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
 
-          {unitName && <p className="mensagemTurma">Selecione sua turma </p>}
+          {showTurmas && (
+            <>
+              <p className="mensagemTurma">Selecione sua turma</p>
+              <div className="courses-wrapper">
+                {turmas.map((item, key) => (
+                  <PlanItem
+                    key={item.id}
+                    hour={scheduleInfo[item.id]?.map((schedule) => schedule.day)}
+                    title={item.name}
+                    amount={item.unit}
+                    isSelected={selectedPlan === item.id}
+                    onSelect={() => handleCourseSelected(item.id, item.name)}
+                  />
+                ))}
 
-          <div className="courses-wrapper">
-            {turmas.map((item, key) => (
-              <PlanItem
-                key={item.id}
-                hour={scheduleInfo[item.id]?.map((schedule) => schedule.day)}
-                title={item.name}
-
-                amount={item.unit}
-                isSelected={selectedPlan === item.id}
-                onSelect={() => handleCourseSelected(item.id, item.name)}
-              />
-            ))}
-          </div>
+              </div>
+            </>
+          )}
           <div className="buttons">
             <Button label="Voltar" color="red" onClick={handlePrevStep} />
             <Button label="Avançar" color="#67CCC5" onClick={handleNextStep} />

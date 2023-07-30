@@ -51,9 +51,6 @@ export const Step1 = () => {
     const birthDate = new Date(e.target.value);
     let age = currentDate.getFullYear() - birthDate.getFullYear();
 
-    // Verifica se o mês de nascimento é maior que o mês atual
-    // ou se é o mesmo mês, mas o dia de nascimento é maior que o dia atual
-    // Nesses casos, ainda não fez aniversário, então subtrai 1 da idade
     const currentMonth = currentDate.getMonth();
     const birthMonth = birthDate.getMonth();
     const currentDay = currentDate.getDate();
@@ -75,6 +72,14 @@ export const Step1 = () => {
       setIsMenor(true);
       dispatch({ type: FormActions.setIsMenor, payload: true });
     }
+  };
+
+  const validatePhone = (phone: string): boolean => {
+    // Remover qualquer caractere que não seja número
+    const cleanPhone = phone.replace(/\D/g, '');
+
+    // Verificar se o CPF possui 11 dígitos
+    return cleanPhone.length === 11;
   };
 
   const validateCpf = (cpf: string): boolean => {
@@ -110,6 +115,7 @@ export const Step1 = () => {
     if (
       state.name !== "" &&
       state.phone !== "" &&
+      validatePhone(state.phone) &&
       state.birth_date !== "" &&
       state.email !== "" &&
       state.cpf !== "" &&
@@ -125,6 +131,8 @@ export const Step1 = () => {
       }
       if (state.phone === "") {
         newErrors.phone = "PREENCHA SEU TELEFONE";
+      } else if (!validatePhone(state.phone)) {
+        newErrors.phone = "TELEFONE INVÁLIDO";
       }
       if (state.birth_date === "") {
         newErrors.birth_date = "PREENCHA SUA DATA DE NASCIMENTO";

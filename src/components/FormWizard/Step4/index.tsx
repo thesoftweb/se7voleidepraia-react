@@ -24,12 +24,12 @@ export const Step4 = () => {
 
 
   const handleCheckboxClick = () => {
-    setShowModal(true);
+    setShowModal(false);
   };
 
   const handleAcceptTerms = () => {
     setShowModal(false);
-    setIsChecked(true);
+
   };
 
   const formatBirthDate = (birthDate: string): string => {
@@ -62,14 +62,17 @@ export const Step4 = () => {
           email: state.email,
           birth_date: state.birth_date,
           cpf: state.cpf,
-          course_id: state.course_id,
-          plan_id: state.plan_id,
-          unit_id: state.unit_id,
-          postal_code: "000.000.000-99",
-          street_name: "nome da rua",
-          city_name: "cidade",
-          neighborhood_name: "bairro",
-          state_name: "estado",
+          resp_name: state.resp_name,
+          resp_phone: state.resp_phone,
+          resp_cpf: state.resp_cpf
+          // course_id: state.course_id,
+          // plan_id: state.plan_id,
+          // unit_id: state.unit_id,
+          // postal_code: "000.000.000-99",
+          // street_name: "nome da rua",
+          // city_name: "cidade",
+          // neighborhood_name: "bairro",
+          // state_name: "estado",
         }),
       }
     );
@@ -106,12 +109,13 @@ export const Step4 = () => {
             <div className="terms">
 
               <Checkbox checked={isChecked} onChange={handleCheckboxClick}>
-                Aceito os termos de uso
+                <u>Termos de uso</u>
               </Checkbox>
               {showModal && (
                 <div className="modal">
                   <div className="modal-content">
                     <h3>Termos de Uso</h3>
+                    <hr />
                     <Contrato />
                     <Button label="Aceitar" onClick={handleAcceptTerms} />
                   </div>
