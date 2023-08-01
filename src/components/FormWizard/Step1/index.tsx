@@ -90,6 +90,14 @@ export const Step1 = () => {
     return cleanCpf.length === 11;
   };
 
+  const validateRespCpf = (resp_cpf: string): boolean => {
+    // Remover qualquer caractere que não seja número
+    const cleanRespCpf = resp_cpf.replace(/\D/g, '');
+
+    // Verificar se o CPF possui 11 dígitos
+    return cleanRespCpf.length === 11;
+  };
+
   const handleCpfChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: FormActions.setCpf, payload: e.target.value });
   };
@@ -112,16 +120,49 @@ export const Step1 = () => {
 
   const handleSubmit = () => {
     const newErrors: Erros = {};
+
     if (
       state.name !== "" &&
       state.phone !== "" &&
       validatePhone(state.phone) &&
       state.birth_date !== "" &&
-      state.email !== "" &&
-      state.cpf !== "" &&
-      validateCpf(state.cpf)
+      state.email !== ""
     ) {
-      navigate("/matricula-online/step2");
+      if (isMenor) {
+        if (
+          state.resp_name !== "" &&
+          state.resp_cpf !== "" &&
+          validateRespCpf(state.resp_cpf) &&
+          state.resp_phone !== "" &&
+          validatePhone(state.resp_phone)
+        ) {
+          navigate("/matricula-online/step2");
+        } else {
+          if (state.resp_name === "") {
+            newErrors.resp_name = "PREENCHA O NOME DO RESPONSÁVEL";
+          }
+          if (state.resp_cpf === "") {
+            newErrors.resp_cpf = "PREENCHA O CPF DO RESPONSÁVEL";
+          } else if (!validateRespCpf(state.resp_cpf)) {
+            newErrors.resp_cpf = "CPF DO RESPONSÁVEL INVÁLIDO";
+          }
+          if (state.resp_phone === "") {
+            newErrors.resp_phone = "PREENCHA O TELEFONE DO RESPONSÁVEL";
+          } else if (!validatePhone(state.resp_phone)) {
+            newErrors.resp_phone = "TELEFONE DO RESPONSÁVEL INVÁLIDO";
+          }
+        }
+      } else {
+        if (state.cpf !== "" && validateCpf(state.cpf)) {
+          navigate("/matricula-online/step2");
+        } else {
+          if (state.cpf === "") {
+            newErrors.cpf = "PREENCHA SEU CPF";
+          } else if (!validateCpf(state.cpf)) {
+            newErrors.cpf = "CPF INVÁLIDO";
+          }
+        }
+      }
     } else {
       if (state.name === "") {
         newErrors.name = "PREENCHA SEU NOME";
@@ -137,13 +178,8 @@ export const Step1 = () => {
       if (state.birth_date === "") {
         newErrors.birth_date = "PREENCHA SUA DATA DE NASCIMENTO";
       }
-      if (state.cpf === "") {
-        newErrors.cpf = "PREENCHA SEU CPF";
-      } else if (!validateCpf(state.cpf)) {
-        newErrors.cpf = "CPF INVÁLIDO";
-      }
-      setErrors(newErrors);
     }
+    setErrors(newErrors);
   };
 
   return (
@@ -209,21 +245,21 @@ export const Step1 = () => {
         {isMenor && (
           <div className="form-wrapper">
             <input
-              placeholder="Nome do Responsável"
+              placeholder="NOME DO RESPONSÁVEL"
               type="text"
               value={state.resp_name}
               onChange={handleRespNameChange}
             />
             <InputMask
               mask="999.999.999-99"
-              placeholder="CPF do Responsável"
+              placeholder="DIGITE SEU CPF "
               type="text"
               value={state.resp_cpf}
               onChange={handleRespCpfChange}
             />
             <InputMask
               mask="(99) 99999-9999"
-              placeholder="Telefone do Responsável"
+              placeholder="TELEFONE DO RESPONSÁVEL"
               type="tel"
               value={state.resp_phone}
               onChange={handleRespPhoneChange}

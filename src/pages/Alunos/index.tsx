@@ -22,6 +22,11 @@ export const Alunos = () => {
 
     const [nomes, setNomes] = useState<Aluno[]>([
         { id: 1, nome: 'Matheus', selecionado: false, img: 'https://media.licdn.com/dms/image/D4D03AQH4DmK_z9k6CA/profile-displayphoto-shrink_800_800/0/1665597842820?e=1695859200&v=beta&t=Qhsbj0NVH3hdObTIHOTp9VGxH6S5itp6mWZO0I2EOi4' },
+        { id: 2, nome: 'Matheus', selecionado: false, img: 'https://media.licdn.com/dms/image/D4D03AQH4DmK_z9k6CA/profile-displayphoto-shrink_800_800/0/1665597842820?e=1695859200&v=beta&t=Qhsbj0NVH3hdObTIHOTp9VGxH6S5itp6mWZO0I2EOi4' }
+        ,
+        { id: 3, nome: 'Matheus', selecionado: false, img: 'https://media.licdn.com/dms/image/D4D03AQH4DmK_z9k6CA/profile-displayphoto-shrink_800_800/0/1665597842820?e=1695859200&v=beta&t=Qhsbj0NVH3hdObTIHOTp9VGxH6S5itp6mWZO0I2EOi4' }
+        ,
+
 
 
     ]);

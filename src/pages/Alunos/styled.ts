@@ -38,6 +38,8 @@ background-color:#2D3192;
         display: flex;
         align-items: center;
         justify-content: center;
+        position:relative;
+        background-color:#2D3192;
     }
     .profile-content {
         padding: 20px;
@@ -47,16 +49,26 @@ background-color:#2D3192;
         text-decoration: none;
         color: #000;
         background-color: #EEE;
-        width: 100%;
+        width: 90%;
         height: 50px;
         align-items: center;
         border-radius: 30px;
     }
 
+    .checkbox-wrapper {
+        position: absolute; /* Posicionamento absoluto para tirar o elemento do fluxo normal */
+        top: 0;
+        right: 0;
+        height: 100%; /* Ajustamos a altura do elemento para ocupar a mesma altura do .profile-content */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     #checkbox1[type="checkbox"] {
         width: 15px;
         height: 20px;
-        margin: 20px;
+        margin: 0 20px; /
     }
     
     .foto {
@@ -68,13 +80,10 @@ background-color:#2D3192;
     .nome {
         margin-left: 20px;
     }
-    
+     
 }
 .marca{
-    display: flex;  
     
-
-    align-items: center;
 
     .label{
         color:white;

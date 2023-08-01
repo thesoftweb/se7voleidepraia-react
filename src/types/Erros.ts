@@ -6,4 +6,8 @@ export type Erros = {
     cpf?: string;
     unit_id?: string;
     category?: string;
+
+    resp_cpf?: string;
+    resp_name?: string;
+    resp_phone?: string;
 }
