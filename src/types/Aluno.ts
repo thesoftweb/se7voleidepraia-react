@@ -1,6 +1,6 @@
 export type Aluno = {
     id: number;
     img: string;
-    nome: string;
+    name: string;
     selecionado: boolean;
 }

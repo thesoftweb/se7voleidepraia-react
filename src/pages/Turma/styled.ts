@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-height:100%;
+min-height:100vh;
 background-color: white;
 `;
 
 export const Header = styled.div`
-    height: 180px;
+    height: 80px;
     background-color: white;
     display: flex;  
     align-items: center;  
@@ -16,10 +16,9 @@ export const Header = styled.div`
 `;
 
 export const Content = styled.div`
-height: 100vh;
+min-height: 100vh;
 display: flex; 
 flex-direction: column;
-border-radius:70px 0 0 0;
 background-color:#2D3192;
 
 `

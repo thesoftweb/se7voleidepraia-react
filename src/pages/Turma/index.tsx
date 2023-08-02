@@ -1,59 +1,54 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { TurmasItem } from "../../components/TurmasItem";
-import { TurmaFake } from '../../fake/TurmaFake';
-import { Album } from '../../types/Album';
-
-import { useContext } from 'react';
-
-import { AuthContext } from '../../contexts/Auth/AuthContext';
-
-import { Button, Container, Content, Header, H1, H2 } from './styled';
+import { useContext } from "react";
+// import { TurmaFake } from '../../fake/TurmaFake';
+// import { Album } from '../../types/Album';
+import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { Button, Container, Content, Header, H1, H2 } from "./styled";
 import { useNavigate } from "react-router-dom";
+import { Turmas } from "../../types/Turmas";
 
 export const Turma = () => {
-    const [loading, setLoading] = useState(false);
-    const [list, setList] = useState<Album[]>([]);
-    const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-    const auth = useContext(AuthContext);
+  const [turmas, setTurmas] = useState<Turmas[]>([]);
+  const navigate = useNavigate();
 
-    const teste = TurmaFake;
+  useEffect(() => {
+    loadTurmas();
+  }, []);
 
-    useEffect(() => {
-        loadTurma();
-    }, []);
+  const loadTurmas = async () => {
+    setLoading(true);
+    let url = `http://se7volei.test/api/courses`;
+    const request = await fetch(url);
+    const { data } = await request.json();
+    console.log("Oque tem", data);
+    setTurmas(data);
+    setLoading(false);
+  };
 
-    const loadTurma = async () => {
-        setLoading(true);
-        const album = await TurmaFake;
-        setList(album);
-        setLoading(false);
-    }
-    const handleLogout = async () => {
-        // await auth.signout();
-        // window.location.href = window.location.href; 
-        navigate('/');
-    }
+  const handleClick = (item: Turmas) => {
+    console.log("navegar turma" + item);
+    navigate(`/alunos?course=${item.id}`);
+  };
 
-    return (
-        <Container>
-            <Header>
-                <H1>Nome do Professor</H1>
-                {auth.user && <Button onClick={handleLogout}>Sair</Button>}
-            </Header>
-            <Content>
-                <H2>Turmas:</H2>
-                {loading && "Carregando.."}
-
-                {list.map((item, index) => (
-                    <TurmasItem
-                        key={index}
-                        aulas={item.aula}
-                        categoria={item.categoria}
-                    />
-                ))}
-            </Content>
-        </Container>
-
-    );
-}
+  return (
+    <Container>
+      <Header />
+      <Content>
+        <H2>Selecione uma turma:</H2>
+        {loading && "Carregando.."}
+        {turmas.map((item, index) => (
+          <TurmasItem
+            key={index}
+            nome={item.name}
+            categoria={item.category}
+            unit={item.unit}
+            onClick={() => handleClick(item)}
+          />
+        ))}
+      </Content>
+    </Container>
+  );
+};
