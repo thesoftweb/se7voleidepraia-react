@@ -14,6 +14,7 @@ type State = {
   resp_name: string;
   resp_phone: string;
   resp_cpf: string;
+  resp_email: string;
 
   category: string;
   course_id: number;
@@ -59,6 +60,7 @@ const initialData: State = {
   resp_name: "",
   resp_phone: "",
   resp_cpf: "",
+  resp_email: "",
 
   category: "",
   course_id: 0,
@@ -94,6 +96,7 @@ export enum FormActions {
   setResp_Name,
   setResp_Telefone,
   setResp_cpf,
+  setResp_Email,
 
   setCategory,
   setCourse_Id,
@@ -142,6 +145,9 @@ const formReducer = (state: State, action: Action) => {
 
     case FormActions.setResp_Telefone:
       return { ...state, resp_phone: action.payload };
+
+    case FormActions.setResp_Email:
+      return { ...state, resp_email: action.payload };
 
     case FormActions.setCategory:
       return { ...state, category: action.payload };

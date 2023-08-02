@@ -10,6 +10,8 @@ import { Erros } from "../../../types/Erros";
 import { parse, isValid, getYear, getMonth, getDate } from "date-fns";
 import { format } from "date-fns";
 
+
+
 import "./styles.css";
 
 export const Step1 = () => {
@@ -63,6 +65,7 @@ export const Step1 = () => {
       age--;
     }
     console.log("IDADE", age);
+    setIsMenor(age < 18);
 
     dispatch({ type: FormActions.setBirth_date, payload: e.target.value });
 
@@ -75,28 +78,21 @@ export const Step1 = () => {
   };
 
   const validatePhone = (phone: string): boolean => {
-    // Remover qualquer caractere que não seja número
     const cleanPhone = phone.replace(/\D/g, '');
-
-    // Verificar se o CPF possui 11 dígitos
     return cleanPhone.length === 11;
   };
 
   const validateCpf = (cpf: string): boolean => {
-    // Remover qualquer caractere que não seja número
     const cleanCpf = cpf.replace(/\D/g, '');
-
-    // Verificar se o CPF possui 11 dígitos
     return cleanCpf.length === 11;
   };
 
   const validateRespCpf = (resp_cpf: string): boolean => {
-    // Remover qualquer caractere que não seja número
     const cleanRespCpf = resp_cpf.replace(/\D/g, '');
-
-    // Verificar se o CPF possui 11 dígitos
     return cleanRespCpf.length === 11;
   };
+
+
 
   const handleCpfChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: FormActions.setCpf, payload: e.target.value });
@@ -118,15 +114,20 @@ export const Step1 = () => {
     dispatch({ type: FormActions.setResp_Telefone, payload: e.target.value });
   };
 
+  const handleRespEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: FormActions.setResp_Email, payload: e.target.value });
+  }
+
   const handleSubmit = () => {
     const newErrors: Erros = {};
+    console.log("State:", state);
+    console.log("Is Menor:", isMenor);
 
     if (
       state.name !== "" &&
       state.phone !== "" &&
       validatePhone(state.phone) &&
-      state.birth_date !== "" &&
-      state.email !== ""
+      state.birth_date !== ""
     ) {
       if (isMenor) {
         if (
@@ -134,7 +135,8 @@ export const Step1 = () => {
           state.resp_cpf !== "" &&
           validateRespCpf(state.resp_cpf) &&
           state.resp_phone !== "" &&
-          validatePhone(state.resp_phone)
+          validatePhone(state.resp_phone) &&
+          state.resp_email !== ""
         ) {
           navigate("/matricula-online/step2");
         } else {
@@ -151,12 +153,15 @@ export const Step1 = () => {
           } else if (!validatePhone(state.resp_phone)) {
             newErrors.resp_phone = "TELEFONE DO RESPONSÁVEL INVÁLIDO";
           }
+          if (state.resp_email === "") {
+            newErrors.resp_email = "PREENCHA O E-MAIL DO RESPONSÁVEL";
+          }
         }
       } else {
-        if (state.cpf !== "" && validateCpf(state.cpf)) {
+        if (state.cpf !== "" && validateCpf(state.cpf) && state.email !== "") {
           navigate("/matricula-online/step2");
         } else {
-          if (state.cpf === "") {
+          if (state.cpf === "" && state.email === "") {
             newErrors.cpf = "PREENCHA SEU CPF";
           } else if (!validateCpf(state.cpf)) {
             newErrors.cpf = "CPF INVÁLIDO";
@@ -167,9 +172,9 @@ export const Step1 = () => {
       if (state.name === "") {
         newErrors.name = "PREENCHA SEU NOME";
       }
-      if (state.email === "") {
-        newErrors.email = "PREENCHA SEU EMAIL";
-      }
+      // if (state.email === "") {
+      //   newErrors.email = "PREENCHA SEU E-MAIL";
+      // }
       if (state.phone === "") {
         newErrors.phone = "PREENCHA SEU TELEFONE";
       } else if (!validatePhone(state.phone)) {
@@ -220,36 +225,40 @@ export const Step1 = () => {
           onChange={handleIdadeChange}
         /> */}
 
-        {errors && <span className="error-message">{errors.email}</span>}
-        <input
-          placeholder="DIGITE SEU EMAIL"
-          type="email"
-          value={state.email}
-          onChange={handleEmailChange}
-        />
-
         {errors && <span className="error-message">{errors.cpf}</span>}
-        <div className="form-wraper">
+        <div className="form-wrapper">
 
           {!isMenor && (
-            <InputMask
-              mask="999.999.999-99"
-              placeholder="DIGITE SEU CPF"
-              type="text"
-              value={state.cpf}
-              onChange={handleCpfChange}
-              required
-            />
+            <div className="form-isFalse">
+              {errors && <span className="error-message">{errors.email}</span>}
+              <input
+                placeholder="DIGITE SEU EMAIL"
+                type="email"
+                value={state.email}
+                onChange={handleEmailChange}
+              />
+              {errors && <span className="error-message">{errors.cpf}</span>}
+              <InputMask
+                mask="999.999.999-99"
+                placeholder="DIGITE SEU CPF"
+                type="text"
+                value={state.cpf}
+                onChange={handleCpfChange}
+                required
+              />
+            </div>
           )}
         </div>
         {isMenor && (
           <div className="form-wrapper">
+            {errors && <span className="error-message">{errors.resp_name}</span>}
             <input
               placeholder="NOME DO RESPONSÁVEL"
               type="text"
               value={state.resp_name}
               onChange={handleRespNameChange}
             />
+            {errors && <span className="error-message">{errors.resp_cpf}</span>}
             <InputMask
               mask="999.999.999-99"
               placeholder="DIGITE SEU CPF "
@@ -257,12 +266,21 @@ export const Step1 = () => {
               value={state.resp_cpf}
               onChange={handleRespCpfChange}
             />
+            {errors && <span className="error-message">{errors.resp_phone}</span>}
             <InputMask
               mask="(99) 99999-9999"
               placeholder="TELEFONE DO RESPONSÁVEL"
               type="tel"
               value={state.resp_phone}
               onChange={handleRespPhoneChange}
+            />
+            {errors && <span className="error-message">{errors.resp_email}</span>}
+            <input
+              placeholder="DIGITE SEU EMAIL RESP"
+              type="email"
+              value={state.resp_email}
+              onChange={handleRespEmailChange}
+              required
             />
           </div>
         )}

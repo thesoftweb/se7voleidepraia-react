@@ -10,12 +10,8 @@ import { PlanItem } from "../../PlanItem";
 
 import "./style.css";
 import { Erros } from "../../../types/Erros";
-import { Scheduler } from "timers/promises";
-
-
 
 export const Step2 = () => {
-
   type Scheduler = {
     day: string;
   };
@@ -67,10 +63,9 @@ export const Step2 = () => {
       state.unit_id !== 0 &&
       state.course_id !== 0 &&
       state.name !== "" &&
-      state.email !== "" &&
       state.birth_date !== "" &&
-      state.phone !== "" &&
-      state.cpf !== ""
+      state.phone !== ""
+
     ) {
       navigate("/matricula-online/step3");
     } else {
