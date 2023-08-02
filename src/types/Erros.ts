@@ -10,4 +10,5 @@ export type Erros = {
     resp_cpf?: string;
     resp_name?: string;
     resp_phone?: string;
+    resp_email?: string;
 }

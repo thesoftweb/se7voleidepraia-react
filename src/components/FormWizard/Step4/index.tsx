@@ -7,8 +7,6 @@ import { format } from "date-fns";
 import { Link } from "react-router-dom";
 
 import "./styles.css";
-import { Turmas } from "../../../types/Turmas";
-import { error } from "console";
 import { Contrato } from "../../Shared/Contrato";
 
 export const Step4 = () => {
@@ -21,15 +19,13 @@ export const Step4 = () => {
   const [errors, setErrors] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-
-
   const handleCheckboxClick = () => {
-    setShowModal(false);
+    setShowModal(true);
   };
 
   const handleAcceptTerms = () => {
     setShowModal(false);
-
+    setIsChecked(true)
   };
 
   const formatBirthDate = (birthDate: string): string => {
@@ -100,14 +96,18 @@ export const Step4 = () => {
                 value={formatBirthDate(state.birth_date)}
               />
               <InfoDetail label={"Telefone:"} value={state.phone} />
-              <InfoDetail label={"Email:"} value={state.email} />
+              {state.isMenor ? (
+                <InfoDetail label={"Email do Responsável:"} value={state.resp_email} />
+              ) : (
+                <InfoDetail label={"Email:"} value={state.email} />
+              )}
               <InfoDetail label={"Unidade:"} value={state.unitName} />
               <InfoDetail label={"Turma:"} value={state.className} />
               <InfoDetail label={"Plano:"} value={state.planName} />
               <InfoDetail label={"Valor do plano:"} value={state.amount} />
             </div>
-            <div className="terms">
 
+            <div className="terms">
               <Checkbox checked={isChecked} onChange={handleCheckboxClick}>
                 <u>Termos de uso</u>
               </Checkbox>
@@ -141,7 +141,6 @@ export const Step4 = () => {
           </>
         )
       }
-
       {
         success && !loading && (
           <>
