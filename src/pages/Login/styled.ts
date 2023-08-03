@@ -39,26 +39,26 @@ export const Formulario = styled.div`
     }
 `;
 
-export const Input = styled.input`
-    margin-bottom: 5px;
-    padding: 10px;
-    border: none;
-    text-decoration: none;
-    border-radius: 12px;
-    background-color:white;
+// export const Input = styled.input`
+//     margin-bottom: 5px;
+//     padding: 10px;
+//     border: none;
+//     text-decoration: none;
+//     border-radius: 12px;
+//     background-color:white;
     
     
 
-    ::placeholder {
-        font-weight:300;
-        color: black;
+//     ::placeholder {
+//         font-weight:300;
+//         color: black;
         
-    }
+//     }
 
-    @media (max-width: 950px) {
-        padding: 20px;
-    }
-`;
+//     @media (max-width: 950px) {
+//         padding: 20px;
+//     }
+// `;
 
 export const Button = styled.button`
     border: none;

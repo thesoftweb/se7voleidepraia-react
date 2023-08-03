@@ -8,6 +8,8 @@ export const useApi = () => ({
     },
     signin: async (cpf: string, password: string) => {
         const response = await api.post('/auth/login/teachers', { username: cpf, password });
+        // console.log('API');
+        console.log('API',response.data);
         return response.data;
     },
     logout: async () => {

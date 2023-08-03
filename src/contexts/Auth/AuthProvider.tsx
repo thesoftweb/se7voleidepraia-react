@@ -22,12 +22,11 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
   const signin = async (cpf: string, password: string) => {
     try {
-      console.log("signin", cpf, password);
       const data = await api.signin(cpf, password);
-
-      if (data.user && data.token) {
-        setUser(data.user);
-        setToken(data.token);
+      console.log("CTX", data);
+      if (data.login) {
+        setUser(data.name);
+        setToken(data.secret);
       }
       return true;
     } catch (error) {

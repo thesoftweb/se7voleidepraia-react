@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { Container, Header, H1, Lista, H2 } from "./styled";
 import { Aluno } from "../../types/Aluno";
 import { useLocation } from "react-router-dom";
 import api from "../../services/api";
+import { Header } from "../../components/Shared/Header";
+
+import "./style.css";
 
 export const Alunos = () => {
   const [loading, setLoading] = useState(false);
@@ -39,41 +41,34 @@ export const Alunos = () => {
   };
 
   return (
-    <Container>
-      <Header>
-        <H1>Nome da Turma</H1>
-      </Header>
-      <Lista>
-        <h2 className="label">
-          {" "}
-          marca todos
+    <div className="container">
+      <Header title="Alunos turma [nome da turma]" />
+      <div className="actions">
+        <div>marca todos</div>
+        <div>
           <input
             type="checkbox"
             checked={students.every((student) => student.selecionado)}
             onChange={(e) => checkAll(e.target.checked)}
           />
-        </h2>
-
-        <div className="cardItem">
-          {students.map((student) => (
-            <div className="profile-card" key={student.id}>
-              <div className="profile-content">
-                <img className="foto" src={student.img} alt="" />
-                {student.name}
-
-                <div className="checkbox-wrapper">
-                  <input
-                    id="checkbox1"
-                    type="checkbox"
-                    checked={student.selecionado}
-                    onChange={(e) => setChecked(student.id, e.target.checked)}
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
-      </Lista>
-    </Container>
+      </div>
+
+      {students.map((student) => (
+        <div className="student" key={student.id}>
+          <img className="foto" src={student.img} alt="" />
+          {student.name}
+
+          <div className="checkbox-wrapper">
+            <input
+              id="checkbox1"
+              type="checkbox"
+              checked={student.selecionado}
+              onChange={(e) => setChecked(student.id, e.target.checked)}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };

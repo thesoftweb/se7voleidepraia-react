@@ -1,0 +1,15 @@
+.actions{
+    display: flex;
+    flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   margin-bottom: 20px;
+   border-bottom: 1px solid #fff;
+}
+
+.student {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
