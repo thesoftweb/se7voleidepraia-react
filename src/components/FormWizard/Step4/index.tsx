@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import "./styles.css";
 import { Contrato } from "../../Shared/Contrato";
 import api from "../../../services/api";
+import Checkbox from "../../Shared/Checkbox";
 
 export const Step4 = () => {
   const [title, setTitle] = useState("Confirme seus dados de matrícula");
@@ -96,7 +97,7 @@ export const Step4 = () => {
 
             <div className="terms">
               <Checkbox checked={isChecked} onChange={handleCheckboxClick}>
-                <u>Termos de uso</u>
+                Termos de uso
               </Checkbox>
               {showModal && (
                 <div className="modal">
@@ -151,21 +152,5 @@ export const InfoDetail = ({ label, value }: InfoDetailProps) => {
       <span className="label-info">{label}</span>
       <span className="value-info">{value}</span>
     </div>
-  );
-};
-
-type CheckboxProps = {
-  checked: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  children: React.ReactNode;
-};
-
-const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange, children }) => {
-  return (
-    <label className="checkbox-container">
-      <input type="checkbox" checked={checked} onChange={onChange} />
-      <span className="checkbox-style"></span>
-      {children}
-    </label>
   );
 };

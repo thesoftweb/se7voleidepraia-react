@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import { TurmasItem } from "../../components/TurmasItem";
-import { Container, Content, H1, H2 } from "./styled";
 import { useNavigate } from "react-router-dom";
 import { Turmas } from "../../types/Turmas";
 import api from "../../services/api";
 import { Header } from "../../components/Shared/Header";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
+
+import "./styles.css";
 
 export const Turma = () => {
   const auth = useContext(AuthContext);
@@ -30,11 +31,13 @@ export const Turma = () => {
   };
 
   return (
-    <Container>
-      <Header title={`Professor(a) ${auth.user}`} />
-      <Content>
-        <H2>Selecione uma turma:</H2>
-        {loading && "Carregando.."}
+    <div className="container">
+      <Header
+        title={`Professor(a) ${auth.user}`}
+        subtitle="Selecione uma turma para fazer a frequencia."
+      />
+      {loading && "Carregando.."}
+      <div className="turmas-wrapper">
         {turmas.map((item, index) => (
           <TurmasItem
             key={index}
@@ -44,7 +47,7 @@ export const Turma = () => {
             onClick={() => handleClick(item)}
           />
         ))}
-      </Content>
-    </Container>
+      </div>
+    </div>
   );
 };

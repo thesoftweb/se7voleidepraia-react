@@ -3,4 +3,6 @@ export type Aluno = {
     img: string;
     name: string;
     selecionado: boolean;
+    customer:string;
+    customer_phone:string;
 }
