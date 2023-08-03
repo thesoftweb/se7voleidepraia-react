@@ -172,9 +172,6 @@ export const Step1 = () => {
       if (state.name === "") {
         newErrors.name = "PREENCHA SEU NOME";
       }
-      // if (state.email === "") {
-      //   newErrors.email = "PREENCHA SEU E-MAIL";
-      // }
       if (state.phone === "") {
         newErrors.phone = "PREENCHA SEU TELEFONE";
       } else if (!validatePhone(state.phone)) {
@@ -217,14 +214,6 @@ export const Step1 = () => {
           value={state.birth_date}
           onChange={handleIdadeChange}
         />
-        {/* <InputMask
-          mask="99/99/9999"
-          placeholder="DATA DE NASCIMENTO"
-          type="text"
-          value={state.birth_date}
-          onChange={handleIdadeChange}
-        /> */}
-
         {errors && <span className="error-message">{errors.cpf}</span>}
         <div className="form-wrapper">
 
@@ -276,7 +265,7 @@ export const Step1 = () => {
             />
             {errors && <span className="error-message">{errors.resp_email}</span>}
             <input
-              placeholder="DIGITE SEU EMAIL RESP"
+              placeholder="DIGITE SEU EMAIL"
               type="email"
               value={state.resp_email}
               onChange={handleRespEmailChange}
