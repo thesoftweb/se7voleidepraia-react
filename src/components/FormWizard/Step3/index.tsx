@@ -8,6 +8,7 @@ import { FormActions, useForm } from "../../../contexts/Form/FormContext";
 import { Logo } from "../../Shared/Logo";
 import "./styles.css";
 import { Plan } from "../../../types/Plan";
+import api from "../../../services/api";
 
 export const Step3 = () => {
   const navigate = useNavigate();
@@ -23,10 +24,8 @@ export const Step3 = () => {
   }, []);
 
   async function fetchPlans() {
-    const request = await fetch("https://app.se7voleidepraia.com.br/api/plans");
-    const { data } = await request.json();
-    setPlans(data);
-    console.log(data)
+    const data = await api.get("/plans");
+    setPlans(data.data.data);
     setIsloading(false);
   }
 
@@ -37,7 +36,6 @@ export const Step3 = () => {
   const handleNextStep = () => {
     if (selectedPlanValor !== null) {
       navigate("/matricula-online/step4");
-
     } else {
       alert("Por favor, selecione um plano antes de prosseguir.");
     }
@@ -66,15 +64,15 @@ export const Step3 = () => {
             </>
           )}
           {!isLoading &&
-
             plans.map((item: Plan, key) => (
               <PlanItem
                 key={item.id}
                 title={item.name}
                 amount={item.amount}
-
                 isSelected={selectedPlanValor === item.id}
-                onSelect={() => handlePlanSelected(item.id, item.amount, item.name)}
+                onSelect={() =>
+                  handlePlanSelected(item.id, item.amount, item.name)
+                }
               />
             ))}
 

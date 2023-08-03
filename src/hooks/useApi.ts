@@ -1,9 +1,4 @@
-import axios from 'axios';
-import { Enrollment } from '../types/Enrollment';
-
-const api = axios.create({
-    baseURL: 'https://app.se7voleidepraia.com.br/api'
-});
+import api from "../services/api";
 
 export const useApi = () => ({
     validateToken: async (token: string) => {

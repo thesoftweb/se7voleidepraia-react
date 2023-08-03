@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { TurmasItem } from "../../components/TurmasItem";
-import { useContext } from "react";
-// import { TurmaFake } from '../../fake/TurmaFake';
-// import { Album } from '../../types/Album';
-import { AuthContext } from "../../contexts/Auth/AuthContext";
-import { Button, Container, Content, Header, H1, H2 } from "./styled";
+import { Container, Content, Header, H1, H2 } from "./styled";
 import { useNavigate } from "react-router-dom";
 import { Turmas } from "../../types/Turmas";
+import api from "../../services/api";
 
 export const Turma = () => {
   const [loading, setLoading] = useState(false);
@@ -20,11 +17,9 @@ export const Turma = () => {
 
   const loadTurmas = async () => {
     setLoading(true);
-    let url = `http://se7volei.test/api/courses`;
-    const request = await fetch(url);
-    const { data } = await request.json();
-    console.log("Oque tem", data);
-    setTurmas(data);
+
+    const data = await api.get("/courses");
+    setTurmas(data.data.data);
     setLoading(false);
   };
 

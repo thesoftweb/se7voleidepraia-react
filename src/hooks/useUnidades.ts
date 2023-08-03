@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import api from '../services/api';
 
 interface Unit {
     id: number;
@@ -7,13 +8,11 @@ interface Unit {
 
 export const useUnidades = () => {
     const [units, setUnits] = useState<Unit[]>([]);
-
+    
     useEffect(() => {
-        fetch('https://app.se7voleidepraia.com.br/api/units')
-            .then((response) => response.json())
+        api.get('/units')
             .then((data) => {
-                console.log('API Data:', data);
-                setUnits(data.data);
+                setUnits(data.data.data);
             })
             .catch((error) => {
                 console.error('API Error:', error);

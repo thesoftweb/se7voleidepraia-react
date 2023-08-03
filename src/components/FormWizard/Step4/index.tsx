@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 import "./styles.css";
 import { Contrato } from "../../Shared/Contrato";
+import api from "../../../services/api";
 
 export const Step4 = () => {
   const [title, setTitle] = useState("Confirme seus dados de matrícula");
@@ -25,7 +26,7 @@ export const Step4 = () => {
 
   const handleAcceptTerms = () => {
     setShowModal(false);
-    setIsChecked(true)
+    setIsChecked(true);
   };
 
   const formatBirthDate = (birthDate: string): string => {
@@ -37,7 +38,6 @@ export const Step4 = () => {
     setIsChecked(event.target.checked);
   };
 
-
   const handleSubmitEnrollment = async () => {
     console.log("ENVIAR MATRICULA");
 
@@ -45,40 +45,22 @@ export const Step4 = () => {
       setErrors("Aceite é obrigatório");
       return alert("Voce precisa aceitar os termos de uso!");
     }
-    const request = await fetch(
-      "https://app.se7voleidepraia.com.br/api/enrollment",
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({
-          name: state.name,
-          email: state.email,
-          birth_date: state.birth_date,
-          cpf: state.cpf,
-          resp_name: state.resp_name,
-          resp_phone: state.resp_phone,
-          resp_cpf: state.resp_cpf
-          // course_id: state.course_id,
-          // plan_id: state.plan_id,
-          // unit_id: state.unit_id,
-          // postal_code: "000.000.000-99",
-          // street_name: "nome da rua",
-          // city_name: "cidade",
-          // neighborhood_name: "bairro",
-          // state_name: "estado",
-        }),
-      }
-    );
-
-    const { data } = await request.json();
-    console.log(data);
+    const data = await api.post("/enrollment", {
+      name: state.name,
+      email: state.email,
+      birth_date: state.birth_date,
+      cpf: state.cpf,
+      resp_name: state.resp_name,
+      resp_phone: state.resp_phone,
+      resp_cpf: state.resp_cpf,
+      course_id: state.course_id,
+      plan_id: state.plan_id,
+      unit_id: state.unit_id,
+    });
 
     setSuccess(true);
     setLoading(false);
-    setLink(data.link);
+    setLink(data.data.data.link);
     setTitle("Efetue o pagamento da matrícula.");
   };
 
@@ -97,7 +79,10 @@ export const Step4 = () => {
               />
               <InfoDetail label={"Telefone:"} value={state.phone} />
               {state.isMenor ? (
-                <InfoDetail label={"Email do Responsável:"} value={state.resp_email} />
+                <InfoDetail
+                  label={"Email do Responsável:"}
+                  value={state.resp_email}
+                />
               ) : (
                 <InfoDetail label={"Email:"} value={state.email} />
               )}
@@ -131,30 +116,25 @@ export const Step4 = () => {
             </div>
           </div>
         </>
-      )
-      }
+      )}
 
-      {
-        loading && (
-          <>
-            <h2>Enviando dados aguarde...</h2>
-          </>
-        )
-      }
-      {
-        success && !loading && (
-          <>
-            <div className="pega">
-              <div className="pegamais">
-                <Link to={link} target="_blank">
-                  Clique aqui para pagar
-                </Link>
-              </div>
+      {loading && (
+        <>
+          <h2>Enviando dados aguarde...</h2>
+        </>
+      )}
+      {success && !loading && (
+        <>
+          <div className="pega">
+            <div className="pegamais">
+              <Link to={link} target="_blank">
+                Clique aqui para pagar
+              </Link>
             </div>
-          </>
-        )
-      }
-    </div >
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 

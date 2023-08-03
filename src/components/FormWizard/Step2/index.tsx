@@ -10,6 +10,7 @@ import { PlanItem } from "../../PlanItem";
 
 import "./style.css";
 import { Erros } from "../../../types/Erros";
+import api from "../../../services/api";
 
 export const Step2 = () => {
   type Scheduler = {
@@ -19,7 +20,9 @@ export const Step2 = () => {
   const navigate = useNavigate();
   const { state, dispatch } = useForm();
   const [turmas, setTurmas] = useState<Turmas[]>([]);
-  const [scheduleInfo, setScheduleInfo] = useState<{ [key: number]: Scheduler[] }>({});
+  const [scheduleInfo, setScheduleInfo] = useState<{
+    [key: number]: Scheduler[];
+  }>({});
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [errors, setErrors] = useState<Erros>({});
   const [showTurmas, setShowTurmas] = useState(false);
@@ -65,7 +68,6 @@ export const Step2 = () => {
       state.name !== "" &&
       state.birth_date !== "" &&
       state.phone !== ""
-
     ) {
       navigate("/matricula-online/step3");
     } else {
@@ -81,16 +83,12 @@ export const Step2 = () => {
   };
 
   const fetchTurmas = async () => {
-    console.log("states", state.unit_id, state.course_id);
-    let url = `https://app.se7voleidepraia.com.br/api/courses?unit_id=${state.unit_id}&category=${state.category}&`;
-    const request = await fetch(url);
-    const { data } = await request.json();
+    let url = `/courses?unit_id=${state.unit_id}&category=${state.category}&`;
+    const data = await api.get(url);
+    console.log("Oque tem", data.data.data);
 
-    console.log("Oque tem", data);
-
-    setTurmas(data);
-
-    const scheduleData = data.reduce(
+    setTurmas(data.data.data);
+    const scheduleData = data.data.data.reduce(
       (acc: { [key: number]: { day: string }[] }, curr: Turmas) => {
         acc[curr.id] = curr.schedules;
         return acc;
@@ -99,10 +97,9 @@ export const Step2 = () => {
     );
     setScheduleInfo(scheduleData);
 
-    if (data.length > 0) {
+    if (data.data.data.length > 0) {
       setShowTurmas(true);
     }
-
   };
 
   const confirmaTurmas = () => {
@@ -167,14 +164,15 @@ export const Step2 = () => {
                 {turmas.map((item, key) => (
                   <PlanItem
                     key={item.id}
-                    hour={scheduleInfo[item.id]?.map((schedule) => schedule.day)}
+                    hour={scheduleInfo[item.id]?.map(
+                      (schedule) => schedule.day
+                    )}
                     title={item.name}
                     amount={item.unit}
                     isSelected={selectedPlan === item.id}
                     onSelect={() => handleCourseSelected(item.id, item.name)}
                   />
                 ))}
-
               </div>
             </>
           )}

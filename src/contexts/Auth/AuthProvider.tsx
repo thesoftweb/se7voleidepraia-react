@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
         }
       }
     };
-    validateToken();
+    // validateToken();
   }, []);
 
   const signin = async (cpf: string, password: string) => {

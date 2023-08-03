@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Container, Header, H1, Lista, H2 } from "./styled";
 import { Aluno } from "../../types/Aluno";
 import { useLocation } from "react-router-dom";
+import api from "../../services/api";
 
 export const Alunos = () => {
   const [loading, setLoading] = useState(false);
@@ -16,11 +17,9 @@ export const Alunos = () => {
     setLoading(true);
     const course = new URLSearchParams(location.search).get("course");
 
-    let url = `http://se7volei.test/api/courses/${course}/students`;
-    const request = await fetch(url);
-    const { data } = await request.json();
+    const data = await api.get(`/courses/${course}/students`);
 
-    setStudents(data);
+    setStudents(data.data.data);
     setLoading(false);
   };
 
