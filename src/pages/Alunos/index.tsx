@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Aluno } from "../../types/Aluno";
 import { useLocation } from "react-router-dom";
 import api from "../../services/api";
 import { Header } from "../../components/Shared/Header";
 
 import "./style.css";
+import Checkbox from "../../components/Shared/Checkbox";
+import { Button } from "../../components/Shared/Buttons";
 
 export const Alunos = () => {
   const [loading, setLoading] = useState(false);
@@ -26,6 +28,7 @@ export const Alunos = () => {
   };
 
   const setChecked = (id: number, selecionado: boolean) => {
+    console.log(id, selecionado);
     const newStudents = students.map((student) =>
       student.id === id ? { ...student, selecionado } : student
     );
@@ -40,35 +43,57 @@ export const Alunos = () => {
     setStudents(newStudents);
   };
 
+  const handleSendAttendance = async () => {
+    const selecionados = students.filter((std) => std.selecionado == true);
+    const token = await localStorage.getItem("authToken");
+    const course = new URLSearchParams(location.search).get("course");
+
+    const response = await api.post("/attendances", {
+      teacher: token,
+      course_id: course,
+      students: selecionados,
+    });
+
+    if (response.data.success) {
+      alert(response.data.message);
+    } else {
+      alert(response.data.message);
+    }
+  };
+
   return (
     <div className="container">
       <Header title="Alunos turma [nome da turma]" />
       <div className="actions">
-        <div>marca todos</div>
-        <div>
-          <input
-            type="checkbox"
-            checked={students.every((student) => student.selecionado)}
-            onChange={(e) => checkAll(e.target.checked)}
-          />
-        </div>
+        <Checkbox
+          checked={students.every((student) => student.selecionado)}
+          onChange={(e) => checkAll(e.target.checked)}
+          children="Selecionar Todos"
+        />
       </div>
+      <div className="students-wrapper">
+        {students.map((student) => (
+          <div className="student-item" key={student.id}>
+            <div className="student">
+              <img className="foto" src={student.img} alt="" />
+              <div className="student-infos">
+                <span>{student.name}</span>
+                <span>{student.customer}</span>
+                <span>{student.customer_phone}</span>
+              </div>
+            </div>
 
-      {students.map((student) => (
-        <div className="student" key={student.id}>
-          <img className="foto" src={student.img} alt="" />
-          {student.name}
-
-          <div className="checkbox-wrapper">
-            <input
-              id="checkbox1"
-              type="checkbox"
-              checked={student.selecionado}
-              onChange={(e) => setChecked(student.id, e.target.checked)}
-            />
+            <div className="checkbox-wrapper">
+              <Checkbox
+                children={""}
+                checked={student.selecionado}
+                onChange={(e) => setChecked(student.id, e.target.checked)}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+      <Button label="Enviar" onClick={handleSendAttendance} />
     </div>
   );
 };

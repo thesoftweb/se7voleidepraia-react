@@ -1,15 +1,38 @@
 .actions{
     display: flex;
     flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   margin-bottom: 20px;
-   border-bottom: 1px solid #fff;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.student {
+.students-wrapper{
+    width: 100%;
+    padding: 5px;
+    height: 100%;
+}
+
+.student-item {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px solid #fff;
+    min-height: 80px;
+    border-radius: 5px;
+    margin: 15px;
+    padding-right: 15px;
+}
+.student {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.student-infos {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 14px;
 }

@@ -1,17 +1,13 @@
-import { RequireAuth } from './contexts/Auth/RequireAuth';
+import { MainRoutes } from "./routes/MainRoutes";
 
-import { MainRoutes } from './routes/MainRoutes';
-
-import "./App.css"
+import "./App.css";
 
 function App() {
-	return (
-		<div className='App'>
-
-			<MainRoutes />
-
-		</div>
-	);
+  return (
+    <div className="App">
+      <MainRoutes />
+    </div>
+  );
 }
 
 export default App;

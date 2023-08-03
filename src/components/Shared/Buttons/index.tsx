@@ -8,12 +8,12 @@ type ButtonProps = {
 
 export const Button = ({ label, color, onClick }: ButtonProps) => {
   return (
-    <div
+    <button
       className="button"
       style={{ backgroundColor: color }}
       onClick={onClick}
     >
       {label}
-    </div>
+    </button>
   );
 };

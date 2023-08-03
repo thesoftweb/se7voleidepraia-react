@@ -2,23 +2,26 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 
-import { Button, Container, Formulario, Img, Logo } from "./styled";
 import { insertMaskInCpf } from "../../hooks/mask";
-import logo from "../../assets/setvolei.png";
+import { Logo } from "../../components/Shared/Logo";
+import { Button } from "../../components/Shared/Buttons";
+import { Header } from "../../components/Shared/Header";
+
+import "./styles.css";
 
 export const Login = () => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [cpf, setCpf] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    if (!cpf || !password) {
-      setError("Digite cpf e senha");
+    if (!username || !password) {
+      setError("Digite usuario e senha");
     }
-    const isLogged = await auth.signin(cpf, password);
+    const isLogged = await auth.signin(username, password);
 
     if (!isLogged) {
       setError("Usuario ou senha invalidos");
@@ -31,17 +34,19 @@ export const Login = () => {
   };
 
   return (
-    <Container>
-      <Logo>
-        <Img src={logo} alt="" />
-      </Logo>
-      <Formulario>
+    <div className="container">
+      <Logo />
+      <Header
+        title="Se7Volei de Praia"
+        subtitle="Informe seus dados de acesso"
+      />
+      <div className="form-wrapper">
         <p>{error}</p>
         <input
           type="text"
-          value={insertMaskInCpf(cpf)}
-          onChange={(e) => setCpf(e.target.value)}
-          placeholder="Digite seu CPF"
+          value={insertMaskInCpf(username)}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Digite seu usário"
         />
 
         <input
@@ -50,8 +55,8 @@ export const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Digite sua senha"
         />
-        <Button onClick={handleLogin}>Login</Button>
-      </Formulario>
-    </Container>
+      </div>
+      <Button label="Login" onClick={handleLogin} />
+    </div>
   );
 };
