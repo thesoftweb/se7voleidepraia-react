@@ -23,6 +23,7 @@ export const Step4 = () => {
 
   const handleCheckboxClick = () => {
     setShowModal(true);
+    console.log('dataaa', state);
   };
 
   const handleAcceptTerms = () => {

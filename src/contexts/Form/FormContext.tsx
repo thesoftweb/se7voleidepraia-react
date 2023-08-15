@@ -11,6 +11,11 @@ type State = {
 
   isMenor: boolean;
 
+  isFamilia: boolean;
+  familiaStudents: { nome: string; birthdate: string }[];
+  aluno1: string;
+  aluno2: string;
+
   resp_name: string;
   resp_phone: string;
   resp_cpf: string;
@@ -56,6 +61,13 @@ const initialData: State = {
   phone: "",
 
   isMenor: false,
+  isFamilia: false,
+  familiaStudents: [],
+  aluno1: '',
+  aluno2: '',
+
+
+
 
   resp_name: "",
   resp_phone: "",
@@ -92,6 +104,12 @@ export enum FormActions {
   setPhone,
 
   setIsMenor,
+  setIsFamilia,
+  addFamiliaStudent,
+  RemoverFamiliaStudent,
+  aluno1,
+  aluno2,
+
 
   setResp_Name,
   setResp_Telefone,
@@ -136,6 +154,21 @@ const formReducer = (state: State, action: Action) => {
 
     case FormActions.setIsMenor:
       return { ...state, isMenor: action.payload };
+
+    case FormActions.setIsFamilia:
+      return { ...state, isFamilia: action.payload };
+
+    case FormActions.addFamiliaStudent:
+      return { ...state, familiaStudents: [...state.familiaStudents, action.payload] };
+
+    case FormActions.RemoverFamiliaStudent:
+      return { ...state, familiaStudents: action.payload };
+
+    case FormActions.aluno1:
+      return { ...state, aluno1: action.payload };
+
+    case FormActions.aluno2:
+      return { ...state, aluno2: action.payload };
 
     case FormActions.setResp_Name:
       return { ...state, resp_name: action.payload };
