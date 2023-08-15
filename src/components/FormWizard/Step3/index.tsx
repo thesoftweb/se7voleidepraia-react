@@ -148,7 +148,7 @@ export const Step3 = () => {
     });
 
     dispatch({
-      type: FormActions.addFamiliaStudent,
+      type: FormActions.RemoverFamiliaStudent,
       payload: updatedFamiliaStudents
     });
   };
