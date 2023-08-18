@@ -41,13 +41,14 @@ export const Step3 = () => {
     navigate("/matricula-online/step2");
   };
 
+
   const handleNextStep = () => {
     console.log("State:", state);
     console.log("Is Family:", state.isFamilia);
 
     if (selectedPlanValor !== null) {
       if (state.isFamilia) {
-        if (novaPessoaDataNascimento !== "" && novaPessoa !== "") {
+        if (novaPessoa !== "" && novaPessoaDataNascimento !== "") {
           navigate("/matricula-online/step4");
         } else {
           alert("Por favor, insira os nomes dos integrantes da família antes de avançar.");
@@ -91,27 +92,28 @@ export const Step3 = () => {
   const AdicionarAlunoAoPlano = () => {
     console.log("State:", state);
 
-    if (state.aluno1.trim() !== '' || state.aluno2.trim() !== '') {
-      const updatedStudents = [
-        ...(state.aluno1.trim() !== '' ? [{ nome: state.aluno1 }] : []),
-        ...(state.aluno2.trim() !== '' ? [{ nome: state.aluno2 }] : [])
-      ];
-      dispatch({ type: FormActions.addFamiliaStudent, payload: updatedStudents });
+    const isAnyStudentFilled = state.familiaStudents.some(
+      student => student.nome.trim() !== '' && student.birthdate.trim() !== ''
+    );
 
-      dispatch({ type: FormActions.aluno1, payload: '' });
-      dispatch({ type: FormActions.aluno2, payload: '' });
+    if (isAnyStudentFilled) {
       dispatch({ type: FormActions.setIsFamilia, payload: true });
-
       navigate("/matricula-online/step4");
-
     } else {
-      alert('Por favor, insira pelo menos um nome de aluno antes de avançar.');
+      alert('Por favor, insira pelo menos um nome de aluno e a data de nascimento antes de avançar.');
     }
   };
+
 
   const VoltarPlanFamlia = () => {
     console.log("State:", state);
     console.log("Is Family: ", isFamilia);
+
+    // Verifica se há pessoas adicionadas e remove-as
+    if (state.familiaStudents.length > 0) {
+      dispatch({ type: FormActions.RemoverFamiliaStudent, payload: [] });
+    }
+
     dispatch({ type: FormActions.setIsFamilia, payload: false });
     setShowAddAnotherStudent(false);
     setShowPlanList(true);
@@ -207,10 +209,7 @@ export const Step3 = () => {
               onSelect={handleAddAnotherStudent}
 
             />
-
             {/* <Button label="Plano Família" color="blue" onClick={handleAddAnotherStudent} /> */}
-
-
             {isLoading && (
               <>
                 <p>Carregando Planos...</p>
