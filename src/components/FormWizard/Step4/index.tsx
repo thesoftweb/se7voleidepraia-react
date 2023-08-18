@@ -2,9 +2,9 @@ import { ChangeEvent, useState } from "react";
 import { Button } from "../../Shared/Buttons";
 import { Header } from "../../Shared/Header";
 import { Logo } from "../../Shared/Logo";
-import { useForm } from "../../../contexts/Form/FormContext";
+import { FormActions, useForm } from "../../../contexts/Form/FormContext";
 import { format } from "date-fns";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./styles.css";
 import { Contrato } from "../../Shared/Contrato";
@@ -20,6 +20,7 @@ export const Step4 = () => {
   const { state, dispatch } = useForm();
   const [errors, setErrors] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleCheckboxClick = () => {
     setShowModal(true);
@@ -44,6 +45,8 @@ export const Step4 = () => {
 
   const handleSubmitEnrollment = async () => {
     console.log("ENVIAR MATRICULA");
+    console.log("ENVIAR MATRICULA", state);
+
 
     if (!isChecked) {
       setErrors("Aceite é obrigatório");
@@ -66,6 +69,19 @@ export const Step4 = () => {
     setLoading(false);
     setLink(data.data.data.link);
     setTitle("Efetue o pagamento da matrícula.");
+  };
+
+  const handleBack = async () => {
+    console.log('step4', state)
+    // Redefinir todas as informações relevantes no estado
+    dispatch({ type: FormActions.setPlan_Id, payload: null });
+    dispatch({ type: FormActions.setPlanName, payload: "" });
+    dispatch({ type: FormActions.setAmount, payload: "" });
+    dispatch({ type: FormActions.setIsFamilia, payload: false });
+    dispatch({ type: FormActions.RemoverFamiliaStudent, payload: [] });
+
+    // Navegar de volta ao Step3
+    navigate("/matricula-online/step3");
   };
 
   return (
@@ -112,6 +128,11 @@ export const Step4 = () => {
               )}
             </div>
             <div className="buttons">
+              <Button
+                label="Voltar"
+                color="red"
+                onClick={handleBack}
+              />
               <Button
                 label="Confimar Matrícula"
                 color=""

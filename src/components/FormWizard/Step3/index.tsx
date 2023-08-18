@@ -41,25 +41,19 @@ export const Step3 = () => {
     navigate("/matricula-online/step2");
   };
 
-
   const handleNextStep = () => {
     console.log("State:", state);
     console.log("Is Family:", state.isFamilia);
 
-    if (selectedPlanValor !== null) {
-      if (state.isFamilia) {
-        if (novaPessoa !== "" && novaPessoaDataNascimento !== "") {
-          navigate("/matricula-online/step4");
-        } else {
-          alert("Por favor, insira os nomes dos integrantes da família antes de avançar.");
-        }
-      } else {
-        navigate("/matricula-online/step4");
-      }
-    } else {
+    if (state.isFamilia && state.familiaStudents.length === 0) {
+      alert("Por favor, insira os nomes dos integrantes da família antes de avançar.");
+    } else if (!state.isFamilia && selectedPlanValor === null) {
       alert("Por favor, selecione um plano antes de prosseguir.");
+    } else {
+      navigate("/matricula-online/step4");
     }
   };
+
 
   const handlePlanSelected = (id: number, amount: string, planName: string, isFamilia: boolean) => {
     console.log("Plano escolhido " + id);
@@ -81,14 +75,6 @@ export const Step3 = () => {
     setShowAddAnotherStudent(true);
   };
 
-  const AdicionarAluno1 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: FormActions.aluno1, payload: event.target.value });
-  };
-
-  const AdicionarAluno2 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: FormActions.aluno2, payload: event.target.value });
-  };
-
   const AdicionarAlunoAoPlano = () => {
     console.log("State:", state);
 
@@ -104,8 +90,7 @@ export const Step3 = () => {
     }
   };
 
-
-  const VoltarPlanFamlia = () => {
+  const VoltarPlanFamilia = () => {
     console.log("State:", state);
     console.log("Is Family: ", isFamilia);
 
@@ -114,9 +99,11 @@ export const Step3 = () => {
       dispatch({ type: FormActions.RemoverFamiliaStudent, payload: [] });
     }
 
+    // Atualiza o valor de isFamilia para false e reseta as entradas
     dispatch({ type: FormActions.setIsFamilia, payload: false });
     setShowAddAnotherStudent(false);
     setShowPlanList(true);
+    setSelectedPlanValor(null); // Adicione esta linha
   };
 
   const handleAddPerson = () => {
@@ -131,7 +118,6 @@ export const Step3 = () => {
       setNovaPessoaDataNascimento(""); // Reset da data após a adição
     }
   };
-
 
   const handleDeletePerson = (index: number) => {
     const updatedFamiliaStudents = state.familiaStudents.filter((_, i) => i !== index);
@@ -195,7 +181,7 @@ export const Step3 = () => {
             ))}
 
             <div className="buttons">
-              <Button label="Cancelar" color="red" onClick={VoltarPlanFamlia} />
+              <Button label="Cancelar" color="red" onClick={VoltarPlanFamilia} />
               <Button label="Avançar" color="#67CCC5" onClick={AdicionarAlunoAoPlano} />
             </div>
           </div>
