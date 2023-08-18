@@ -63,6 +63,10 @@ export const Step4 = () => {
       course_id: state.course_id,
       plan_id: state.plan_id,
       unit_id: state.unit_id,
+
+      isMenor: state.isMenor,
+      isFamilia: state.isFamilia,
+      familiaStudents: state.familiaStudents
     });
 
     setSuccess(true);
