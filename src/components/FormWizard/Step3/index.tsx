@@ -4,12 +4,17 @@ import { Header } from "../../Shared/Header";
 import { PlanItem } from "../../PlanItem";
 import { Button } from "../../Shared/Buttons";
 import { FormActions, useForm } from "../../../contexts/Form/FormContext";
+import { Erros } from "../../../types/Erros";
 
 import { Logo } from "../../Shared/Logo";
 import "./styles.css";
 import { Plan } from "../../../types/Plan";
 import api from "../../../services/api";
 import { format } from "date-fns";
+import InputMask from "react-input-mask";
+import { useUnidades } from "../../../hooks/useUnidades";
+import { Turmas } from "../../../types/Turmas";
+import { Scheduler } from "timers/promises";
 
 export const Step3 = () => {
   const navigate = useNavigate();
@@ -26,6 +31,7 @@ export const Step3 = () => {
 
   const [novaPessoa, setNovaPessoa] = useState("");
   const [novaPessoaDataNascimento, setNovaPessoaDataNascimento] = useState("");
+  const [courseNew, setCourseNew] = useState(0);
 
   useEffect(() => {
     fetchPlans();
@@ -53,7 +59,6 @@ export const Step3 = () => {
       navigate("/matricula-online/step4");
     }
   };
-
 
   const handlePlanSelected = (id: number, amount: string, planName: string, isFamilia: boolean) => {
     console.log("Plano escolhido " + id);
@@ -108,14 +113,25 @@ export const Step3 = () => {
 
   const handleAddPerson = () => {
     if (novaPessoa.trim() !== "" && novaPessoaDataNascimento.trim() !== "") {
-      // Dispatch para adicionar uma nova pessoa à lista com nome e data de nascimento
+      const familiaCourseId = state.course_id;
+
+      const newStudent = {
+        nome: novaPessoa,
+        birthdate: novaPessoaDataNascimento,
+        course_id: familiaCourseId
+      };
       dispatch({
         type: FormActions.addFamiliaStudent,
-        payload: { nome: novaPessoa, birthdate: novaPessoaDataNascimento }
+        payload: newStudent
       });
 
+      dispatch({ type: FormActions.setFamilyUnit, payload: "" });
+      dispatch({ type: FormActions.setFamilyCategory, payload: "" });
+
+      setSelectedPlanValor(null);
       setNovaPessoa("");
       setNovaPessoaDataNascimento(""); // Reset da data após a adição
+      setShowTurmas(false)
     }
   };
 
@@ -141,6 +157,73 @@ export const Step3 = () => {
     });
   };
 
+
+
+
+
+
+  type Scheduler = {
+    day: string;
+  };
+
+  const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
+  const [errors, setErrors] = useState<Erros>({});
+  const { units } = useUnidades();
+  const [turmas, setTurmas] = useState<Turmas[]>([]);
+  const [scheduleInfo, setScheduleInfo] = useState<{
+    [key: number]: Scheduler[];
+  }>({});
+  const [showTurmas, setShowTurmas] = useState(false);
+
+  const handleFamiliaUnidadeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch({ type: FormActions.setFamilyUnit, payload: e.target.value });
+  }
+
+  const handleFamiliaCategoriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch({ type: FormActions.setFamilyCategory, payload: e.target.value });
+  };
+
+  const handleFamiliaCourseSelected = (id: number, className: string) => {
+    setSelectedPlan(id);
+    dispatch({ type: FormActions.setCourse_Id, payload: id });
+    dispatch({ type: FormActions.setClassName, payload: className });
+  };
+
+  const fetchTurmas = async () => {
+    let url = `/courses?unit_id=${state.unit_id}&category=${state.category}&`;
+    const data = await api.get(url);
+    console.log("Oque tem", data.data.data);
+
+    setTurmas(data.data.data);
+    const scheduleData = data.data.data.reduce(
+      (acc: { [key: number]: { day: string }[] }, curr: Turmas) => {
+        acc[curr.id] = curr.schedules;
+        return acc;
+      },
+      {}
+    );
+    setScheduleInfo(scheduleData);
+
+    if (data.data.data.length > 0) {
+      setShowTurmas(true);
+    }
+  };
+
+  const confirmaTurmas = () => {
+    if (state.familyUnit !== 0 && state.familyCategory !== 0) {
+      fetchTurmas();
+    } else {
+      if (state.unit_id === 0) {
+
+      }
+      if (state.category === "") {
+
+      }
+    }
+  };
+
+
+
   return (
     <div className="container">
       <Logo />
@@ -158,12 +241,57 @@ export const Step3 = () => {
               onChange={(e) => setNovaPessoa(e.target.value)}
               placeholder="Nome da pessoa"
             />
-            <input
-              type="date"
+            <InputMask
+              mask="99/99/9999"
+              type="text"
               value={novaPessoaDataNascimento}
               onChange={(e) => setNovaPessoaDataNascimento(e.target.value)}
               placeholder="Data de nascimento"
             />
+
+            <label>SELECIONE UMA UNIDADE</label>
+            {errors && <span className="error-message">{errors.unit_id}</span>}
+            <select value={state.familyUnit} onChange={handleFamiliaUnidadeChange}>
+              <option>SELECIONE</option>
+
+              {units.map((item, key) => (
+                <option value={item.id} key={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+            <label>SELECIONE UMA CATEGORIA</label>
+            {errors && <span className="error-message">{errors.category}</span>}
+            <select value={state.familyCategory} onChange={handleFamiliaCategoriaChange}>
+              <option value="">SELECIONE</option>
+              <option value="kids">Crianças</option>
+              <option value="teens">Adolecentes</option>
+              <option value="adult">Adultos</option>
+              <option value="competitive">Competitivo</option>
+            </select>
+
+            <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
+
+            {showTurmas && (
+              <>
+                <p className="mensagemTurma">Selecione sua turma</p>
+                <div className="courses-wrapper">
+                  {turmas.map((item, key) => (
+                    <PlanItem
+                      key={item.id}
+                      hour={scheduleInfo[item.id]?.map(
+                        (schedule) => schedule.day
+                      )}
+                      title={item.name}
+                      amount={item.unit}
+                      isSelected={selectedPlan === item.id}
+                      onSelect={() => handleFamiliaCourseSelected(item.id, item.name)}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+
             <Button onClick={handleAddPerson} color="grey" label="Adicionar" />
 
             {state.familiaStudents.map((person, index) => (
@@ -171,13 +299,14 @@ export const Step3 = () => {
                 key={index}>
                 {person.nome}
                 <input
-                  type="date"
+                  type="text"
                   value={person.birthdate}
                   onChange={(e) => handlePersonDataNascimentoChange(index, e.target.value)}
                 />
-                <button onClick={() => handleDeletePerson(index)}>Excluir</button>
 
+                <button onClick={() => handleDeletePerson(index)}>Excluir</button>
               </div>
+
             ))}
 
             <div className="buttons">
@@ -224,4 +353,5 @@ export const Step3 = () => {
       </div>
     </div>
   );
-};
+}
+

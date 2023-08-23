@@ -12,9 +12,9 @@ type State = {
   isMenor: boolean;
 
   isFamilia: boolean;
-  familiaStudents: { nome: string; birthdate: string }[];
-  aluno1: string;
-  aluno2: string;
+  familiaStudents: { nome: string; birthdate: string; course_id: number }[];
+  familyUnit: number;
+  familyCategory: number;
 
   resp_name: string;
   resp_phone: string;
@@ -22,6 +22,7 @@ type State = {
   resp_email: string;
 
   category: string;
+
   course_id: number;
 
   plan_id: number;
@@ -63,8 +64,8 @@ const initialData: State = {
   isMenor: false,
   isFamilia: false,
   familiaStudents: [],
-  aluno1: '',
-  aluno2: '',
+  familyUnit: 0,
+  familyCategory: 0,
 
 
 
@@ -107,8 +108,8 @@ export enum FormActions {
   setIsFamilia,
   addFamiliaStudent,
   RemoverFamiliaStudent,
-  aluno1,
-  aluno2,
+  setFamilyUnit,
+  setFamilyCategory,
 
 
   setResp_Name,
@@ -164,11 +165,11 @@ const formReducer = (state: State, action: Action) => {
     case FormActions.RemoverFamiliaStudent:
       return { ...state, familiaStudents: action.payload };
 
-    case FormActions.aluno1:
-      return { ...state, aluno1: action.payload };
+    case FormActions.setFamilyUnit:
+      return { ...state, familyUnit: action.payload };
 
-    case FormActions.aluno2:
-      return { ...state, aluno2: action.payload };
+    case FormActions.setFamilyCategory:
+      return { ...state, familyCategory: action.payload };
 
     case FormActions.setResp_Name:
       return { ...state, resp_name: action.payload };
@@ -222,6 +223,7 @@ export const FormProvider = ({ children }: FormProviderProps) => {
 
 // Context Hook
 export const useForm = () => {
+
   const context = useContext(FormContext);
   if (context === undefined) {
     throw new Error("useForm precisa ser usado dentro do FormProvider");
