@@ -13,6 +13,7 @@ import InputMask from "react-input-mask";
 import { useUnidades } from "../../../hooks/useUnidades";
 import { Turmas } from "../../../types/Turmas";
 import { Scheduler } from "timers/promises";
+import { Erros } from "../../../types/Erros";
 
 export const Step3 = () => {
   const navigate = useNavigate();
