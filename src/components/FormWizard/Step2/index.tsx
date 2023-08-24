@@ -72,13 +72,12 @@ export const Step2 = () => {
       navigate("/matricula-online/step3");
     } else {
       if (state.unit_id === 0) {
-        newErrors.unit_id = "SELECIONE A UNIDADE";
+        newErrors.unit_id = "Escolha a Unidade";
       }
       if (state.category === "") {
-        newErrors.category = "SELECIONE A CATEGORIA";
+        newErrors.category = "Escolha a categoria";
       }
       setErrors(newErrors);
-      console.log(handleNextStep);
     }
   };
 
@@ -107,10 +106,10 @@ export const Step2 = () => {
       fetchTurmas();
     } else {
       if (state.unit_id === 0) {
-        newErrors.unit_id = "SELECIONE A UNIDADE";
+        newErrors.unit_id = "Escolha uma Unidade";
       }
       if (state.category === "") {
-        newErrors.category = "SELECIONE A CATEGORIA";
+        newErrors.category = "Selecione uma categoria";
       }
     }
   };
@@ -126,14 +125,14 @@ export const Step2 = () => {
       <div className="header-step2">
         <Logo />
         <Header
-          title="Preencha os dados abaixo"
-          subtitle="Certifique-se de selecionar corretamente"
+          title="Selecione uma Turma"
+          subtitle="Escolha uma unidade e uma categoria"
         />
       </div>
       <div className="form-step2">
         <div className="testando">
           <div className="form-units">
-            <label>SELECIONE UMA UNIDADE</label>
+            <label>Escolha uma Unidade</label>
             {errors && <span className="error-message">{errors.unit_id}</span>}
             <select value={state.unit_id} onChange={handleUnidadeChange}>
               <option>SELECIONE</option>
@@ -144,7 +143,7 @@ export const Step2 = () => {
                 </option>
               ))}
             </select>
-            <label>SELECIONE UMA CATEGORIA</label>
+            <label>Escolha uma Categoria</label>
             {errors && <span className="error-message">{errors.category}</span>}
             <select value={state.category} onChange={handleCategoriaChange}>
               <option value="">SELECIONE</option>
@@ -159,7 +158,7 @@ export const Step2 = () => {
 
           {showTurmas && (
             <>
-              <p className="mensagemTurma">Selecione sua turma</p>
+              <span className="mensagemTurma">Selecione sua turma</span>
               <div className="courses-wrapper">
                 {turmas.map((item, key) => (
                   <PlanItem

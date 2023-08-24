@@ -7,10 +7,6 @@ import { Logo } from "../../Shared/Logo";
 import { Button } from "../../Shared/Buttons";
 import InputMask from "react-input-mask";
 import { Erros } from "../../../types/Erros";
-import { parse, isValid, getYear, getMonth, getDate } from "date-fns";
-import { format } from "date-fns";
-
-
 
 import "./styles.css";
 
@@ -78,21 +74,19 @@ export const Step1 = () => {
   };
 
   const validatePhone = (phone: string): boolean => {
-    const cleanPhone = phone.replace(/\D/g, '');
+    const cleanPhone = phone.replace(/\D/g, "");
     return cleanPhone.length === 11;
   };
 
   const validateCpf = (cpf: string): boolean => {
-    const cleanCpf = cpf.replace(/\D/g, '');
+    const cleanCpf = cpf.replace(/\D/g, "");
     return cleanCpf.length === 11;
   };
 
   const validateRespCpf = (resp_cpf: string): boolean => {
-    const cleanRespCpf = resp_cpf.replace(/\D/g, '');
+    const cleanRespCpf = resp_cpf.replace(/\D/g, "");
     return cleanRespCpf.length === 11;
   };
-
-
 
   const handleCpfChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: FormActions.setCpf, payload: e.target.value });
@@ -116,7 +110,7 @@ export const Step1 = () => {
 
   const handleRespEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: FormActions.setResp_Email, payload: e.target.value });
-  }
+  };
 
   const handleSubmit = () => {
     const newErrors: Erros = {};
@@ -141,20 +135,20 @@ export const Step1 = () => {
           navigate("/matricula-online/step2");
         } else {
           if (state.resp_name === "") {
-            newErrors.resp_name = "PREENCHA O NOME DO RESPONSÁVEL";
+            newErrors.resp_name = "Nome do responsável obrigatório";
           }
           if (state.resp_cpf === "") {
-            newErrors.resp_cpf = "PREENCHA O CPF DO RESPONSÁVEL";
+            newErrors.resp_cpf = "CPF do responsável obrigatório";
           } else if (!validateRespCpf(state.resp_cpf)) {
-            newErrors.resp_cpf = "CPF DO RESPONSÁVEL INVÁLIDO";
+            newErrors.resp_cpf = "CPF do responsável inválido";
           }
           if (state.resp_phone === "") {
-            newErrors.resp_phone = "PREENCHA O TELEFONE DO RESPONSÁVEL";
+            newErrors.resp_phone = "Telefone do responsável obrigatório";
           } else if (!validatePhone(state.resp_phone)) {
-            newErrors.resp_phone = "TELEFONE DO RESPONSÁVEL INVÁLIDO";
+            newErrors.resp_phone = "Telfone do responsável inválido";
           }
           if (state.resp_email === "") {
-            newErrors.resp_email = "PREENCHA O E-MAIL DO RESPONSÁVEL";
+            newErrors.resp_email = "E-mail do responsável obrigatório";
           }
         }
       } else {
@@ -162,23 +156,23 @@ export const Step1 = () => {
           navigate("/matricula-online/step2");
         } else {
           if (state.cpf === "" && state.email === "") {
-            newErrors.cpf = "PREENCHA SEU CPF";
+            newErrors.cpf = "CPF obrigatório";
           } else if (!validateCpf(state.cpf)) {
-            newErrors.cpf = "CPF INVÁLIDO";
+            newErrors.cpf = "CPF Inválido";
           }
         }
       }
     } else {
       if (state.name === "") {
-        newErrors.name = "PREENCHA SEU NOME";
+        newErrors.name = "Campo nome é obrigatório";
       }
       if (state.phone === "") {
-        newErrors.phone = "PREENCHA SEU TELEFONE";
+        newErrors.phone = "Campo telefone é obrigatório";
       } else if (!validatePhone(state.phone)) {
-        newErrors.phone = "TELEFONE INVÁLIDO";
+        newErrors.phone = "Telfone inválido";
       }
       if (state.birth_date === "") {
-        newErrors.birth_date = "PREENCHA SUA DATA DE NASCIMENTO";
+        newErrors.birth_date = "Campo data de nascimento é obrigatório";
       }
     }
     setErrors(newErrors);
@@ -191,7 +185,7 @@ export const Step1 = () => {
       <div className="form-wrapper">
         {errors && <span className="error-message">{errors.name}</span>}
         <input
-          placeholder="DIGITE SEU NOME"
+          placeholder="Seu Nome"
           type="text"
           value={state.name}
           onChange={handleNameChange}
@@ -200,7 +194,7 @@ export const Step1 = () => {
         {errors && <span className="error-message">{errors.phone}</span>}
         <InputMask
           mask="(99) 99999-9999"
-          placeholder="DIGITE SEU TELEFONE"
+          placeholder="Seu Telefone"
           type="tel"
           value={state.phone}
           onChange={handleTelefoneChange}
@@ -210,18 +204,17 @@ export const Step1 = () => {
         {errors && <span className="error-message">{errors.birth_date}</span>}
         <input
           type="date"
-          placeholder="DATA DE NASCIMENTO"
+          placeholder="Sua Data de Nascimento"
           value={state.birth_date}
           onChange={handleIdadeChange}
         />
         {errors && <span className="error-message">{errors.cpf}</span>}
         <div className="form-wrapper">
-
           {!isMenor && (
             <div className="form-isFalse">
               {errors && <span className="error-message">{errors.email}</span>}
               <input
-                placeholder="DIGITE SEU EMAIL"
+                placeholder="Seu e-mail"
                 type="email"
                 value={state.email}
                 onChange={handleEmailChange}
@@ -229,7 +222,7 @@ export const Step1 = () => {
               {errors && <span className="error-message">{errors.cpf}</span>}
               <InputMask
                 mask="999.999.999-99"
-                placeholder="DIGITE SEU CPF"
+                placeholder="Seu CPF"
                 type="text"
                 value={state.cpf}
                 onChange={handleCpfChange}
@@ -240,9 +233,11 @@ export const Step1 = () => {
         </div>
         {isMenor && (
           <div className="form-wrapper">
-            {errors && <span className="error-message">{errors.resp_name}</span>}
+            {errors && (
+              <span className="error-message">{errors.resp_name}</span>
+            )}
             <input
-              placeholder="NOME DO RESPONSÁVEL"
+              placeholder="Nome do responsável"
               type="text"
               value={state.resp_name}
               onChange={handleRespNameChange}
@@ -250,22 +245,26 @@ export const Step1 = () => {
             {errors && <span className="error-message">{errors.resp_cpf}</span>}
             <InputMask
               mask="999.999.999-99"
-              placeholder="DIGITE SEU CPF "
+              placeholder="CPF do responsável"
               type="text"
               value={state.resp_cpf}
               onChange={handleRespCpfChange}
             />
-            {errors && <span className="error-message">{errors.resp_phone}</span>}
+            {errors && (
+              <span className="error-message">{errors.resp_phone}</span>
+            )}
             <InputMask
               mask="(99) 99999-9999"
-              placeholder="TELEFONE DO RESPONSÁVEL"
+              placeholder="Telefone do responsável"
               type="tel"
               value={state.resp_phone}
               onChange={handleRespPhoneChange}
             />
-            {errors && <span className="error-message">{errors.resp_email}</span>}
+            {errors && (
+              <span className="error-message">{errors.resp_email}</span>
+            )}
             <input
-              placeholder="DIGITE SEU EMAIL"
+              placeholder="E-mail do responsável"
               type="email"
               value={state.resp_email}
               onChange={handleRespEmailChange}

@@ -2,9 +2,9 @@ import { ChangeEvent, useState } from "react";
 import { Button } from "../../Shared/Buttons";
 import { Header } from "../../Shared/Header";
 import { Logo } from "../../Shared/Logo";
-import { useForm } from "../../../contexts/Form/FormContext";
+import { FormActions, useForm } from "../../../contexts/Form/FormContext";
 import { format } from "date-fns";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./styles.css";
 import { Contrato } from "../../Shared/Contrato";
@@ -20,9 +20,11 @@ export const Step4 = () => {
   const { state, dispatch } = useForm();
   const [errors, setErrors] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleCheckboxClick = () => {
     setShowModal(true);
+    console.log("dataaa", state);
   };
 
   const handleAcceptTerms = () => {
@@ -33,7 +35,7 @@ export const Step4 = () => {
   const formatBirthDate = (birthDate: string): string => {
     const [year, month, day] = birthDate.split("-").map(Number);
     const date = new Date(year, month - 1, day);
-    console.log('dataaa', date);
+    console.log("dataaa", date);
     return format(date, "dd/MM/yyyy");
   };
 
@@ -43,6 +45,7 @@ export const Step4 = () => {
 
   const handleSubmitEnrollment = async () => {
     console.log("ENVIAR MATRICULA");
+    console.log("ENVIAR MATRICULA", state);
 
     if (!isChecked) {
       setErrors("Aceite é obrigatório");
@@ -59,12 +62,29 @@ export const Step4 = () => {
       course_id: state.course_id,
       plan_id: state.plan_id,
       unit_id: state.unit_id,
+
+      isMenor: state.isMenor,
+      isFamilia: state.isFamilia,
+      familiaStudents: state.familiaStudents,
     });
 
     setSuccess(true);
     setLoading(false);
     setLink(data.data.data.link);
     setTitle("Efetue o pagamento da matrícula.");
+  };
+
+  const handleBack = async () => {
+    console.log("step4", state);
+    // Redefinir todas as informações relevantes no estado
+    dispatch({ type: FormActions.setPlan_Id, payload: null });
+    dispatch({ type: FormActions.setPlanName, payload: "" });
+    dispatch({ type: FormActions.setAmount, payload: "" });
+    dispatch({ type: FormActions.setIsFamilia, payload: false });
+    dispatch({ type: FormActions.RemoverFamiliaStudent, payload: [] });
+
+    // Navegar de volta ao Step3
+    navigate("/matricula-online/step3");
   };
 
   return (
@@ -92,7 +112,14 @@ export const Step4 = () => {
               <InfoDetail label={"Unidade:"} value={state.unitName} />
               <InfoDetail label={"Turma:"} value={state.className} />
               <InfoDetail label={"Plano:"} value={state.planName} />
-              <InfoDetail label={"Valor do plano:"} value={state.amount} />
+              <InfoDetail
+                label={"Valor do plano:"}
+                value={
+                  state.isFamilia
+                    ? "Será calculado baseado na quantidade de alunos"
+                    : state.amount
+                }
+              />
             </div>
 
             <div className="terms">
@@ -111,6 +138,7 @@ export const Step4 = () => {
               )}
             </div>
             <div className="buttons">
+              <Button label="Voltar" color="red" onClick={handleBack} />
               <Button
                 label="Confimar Matrícula"
                 color=""

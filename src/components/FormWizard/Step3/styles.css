@@ -11,11 +11,54 @@
     width: 80%;
 }
 
+.buttons-familia {
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: center;
+    justify-content: center;
+}
 
+.add-student-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-/* .buttons {
-    margin-top: 20px;
+.add-student-wrapper input {
+    background-color: white;
+    border: none;
+    height: 45px;
+    width: 280px;
+    margin-bottom: 20px;
+    position: relative;
+    border-radius: 8px;
+    color: black;
+}
+
+.student-familia {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-} */
+    text-align: left;
+    width: 100%;
+    /* margin: 10px; */
+    margin-top: 15px;
+}
+
+.student-familia button {
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 25px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.student {
+    display: flex;
+    flex-direction: column;
+}

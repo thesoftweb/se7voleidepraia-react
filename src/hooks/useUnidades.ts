@@ -8,7 +8,7 @@ interface Unit {
 
 export const useUnidades = () => {
     const [units, setUnits] = useState<Unit[]>([]);
-    
+
     useEffect(() => {
         api.get('/units')
             .then((data) => {
