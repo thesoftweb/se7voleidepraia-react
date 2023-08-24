@@ -24,7 +24,7 @@ export const Step4 = () => {
 
   const handleCheckboxClick = () => {
     setShowModal(true);
-    console.log('dataaa', state);
+    console.log("dataaa", state);
   };
 
   const handleAcceptTerms = () => {
@@ -35,7 +35,7 @@ export const Step4 = () => {
   const formatBirthDate = (birthDate: string): string => {
     const [year, month, day] = birthDate.split("-").map(Number);
     const date = new Date(year, month - 1, day);
-    console.log('dataaa', date);
+    console.log("dataaa", date);
     return format(date, "dd/MM/yyyy");
   };
 
@@ -46,7 +46,6 @@ export const Step4 = () => {
   const handleSubmitEnrollment = async () => {
     console.log("ENVIAR MATRICULA");
     console.log("ENVIAR MATRICULA", state);
-
 
     if (!isChecked) {
       setErrors("Aceite é obrigatório");
@@ -66,7 +65,7 @@ export const Step4 = () => {
 
       isMenor: state.isMenor,
       isFamilia: state.isFamilia,
-      familiaStudents: state.familiaStudents
+      familiaStudents: state.familiaStudents,
     });
 
     setSuccess(true);
@@ -76,7 +75,7 @@ export const Step4 = () => {
   };
 
   const handleBack = async () => {
-    console.log('step4', state)
+    console.log("step4", state);
     // Redefinir todas as informações relevantes no estado
     dispatch({ type: FormActions.setPlan_Id, payload: null });
     dispatch({ type: FormActions.setPlanName, payload: "" });
@@ -113,7 +112,14 @@ export const Step4 = () => {
               <InfoDetail label={"Unidade:"} value={state.unitName} />
               <InfoDetail label={"Turma:"} value={state.className} />
               <InfoDetail label={"Plano:"} value={state.planName} />
-              <InfoDetail label={"Valor do plano:"} value={state.amount} />
+              <InfoDetail
+                label={"Valor do plano:"}
+                value={
+                  state.isFamilia
+                    ? "Será calculado baseado na quantidade de alunos"
+                    : state.amount
+                }
+              />
             </div>
 
             <div className="terms">
@@ -132,11 +138,7 @@ export const Step4 = () => {
               )}
             </div>
             <div className="buttons">
-              <Button
-                label="Voltar"
-                color="red"
-                onClick={handleBack}
-              />
+              <Button label="Voltar" color="red" onClick={handleBack} />
               <Button
                 label="Confimar Matrícula"
                 color=""

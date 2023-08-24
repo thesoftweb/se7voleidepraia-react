@@ -38,10 +38,12 @@
 
 .student-familia {
     display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin: 15px;
-    margin-top: 25px;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    width: 100%;
+    /* margin: 10px; */
+    margin-top: 15px;
 }
 
 .student-familia button {
@@ -54,4 +56,9 @@
     border-radius: 8px;
     cursor: pointer;
 
+}
+
+.student {
+    display: flex;
+    flex-direction: column;
 }

@@ -14,7 +14,7 @@ type State = {
   isFamilia: boolean;
   familiaStudents: { nome: string; birthdate: string; course_id: number }[];
   familyUnit: number;
-  familyCategory: number;
+  familyCategory: string;
 
   resp_name: string;
   resp_phone: string;
@@ -65,10 +65,7 @@ const initialData: State = {
   isFamilia: false,
   familiaStudents: [],
   familyUnit: 0,
-  familyCategory: 0,
-
-
-
+  familyCategory: "",
 
   resp_name: "",
   resp_phone: "",
@@ -110,7 +107,6 @@ export enum FormActions {
   RemoverFamiliaStudent,
   setFamilyUnit,
   setFamilyCategory,
-
 
   setResp_Name,
   setResp_Telefone,
@@ -160,7 +156,10 @@ const formReducer = (state: State, action: Action) => {
       return { ...state, isFamilia: action.payload };
 
     case FormActions.addFamiliaStudent:
-      return { ...state, familiaStudents: [...state.familiaStudents, action.payload] };
+      return {
+        ...state,
+        familiaStudents: [...state.familiaStudents, action.payload],
+      };
 
     case FormActions.RemoverFamiliaStudent:
       return { ...state, familiaStudents: action.payload };
@@ -223,7 +222,6 @@ export const FormProvider = ({ children }: FormProviderProps) => {
 
 // Context Hook
 export const useForm = () => {
-
   const context = useContext(FormContext);
   if (context === undefined) {
     throw new Error("useForm precisa ser usado dentro do FormProvider");
