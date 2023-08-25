@@ -13,6 +13,7 @@ import InputMask from "react-input-mask";
 import { useUnidades } from "../../../hooks/useUnidades";
 import { Turmas } from "../../../types/Turmas";
 import { Scheduler } from "timers/promises";
+import { Erros } from "../../../types/Erros";
 
 export const Step3 = () => {
   const navigate = useNavigate();
@@ -40,6 +41,8 @@ export const Step3 = () => {
 
   const [unitFamilySel, setUnityFamilySel] = useState("");
   const [courseFamilySel, setCourseyFamilySel] = useState("");
+  const [turmasCarregadas, setTurmasCarregadas] = useState(false);
+
 
   useEffect(() => {
     fetchPlans();
@@ -52,6 +55,11 @@ export const Step3 = () => {
   }
 
   const handlePrevStep = () => {
+    console.log("State:", state);
+    dispatch({ type: FormActions.setUnit_Id, payload: null });
+    dispatch({ type: FormActions.setCategory, payload: '' });
+
+
     navigate("/matricula-online/step2");
   };
 
@@ -132,9 +140,13 @@ export const Step3 = () => {
       // const familiaCourseId = state.course_id;
       const course_id = courseNew;
 
+      const [day, month, year] = novaPessoaDataNascimento.split("/");
+      const formattedDate = `${year}-${month}-${day}`;
+
+
       const newStudent = {
         nome: novaPessoa,
-        birthdate: novaPessoaDataNascimento,
+        birthdate: formattedDate,
         course_id: course_id,
       };
 
@@ -142,7 +154,7 @@ export const Step3 = () => {
         type: FormActions.addFamiliaStudent,
         payload: {
           nome: novaPessoa,
-          birthdate: novaPessoaDataNascimento,
+          birthdate: formattedDate,
           course_id: course_id,
         },
       });
@@ -150,6 +162,7 @@ export const Step3 = () => {
       //talvez nao precise dos dois dispatchs abaixo
       dispatch({ type: FormActions.setFamilyUnit, payload: "" });
       dispatch({ type: FormActions.setFamilyCategory, payload: "" });
+
 
       setSelectedPlanValor(null);
       setNovaPessoa("");
@@ -231,6 +244,8 @@ export const Step3 = () => {
     if (data.data.data.length > 0) {
       setShowTurmas(true);
     }
+    setTurmasCarregadas(true);
+
   };
 
   const confirmaTurmas = () => {
@@ -242,6 +257,16 @@ export const Step3 = () => {
       if (state.category === "") {
       }
     }
+  };
+
+  const getTurmaNome = (course_id: number) => {
+    const turma = turmas.find((turma) => turma.id === course_id);
+
+    if (!turmasCarregadas) {
+      return "Carregando turmas...";
+    }
+
+    return turma ? turma.name : "Turma não encontrada";
   };
 
   return (
@@ -328,8 +353,10 @@ export const Step3 = () => {
                 <div className="student">
                   <span>{person.nome}</span>
                   {/* //TODO: colocar birthdate e nome da turma */}
-                  {/* <span>{person.birthdate}</span>
-                  <span>{person.course_id} seria a turma</span> */}
+                  <span>{person.birthdate}</span>
+                  <span>
+                    {turmasCarregadas ? getTurmaNome(person.course_id) : ""}
+                  </span>
                 </div>
                 <button onClick={() => handleDeletePerson(index)}>x</button>
               </div>

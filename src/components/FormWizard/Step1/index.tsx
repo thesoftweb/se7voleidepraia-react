@@ -174,6 +174,12 @@ export const Step1 = () => {
       if (state.birth_date === "") {
         newErrors.birth_date = "Campo data de nascimento é obrigatório";
       }
+      if (state.email === "") {
+        newErrors.email = "Campo e-mail é obrigatório";
+      }
+      if (state.cpf === "") {
+        newErrors.cpf = "Campo cpf é obrigatório";
+      }
     }
     setErrors(newErrors);
   };
@@ -208,7 +214,7 @@ export const Step1 = () => {
           value={state.birth_date}
           onChange={handleIdadeChange}
         />
-        {errors && <span className="error-message">{errors.cpf}</span>}
+
         <div className="form-wrapper">
           {!isMenor && (
             <div className="form-isFalse">
@@ -233,9 +239,7 @@ export const Step1 = () => {
         </div>
         {isMenor && (
           <div className="form-wrapper">
-            {errors && (
-              <span className="error-message">{errors.resp_name}</span>
-            )}
+            {errors && (<span className="error-message">{errors.resp_name}</span>)}
             <input
               placeholder="Nome do responsável"
               type="text"

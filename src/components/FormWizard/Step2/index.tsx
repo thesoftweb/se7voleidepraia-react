@@ -26,6 +26,7 @@ export const Step2 = () => {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [errors, setErrors] = useState<Erros>({});
   const [showTurmas, setShowTurmas] = useState(false);
+  const [isSelectionComplete, setIsSelectionComplete] = useState(false);
 
   const { units } = useUnidades();
 
@@ -49,19 +50,25 @@ export const Step2 = () => {
     if (selectedUnit) {
       dispatch({ type: FormActions.setUnitName, payload: selectedUnit.name });
     }
+    setIsSelectionComplete(state.category !== "" && e.target.value !== "0");
   };
 
   const handleCategoriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: FormActions.setCategory, payload: e.target.value });
+
+    setIsSelectionComplete(state.unit_id !== 0 && e.target.value !== "");
   };
 
   const handlePrevStep = () => {
+    dispatch({ type: FormActions.setUnit_Id, payload: null });
+    dispatch({ type: FormActions.setCategory, payload: '' });
     navigate("/matricula-online");
     console.log("PREV STEP");
   };
 
   const newErrors: Erros = {};
   const handleNextStep = () => {
+    console.log("State:", state);
     if (
       state.unit_id !== 0 &&
       state.course_id !== 0 &&
@@ -71,6 +78,7 @@ export const Step2 = () => {
     ) {
       navigate("/matricula-online/step3");
     } else {
+
       if (state.unit_id === 0) {
         newErrors.unit_id = "Escolha a Unidade";
       }
@@ -102,16 +110,7 @@ export const Step2 = () => {
   };
 
   const confirmaTurmas = () => {
-    if (state.unit_id !== 0 && state.category !== "") {
-      fetchTurmas();
-    } else {
-      if (state.unit_id === 0) {
-        newErrors.unit_id = "Escolha uma Unidade";
-      }
-      if (state.category === "") {
-        newErrors.category = "Selecione uma categoria";
-      }
-    }
+    fetchTurmas();
   };
 
   const handleCourseSelected = (id: number, className: string) => {
@@ -153,8 +152,9 @@ export const Step2 = () => {
               <option value="competitive">Competitivo</option>
             </select>
           </div>
-
-          <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
+          {isSelectionComplete && (
+            <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
+          )}
 
           {showTurmas && (
             <>
