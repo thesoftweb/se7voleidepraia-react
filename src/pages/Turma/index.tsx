@@ -27,7 +27,7 @@ export const Turma = () => {
   };
 
   const handleClick = (item: Turmas) => {
-    navigate(`/alunos?course=${item.id}`);
+    navigate(`/alunos?course=${item.id}&name=${item.name}`);
   };
 
   return (
