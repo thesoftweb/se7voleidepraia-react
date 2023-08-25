@@ -143,7 +143,6 @@ export const Step3 = () => {
       const [day, month, year] = novaPessoaDataNascimento.split("/");
       const formattedDate = `${year}-${month}-${day}`;
 
-
       const newStudent = {
         nome: novaPessoa,
         birthdate: formattedDate,
@@ -246,6 +245,13 @@ export const Step3 = () => {
     }
     setTurmasCarregadas(true);
 
+  };
+
+  const formatBirthDate = (birthdate: string): string => {
+    const [year, month, day] = birthdate.split("-").map(Number);
+    const date = new Date(year, month - 1, day);
+    console.log("dataaa", date);
+    return format(date, "dd/MM/yyyy");
   };
 
   const confirmaTurmas = () => {
@@ -352,8 +358,8 @@ export const Step3 = () => {
               <div className="student-familia" key={index}>
                 <div className="student">
                   <span>{person.nome}</span>
-                  {/* //TODO: colocar birthdate e nome da turma */}
-                  <span>{person.birthdate}</span>
+
+                  <span>{formatBirthDate(person.birthdate)}</span>
                   <span>
                     {turmasCarregadas ? getTurmaNome(person.course_id) : ""}
                   </span>
