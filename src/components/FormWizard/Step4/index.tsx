@@ -74,6 +74,28 @@ export const Step4 = () => {
     setTitle("Efetue o pagamento da matrícula.");
   };
 
+  const handleGetAmount = () => {
+    let valorString = state.amount;
+
+    // Remover caracteres não numéricos e substituir a vírgula por ponto
+    let valorNumerico = parseFloat(
+      valorString.replace(/[^\d,]/g, "").replace(",", ".")
+    );
+
+    // Verificar se o valor é um número válido
+    if (!isNaN(valorNumerico)) {
+      // Agora você pode multiplicar o valor
+      let multiplicador = state.familiaStudents.length + 1;
+      let resultado = valorNumerico * multiplicador;
+      return resultado.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+    } else {
+      return "0.00";
+    }
+  };
+
   const handleBack = async () => {
     console.log("step4", state);
     // Redefinir todas as informações relevantes no estado
@@ -114,11 +136,7 @@ export const Step4 = () => {
               <InfoDetail label={"Plano:"} value={state.planName} />
               <InfoDetail
                 label={"Valor do plano:"}
-                value={
-                  state.isFamilia
-                    ? "Será calculado baseado na quantidade de alunos"
-                    : state.amount
-                }
+                value={state.isFamilia ? handleGetAmount() : state.amount}
               />
             </div>
 

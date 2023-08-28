@@ -87,20 +87,26 @@ export const Step3 = () => {
     planName: string,
     isFamilia: boolean
   ) => {
-    console.log("Plano escolhido " + id);
     setSelectedPlanValor(id);
 
-    dispatch({ type: FormActions.setPlan_Id, payload: id });
-    dispatch({ type: FormActions.setPlanName, payload: planName });
-    dispatch({ type: FormActions.setAmount, payload: amount });
-    dispatch({ type: FormActions.setIsFamilia, payload: isFamilia });
+    if (isFamilia) {
+      dispatch({ type: FormActions.setPlan_Id, payload: id });
+      dispatch({ type: FormActions.setPlanName, payload: planName });
+      dispatch({ type: FormActions.setAmount, payload: amount });
+      dispatch({ type: FormActions.setIsFamilia, payload: isFamilia });
+      setShowPlanList(false);
+      handleAddAnotherStudent();
+    } else {
+      dispatch({ type: FormActions.setPlan_Id, payload: id });
+      dispatch({ type: FormActions.setPlanName, payload: planName });
+      dispatch({ type: FormActions.setAmount, payload: amount });
+      dispatch({ type: FormActions.setIsFamilia, payload: isFamilia });
+    }
   };
 
   const handleAddAnotherStudent = () => {
     setFamiliaStudentsInputs([...familiaStudentsInputs, ""]);
-    handlePlanSelected(4, "", "Plano Família", true);
     dispatch({ type: FormActions.setIsFamilia, payload: true });
-
     setShowPlanList(false);
     setShowAddAnotherStudent(true);
   };
@@ -384,12 +390,6 @@ export const Step3 = () => {
 
         {showPlanList && (
           <div className="plan-step3">
-            <PlanItem
-              title={"Plano Familia"}
-              amount={"Valor a ser definido"}
-              onSelect={handleAddAnotherStudent}
-            />
-            {/* <Button label="Plano Família" color="blue" onClick={handleAddAnotherStudent} /> */}
             {isLoading && (
               <>
                 <p>Carregando Planos...</p>
@@ -404,7 +404,12 @@ export const Step3 = () => {
                   amount={item.amount}
                   isSelected={selectedPlanValor === item.id}
                   onSelect={() =>
-                    handlePlanSelected(item.id, item.amount, item.name, false)
+                    handlePlanSelected(
+                      item.id,
+                      item.amount,
+                      item.name,
+                      item.is_familia
+                    )
                   }
                 />
               ))}
