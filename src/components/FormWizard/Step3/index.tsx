@@ -30,6 +30,7 @@ export const Step3 = () => {
   const [novaPessoa, setNovaPessoa] = useState("");
   const [novaPessoaDataNascimento, setNovaPessoaDataNascimento] = useState("");
   const [courseNew, setCourseNew] = useState(0);
+  const [className, setClassName] = useState("");
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [errors, setErrors] = useState<Erros>({});
   const { units } = useUnidades();
@@ -41,6 +42,11 @@ export const Step3 = () => {
 
   const [unitFamilySel, setUnityFamilySel] = useState("");
   const [courseFamilySel, setCourseyFamilySel] = useState("");
+  const [turmasCarregadas, setTurmasCarregadas] = useState(false);
+
+  type Scheduler = {
+    day: string;
+  };
 
   useEffect(() => {
     fetchPlans();
@@ -53,6 +59,10 @@ export const Step3 = () => {
   }
 
   const handlePrevStep = () => {
+    console.log("State:", state);
+    dispatch({ type: FormActions.setUnit_Id, payload: null });
+    dispatch({ type: FormActions.setCategory, payload: "" });
+
     navigate("/matricula-online/step2");
   };
 
@@ -133,18 +143,23 @@ export const Step3 = () => {
       // const familiaCourseId = state.course_id;
       const course_id = courseNew;
 
-      const newStudent = {
-        nome: novaPessoa,
-        birthdate: novaPessoaDataNascimento,
-        course_id: course_id,
-      };
+      const [day, month, year] = novaPessoaDataNascimento.split("/");
+      const formattedDate = `${year}-${month}-${day}`;
+
+      //TODO: remover codigo nao utilizado
+      // const newStudent = {
+      //   nome: novaPessoa,
+      //   birthdate: formattedDate,
+      //   course_id: course_id,
+      // };
 
       dispatch({
         type: FormActions.addFamiliaStudent,
         payload: {
           nome: novaPessoa,
-          birthdate: novaPessoaDataNascimento,
+          birthdate: formattedDate,
           course_id: course_id,
+          course: className,
         },
       });
 
@@ -184,10 +199,6 @@ export const Step3 = () => {
     });
   };
 
-  type Scheduler = {
-    day: string;
-  };
-
   const handleFamiliaUnidadeChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -207,7 +218,7 @@ export const Step3 = () => {
   const handleFamiliaCourseSelected = (id: number, className: string) => {
     setSelectedPlan(id);
     setCourseNew(id);
-
+    setClassName(className);
     //talvez nao precise das linhas abaixo
     // dispatch({ type: FormActions.setCourse_Id, payload: id });
     // dispatch({ type: FormActions.setClassName, payload: className });
@@ -232,6 +243,14 @@ export const Step3 = () => {
     if (data.data.data.length > 0) {
       setShowTurmas(true);
     }
+    setTurmasCarregadas(true);
+  };
+
+  const formatBirthDate = (birthdate: string): string => {
+    const [year, month, day] = birthdate.split("-").map(Number);
+    const date = new Date(year, month - 1, day);
+    console.log("dataaa", date);
+    return format(date, "dd/MM/yyyy");
   };
 
   const confirmaTurmas = () => {
@@ -243,6 +262,18 @@ export const Step3 = () => {
       if (state.category === "") {
       }
     }
+  };
+
+  const getTurmaNome = (course_id: number) => {
+    console.log(state.familiaStudents);
+
+    const turma = turmas.find((turma) => turma.id === course_id);
+
+    if (!turmasCarregadas) {
+      return "Carregando turmas...";
+    }
+
+    return turma ? turma.name : "Turma não encontrada";
   };
 
   return (
@@ -328,9 +359,9 @@ export const Step3 = () => {
               <div className="student-familia" key={index}>
                 <div className="student">
                   <span>{person.nome}</span>
-                  {/* //TODO: colocar birthdate e nome da turma */}
-                  {/* <span>{person.birthdate}</span>
-                  <span>{person.course_id} seria a turma</span> */}
+
+                  <span>{formatBirthDate(person.birthdate)}</span>
+                  <span>{person.course}</span>
                 </div>
                 <button onClick={() => handleDeletePerson(index)}>x</button>
               </div>

@@ -4,6 +4,7 @@ type ButtonProps = {
   label: string;
   color?: string;
   onClick: () => void;
+
 };
 
 export const Button = ({ label, color, onClick }: ButtonProps) => {
