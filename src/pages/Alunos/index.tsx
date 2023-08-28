@@ -32,7 +32,6 @@ export const Alunos = () => {
   };
 
   const setChecked = (id: number, selecionado: boolean) => {
-    console.log(id, selecionado);
     const newStudents = students.map((student) =>
       student.id === id ? { ...student, selecionado } : student
     );
@@ -85,8 +84,6 @@ export const Alunos = () => {
               <img className="foto" src={student.img} alt="" />
               <div className="student-infos">
                 <span>{student.name}</span>
-                <span>{student.customer}</span>
-                <span>{student.customer_phone}</span>
               </div>
             </div>
 
