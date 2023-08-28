@@ -12,7 +12,12 @@ type State = {
   isMenor: boolean;
 
   isFamilia: boolean;
-  familiaStudents: { nome: string; birthdate: string; course_id: number }[];
+  familiaStudents: {
+    nome: string;
+    birthdate: string;
+    course_id: number;
+    course: string;
+  }[];
   familyUnit: number;
   familyCategory: string;
 
