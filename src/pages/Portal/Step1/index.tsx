@@ -5,10 +5,11 @@ import { Header } from "../../../components/Shared/Header";
 import { Logo } from "../../../components/Shared/Logo";
 
 import { AuthContext } from "../../../contexts/Auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const PortalStep1 = () => {
   const auth = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
 
@@ -16,17 +17,13 @@ export const PortalStep1 = () => {
     if (!username) {
       setError("Digite o cpf");
     }
+    // const isLogged = true;
 
-    const isLogged = true;
-
-    if (!isLogged) {
-      setError("Usuario ou senha invalidos");
-      return;
-    }
-
-    console.log(isLogged);
-
-    // navigate("/turma");
+    // if (!isLogged) {
+    //   setError("Usuario ou senha invalidos");
+    //   return;
+    // }
+    navigate(`/portal/aluno/cobrancas?cpf=${username}`);
   };
 
   return (
@@ -39,7 +36,7 @@ export const PortalStep1 = () => {
           type="text"
           value={insertMaskInCpf(username)}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Digite seu usário"
+          placeholder="Digite o CPF"
         />
       </div>
       <Button label="Entrar" onClick={handleLogin} />
