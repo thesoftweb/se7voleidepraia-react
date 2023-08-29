@@ -96,6 +96,25 @@ export const Step4 = () => {
     }
   };
 
+  const handleEnrollmentValue = () => {
+    const valorPadraoMatricula = import.meta.env.VITE_ENROLL_VALUE;
+
+    if (state.isFamilia) {
+      const quantidadeMatriculas = state.familiaStudents.length + 1; // +1 para o aluno padrão
+      const valorTotal = quantidadeMatriculas * valorPadraoMatricula;
+      return formatarValorBRL(valorTotal);
+    } else {
+      return formatarValorBRL(valorPadraoMatricula);
+    }
+  };
+
+  function formatarValorBRL(valor: number) {
+    return valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  }
+
   const handleBack = async () => {
     console.log("step4", state);
     // Redefinir todas as informações relevantes no estado
@@ -135,7 +154,11 @@ export const Step4 = () => {
               <InfoDetail label={"Turma:"} value={state.className} />
               <InfoDetail label={"Plano:"} value={state.planName} />
               <InfoDetail
-                label={"Valor do plano:"}
+                label={"Valor da Matrícula:"}
+                value={`R$ ${handleEnrollmentValue()}`}
+              />
+              <InfoDetail
+                label={"Valor da Mensalidade:"}
                 value={state.isFamilia ? handleGetAmount() : state.amount}
               />
             </div>
