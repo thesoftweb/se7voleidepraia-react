@@ -8,13 +8,25 @@ type CheckboxProps = {
   children: React.ReactNode;
 };
 
-const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange, children }) => {
+const Checkbox: React.FC<CheckboxProps> = ({
+  checked,
+  onChange,
+  children,
+  ...props
+}) => {
   return (
-    <label className="checkbox-container">
-      <input type="checkbox" checked={checked} onChange={onChange} />
-      <span className="checkbox-style"></span>
-      {children}
-    </label>
+    <div className="checkbox-wrapper">
+      <label className="checkbox-container">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={onChange}
+          {...props}
+        />
+        <span className="checkbox-style"></span>
+        {children}
+      </label>
+    </div>
   );
 };
 

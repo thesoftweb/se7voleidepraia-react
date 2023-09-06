@@ -44,33 +44,66 @@ export const Step1 = () => {
   //   return format(date, "dd/MM/yyyy");
   // };
 
-  const handleIdadeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const currentDate = new Date();
-    const birthDate = new Date(e.target.value);
-    let age = currentDate.getFullYear() - birthDate.getFullYear();
+  const validarIdade = (dataNascimento: string) => {
+    const dataNascimentoArray = dataNascimento.split("/");
+    const diaNascimento = parseInt(dataNascimentoArray[0], 10);
+    const mesNascimento = parseInt(dataNascimentoArray[1], 10);
+    const anoNascimento = parseInt(dataNascimentoArray[2], 10);
 
-    const currentMonth = currentDate.getMonth();
-    const birthMonth = birthDate.getMonth();
-    const currentDay = currentDate.getDate();
-    const birthDay = birthDate.getDate();
+    const dataNascimentoDate = new Date(
+      anoNascimento,
+      mesNascimento - 1,
+      diaNascimento
+    );
 
+    const hoje = new Date();
+
+    const diferencaAnos = hoje.getFullYear() - dataNascimentoDate.getFullYear();
+
+    console.log(dataNascimento, diferencaAnos);
     if (
-      birthMonth > currentMonth ||
-      (birthMonth === currentMonth && birthDay > currentDay)
+      diferencaAnos > 18 ||
+      (diferencaAnos === 18 && hoje >= dataNascimentoDate)
     ) {
-      age--;
-    }
-    console.log("IDADE", age);
-    setIsMenor(age < 18);
-
-    dispatch({ type: FormActions.setBirth_date, payload: e.target.value });
-
-    if (age >= 18) {
+      setIsMenor(false);
       dispatch({ type: FormActions.setIsMenor, payload: false });
     } else {
       setIsMenor(true);
       dispatch({ type: FormActions.setIsMenor, payload: true });
     }
+  };
+
+  const handleIdadeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // const currentDate = new Date();
+    // const birthDate = new Date(e.target.value);
+    // let age = currentDate.getFullYear() - birthDate.getFullYear();
+
+    // const currentMonth = currentDate.getMonth();
+    // const birthMonth = birthDate.getMonth();
+    // const currentDay = currentDate.getDate();
+    // const birthDay = birthDate.getDate();
+
+    // if (
+    //   birthMonth > currentMonth ||
+    //   (birthMonth === currentMonth && birthDay > currentDay)
+    // ) {
+    //   age--;
+    // }
+    // console.log("IDADE", age);
+    // setIsMenor(age < 18);
+
+    // dispatch({ type: FormActions.setBirth_date, payload: e.target.value });
+
+    // if (age >= 18) {
+    //   dispatch({ type: FormActions.setIsMenor, payload: false });
+    // } else {
+    //   setIsMenor(true);
+    //   dispatch({ type: FormActions.setIsMenor, payload: true });
+    // }
+    const valorInput = e.target.value;
+    // validarIdade(valorInput);
+
+    dispatch({ type: FormActions.setBirth_date, payload: valorInput });
   };
 
   const validatePhone = (phone: string): boolean => {
@@ -208,11 +241,13 @@ export const Step1 = () => {
         />
 
         {errors && <span className="error-message">{errors.birth_date}</span>}
-        <input
-          type="date"
+        <InputMask
+          type="tel"
+          mask="99/99/9999"
           placeholder="Sua Data de Nascimento"
           value={state.birth_date}
           onChange={handleIdadeChange}
+          onBlur={() => validarIdade(state.birth_date)}
         />
 
         <div className="form-wrapper">
@@ -239,7 +274,9 @@ export const Step1 = () => {
         </div>
         {isMenor && (
           <div className="form-wrapper">
-            {errors && (<span className="error-message">{errors.resp_name}</span>)}
+            {errors && (
+              <span className="error-message">{errors.resp_name}</span>
+            )}
             <input
               placeholder="Nome do responsável"
               type="text"

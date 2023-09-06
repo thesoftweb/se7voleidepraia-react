@@ -1,3 +1,9 @@
 .contrato-text {
     color: black;
+    text-align: justify;
+}
+
+.contrato-title {
+    font-weight: bold;
+    text-decoration: underline;
 }

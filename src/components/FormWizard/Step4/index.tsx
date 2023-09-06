@@ -24,7 +24,6 @@ export const Step4 = () => {
 
   const handleCheckboxClick = () => {
     setShowModal(true);
-    console.log("dataaa", state);
   };
 
   const handleAcceptTerms = () => {
@@ -51,10 +50,18 @@ export const Step4 = () => {
       setErrors("Aceite é obrigatório");
       return alert("Voce precisa aceitar os termos de uso!");
     }
+
+    let oldDate = state.birth_date.split("/");
+    let year = oldDate[2];
+    let month = oldDate[1];
+    let day = oldDate[0];
+
+    const newDate = `${year}-${month}-${day}`;
+
     const data = await api.post("/enrollment", {
       name: state.name,
       email: state.email,
-      birth_date: state.birth_date,
+      birth_date: newDate,
       cpf: state.cpf,
       resp_name: state.resp_name,
       resp_phone: state.resp_phone,
@@ -137,10 +144,7 @@ export const Step4 = () => {
           <div className="infos">
             <div className="stpe4">
               <InfoDetail label={"Nome:"} value={state.name} />
-              <InfoDetail
-                label={"Data nasc.:"}
-                value={formatBirthDate(state.birth_date)}
-              />
+              <InfoDetail label={"Data nasc.:"} value={state.birth_date} />
               <InfoDetail label={"Telefone:"} value={state.phone} />
               {state.isMenor ? (
                 <InfoDetail
@@ -164,9 +168,9 @@ export const Step4 = () => {
             </div>
 
             <div className="terms">
-              <Checkbox checked={isChecked} onChange={handleCheckboxClick}>
-                Termos de uso
-              </Checkbox>
+              <span onClick={handleCheckboxClick}>
+                Ao confirmar matrícula eu concordo com os <u>termos de uso</u>.
+              </span>
               {showModal && (
                 <div className="modal">
                   <div className="modal-content">
