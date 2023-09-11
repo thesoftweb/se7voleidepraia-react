@@ -8,4 +8,8 @@
     border-radius: 8px;
     cursor: pointer;
     margin: 10px;
+    &:disabled{
+        background-color: #ccc;
+    }
 }
+

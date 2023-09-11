@@ -220,7 +220,7 @@ export const Step1 = () => {
   return (
     <div className="container">
       <Logo />
-      <Header title="Seja bem-vindo" subtitle="Preencha seus dados pessoais" />
+      <Header title="Seja bem-vindo" subtitle="Preencha os dados do Aluno(a)" />
       <div className="form-wrapper">
         {errors && <span className="error-message">{errors.name}</span>}
         <input

@@ -17,12 +17,13 @@ export const Step4 = () => {
   const [success, setSuccess] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [link, setLink] = useState("");
+  const [linkGroup, setLinkGroup] = useState("");
   const { state, dispatch } = useForm();
   const [errors, setErrors] = useState("");
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-  const handleCheckboxClick = () => {
+  const handleOpenModal = () => {
     setShowModal(true);
   };
 
@@ -51,6 +52,8 @@ export const Step4 = () => {
       return alert("Voce precisa aceitar os termos de uso!");
     }
 
+    setLoading(true);
+
     let oldDate = state.birth_date.split("/");
     let year = oldDate[2];
     let month = oldDate[1];
@@ -78,6 +81,7 @@ export const Step4 = () => {
     setSuccess(true);
     setLoading(false);
     setLink(data.data.data.link);
+    setLinkGroup(data.data.data.whatsapp_link);
     setTitle("Efetue o pagamento da matrícula.");
   };
 
@@ -168,9 +172,17 @@ export const Step4 = () => {
             </div>
 
             <div className="terms">
-              <span onClick={handleCheckboxClick}>
-                Ao confirmar matrícula eu concordo com os <u>termos de uso</u>.
-              </span>
+              <input
+                type="checkbox"
+                className="input-check"
+                checked={isChecked}
+                onChange={() => setIsChecked(!isChecked)}
+              />
+
+              <p onClick={handleOpenModal}>
+                Aceito os <u>termos de uso</u>.
+              </p>
+
               {showModal && (
                 <div className="modal">
                   <div className="modal-content">
@@ -188,6 +200,7 @@ export const Step4 = () => {
                 label="Confimar Matrícula"
                 color=""
                 onClick={handleSubmitEnrollment}
+                disabled={loading}
               />
             </div>
           </div>
@@ -206,7 +219,14 @@ export const Step4 = () => {
               <Link to={link} target="_blank">
                 Clique aqui para pagar
               </Link>
+              {linkGroup && (
+                <Link to={linkGroup} target="_blank">
+                  Entre no grupo de Alunos
+                </Link>
+              )}
             </div>
+
+            <div className="group"></div>
           </div>
         </>
       )}
