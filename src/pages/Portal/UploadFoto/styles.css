@@ -1,0 +1,14 @@
+.upload-button{
+    border: 1px solid #fff;
+    height: 15px;
+    padding: 20px;
+    margin-bottom: 5px;    
+}
+
+.image-preview {
+    margin-top: 40px;    
+}
+
+.preview {
+    border-radius: 20px;
+}

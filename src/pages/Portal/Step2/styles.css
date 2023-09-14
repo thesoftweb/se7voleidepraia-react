@@ -28,6 +28,17 @@
     justify-content: start;
   
 }
+.tabs {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-bottom: 20px;        
+}
+
+.tab-active {
+    border-bottom: 2px solid #fff;
+    padding: none
+}
 
 .actions {
     display: flex;

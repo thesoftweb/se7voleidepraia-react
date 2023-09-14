@@ -12,6 +12,7 @@ import { RequireAuth } from "../contexts/Auth/RequireAuth";
 
 import { PortalStep1 } from "../pages/Portal/Step1";
 import { PortalStep2 } from "../pages/Portal/Step2";
+import { UploadFoto } from "../pages/Portal/UploadFoto";
 
 export const MainRoutes = () => {
   return (
@@ -40,6 +41,7 @@ export const MainRoutes = () => {
       <Route path="/matricula-online/step4" element={<Step4 />} />
       <Route path="/portal/aluno" element={<PortalStep1 />} />
       <Route path="/portal/aluno/cobrancas" element={<PortalStep2 />} />
+      <Route path="/portal/aluno/upload-foto" element={<UploadFoto />} />
     </Routes>
   );
 };

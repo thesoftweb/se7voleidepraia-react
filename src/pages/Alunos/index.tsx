@@ -80,13 +80,10 @@ export const Alunos = () => {
       <div className="students-wrapper">
         {students.map((student) => (
           <div className="student-item" key={student.id}>
-            <div className="student">
+            <div className="student-data">
               <img className="foto" src={student.img} alt="" />
-              <div className="student-infos">
-                <span>{student.name}</span>
-              </div>
+              <span>{student.name}</span>
             </div>
-
             <div className="checkbox-wrapper">
               <Checkbox
                 children={""}
