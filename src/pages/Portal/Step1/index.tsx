@@ -33,7 +33,7 @@ export const PortalStep1 = () => {
       <div className="form-wrapper">
         <p>{error}</p>
         <input
-          type="text"
+          type="tel"
           value={insertMaskInCpf(username)}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Digite o CPF"

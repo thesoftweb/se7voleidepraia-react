@@ -6,9 +6,10 @@
 }
 
 .image-preview {
-    margin-top: 40px;    
+    margin-top: 20px;    
 }
 
 .preview {
     border-radius: 20px;
+    max-height: 300px;    
 }

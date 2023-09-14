@@ -89,6 +89,7 @@ export const PortalStep2 = () => {
               student_id={enroll.student_id}
               course={enroll.course}
               student={enroll.student}
+              photo={enroll.photo}
               onPress={() => handleUploadFoto(enroll.student_id)}
             />
           ))}
@@ -112,6 +113,7 @@ type EnrollmentCard = {
   student: string;
   student_id: string;
   course: string;
+  photo: string;
   onPress: () => void;
 };
 
@@ -125,7 +127,7 @@ const BillCard = ({ id, dueDate, description, pdf, link, value }: BillCard) => {
       </div>
       <div className="actions">
         <a href={pdf} target="_blank">
-          Ver Cobrança
+          Cobrança
         </a>
         <a href={link} target="_blank">
           Boleto
@@ -140,9 +142,13 @@ const EnrollmentCard = ({
   student_id,
   course,
   onPress,
+  photo,
 }: EnrollmentCard) => {
   return (
-    <div className="billCard" key={student_id}>
+    <div className="enrollCard" key={student_id}>
+      <div className="photo">
+        <img src={photo} alt="" className="foto" />
+      </div>
       <div className="infos">
         <div className="info">Aluno: {student}</div>
         <div className="info">Curso: {course}</div>
