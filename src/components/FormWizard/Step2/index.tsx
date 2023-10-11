@@ -26,6 +26,7 @@ export const Step2 = () => {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [errors, setErrors] = useState<Erros>({});
   const [showTurmas, setShowTurmas] = useState(false);
+  const [isSelectionComplete, setIsSelectionComplete] = useState(false);
 
   const { units } = useUnidades();
 
@@ -49,19 +50,25 @@ export const Step2 = () => {
     if (selectedUnit) {
       dispatch({ type: FormActions.setUnitName, payload: selectedUnit.name });
     }
+    setIsSelectionComplete(state.category !== "" && e.target.value !== "0");
   };
 
   const handleCategoriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: FormActions.setCategory, payload: e.target.value });
+
+    setIsSelectionComplete(state.unit_id !== 0 && e.target.value !== "");
   };
 
   const handlePrevStep = () => {
+    dispatch({ type: FormActions.setUnit_Id, payload: null });
+    dispatch({ type: FormActions.setCategory, payload: '' });
     navigate("/matricula-online");
     console.log("PREV STEP");
   };
 
   const newErrors: Erros = {};
   const handleNextStep = () => {
+    console.log("State:", state);
     if (
       state.unit_id !== 0 &&
       state.course_id !== 0 &&
@@ -71,14 +78,14 @@ export const Step2 = () => {
     ) {
       navigate("/matricula-online/step3");
     } else {
+
       if (state.unit_id === 0) {
-        newErrors.unit_id = "SELECIONE A UNIDADE";
+        newErrors.unit_id = "Escolha a Unidade";
       }
       if (state.category === "") {
-        newErrors.category = "SELECIONE A CATEGORIA";
+        newErrors.category = "Escolha a categoria";
       }
       setErrors(newErrors);
-      console.log(handleNextStep);
     }
   };
 
@@ -103,16 +110,7 @@ export const Step2 = () => {
   };
 
   const confirmaTurmas = () => {
-    if (state.unit_id !== 0 && state.category !== "") {
-      fetchTurmas();
-    } else {
-      if (state.unit_id === 0) {
-        newErrors.unit_id = "SELECIONE A UNIDADE";
-      }
-      if (state.category === "") {
-        newErrors.category = "SELECIONE A CATEGORIA";
-      }
-    }
+    fetchTurmas();
   };
 
   const handleCourseSelected = (id: number, className: string) => {
@@ -126,14 +124,14 @@ export const Step2 = () => {
       <div className="header-step2">
         <Logo />
         <Header
-          title="Preencha os dados abaixo"
-          subtitle="Certifique-se de selecionar corretamente"
+          title="Selecione uma Turma"
+          subtitle="Escolha uma unidade e uma categoria"
         />
       </div>
       <div className="form-step2">
         <div className="testando">
           <div className="form-units">
-            <label>SELECIONE UMA UNIDADE</label>
+            <label>Escolha uma Unidade</label>
             {errors && <span className="error-message">{errors.unit_id}</span>}
             <select value={state.unit_id} onChange={handleUnidadeChange}>
               <option>SELECIONE</option>
@@ -144,7 +142,7 @@ export const Step2 = () => {
                 </option>
               ))}
             </select>
-            <label>SELECIONE UMA CATEGORIA</label>
+            <label>Escolha uma Categoria</label>
             {errors && <span className="error-message">{errors.category}</span>}
             <select value={state.category} onChange={handleCategoriaChange}>
               <option value="">SELECIONE</option>
@@ -154,12 +152,13 @@ export const Step2 = () => {
               <option value="competitive">Competitivo</option>
             </select>
           </div>
-
-          <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
+          {isSelectionComplete && (
+            <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
+          )}
 
           {showTurmas && (
             <>
-              <p className="mensagemTurma">Selecione sua turma</p>
+              <span className="mensagemTurma">Selecione sua turma</span>
               <div className="courses-wrapper">
                 {turmas.map((item, key) => (
                   <PlanItem

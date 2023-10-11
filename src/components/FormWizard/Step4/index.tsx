@@ -2,9 +2,9 @@ import { ChangeEvent, useState } from "react";
 import { Button } from "../../Shared/Buttons";
 import { Header } from "../../Shared/Header";
 import { Logo } from "../../Shared/Logo";
-import { useForm } from "../../../contexts/Form/FormContext";
+import { FormActions, useForm } from "../../../contexts/Form/FormContext";
 import { format } from "date-fns";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./styles.css";
 import { Contrato } from "../../Shared/Contrato";
@@ -17,11 +17,13 @@ export const Step4 = () => {
   const [success, setSuccess] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [link, setLink] = useState("");
+  const [linkGroup, setLinkGroup] = useState("");
   const { state, dispatch } = useForm();
   const [errors, setErrors] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
-  const handleCheckboxClick = () => {
+  const handleOpenModal = () => {
     setShowModal(true);
   };
 
@@ -33,7 +35,7 @@ export const Step4 = () => {
   const formatBirthDate = (birthDate: string): string => {
     const [year, month, day] = birthDate.split("-").map(Number);
     const date = new Date(year, month - 1, day);
-    console.log('dataaa', date);
+    console.log("dataaa", date);
     return format(date, "dd/MM/yyyy");
   };
 
@@ -43,15 +45,26 @@ export const Step4 = () => {
 
   const handleSubmitEnrollment = async () => {
     console.log("ENVIAR MATRICULA");
+    console.log("ENVIAR MATRICULA", state);
 
     if (!isChecked) {
       setErrors("Aceite é obrigatório");
       return alert("Voce precisa aceitar os termos de uso!");
     }
+
+    setLoading(true);
+
+    let oldDate = state.birth_date.split("/");
+    let year = oldDate[2];
+    let month = oldDate[1];
+    let day = oldDate[0];
+
+    const newDate = `${year}-${month}-${day}`;
+
     const data = await api.post("/enrollment", {
       name: state.name,
       email: state.email,
-      birth_date: state.birth_date,
+      birth_date: newDate,
       cpf: state.cpf,
       resp_name: state.resp_name,
       resp_phone: state.resp_phone,
@@ -59,12 +72,71 @@ export const Step4 = () => {
       course_id: state.course_id,
       plan_id: state.plan_id,
       unit_id: state.unit_id,
+
+      isMenor: state.isMenor,
+      isFamilia: state.isFamilia,
+      familiaStudents: state.familiaStudents,
     });
 
     setSuccess(true);
     setLoading(false);
     setLink(data.data.data.link);
+    setLinkGroup(data.data.data.whatsapp_link);
     setTitle("Efetue o pagamento da matrícula.");
+  };
+
+  const handleGetAmount = () => {
+    let valorString = state.amount;
+
+    // Remover caracteres não numéricos e substituir a vírgula por ponto
+    let valorNumerico = parseFloat(
+      valorString.replace(/[^\d,]/g, "").replace(",", ".")
+    );
+
+    // Verificar se o valor é um número válido
+    if (!isNaN(valorNumerico)) {
+      // Agora você pode multiplicar o valor
+      let multiplicador = state.familiaStudents.length + 1;
+      let resultado = valorNumerico * multiplicador;
+      return resultado.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+    } else {
+      return "0.00";
+    }
+  };
+
+  const handleEnrollmentValue = () => {
+    const valorPadraoMatricula = import.meta.env.VITE_ENROLL_VALUE;
+
+    if (state.isFamilia) {
+      const quantidadeMatriculas = state.familiaStudents.length + 1; // +1 para o aluno padrão
+      const valorTotal = quantidadeMatriculas * valorPadraoMatricula;
+      return formatarValorBRL(valorTotal);
+    } else {
+      return formatarValorBRL(valorPadraoMatricula);
+    }
+  };
+
+  function formatarValorBRL(valor: number) {
+    return valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  }
+
+  const handleBack = async () => {
+    console.log("step4", state);
+    // Redefinir todas as informações relevantes no estado
+    dispatch({ type: FormActions.setPlan_Id, payload: null });
+    dispatch({ type: FormActions.setPlanName, payload: "" });
+    dispatch({ type: FormActions.setAmount, payload: "" });
+    dispatch({ type: FormActions.setIsFamilia, payload: false });
+    dispatch({ type: FormActions.RemoverFamiliaStudent, payload: [] });
+
+    // Navegar de volta ao Step3
+    navigate("/matricula-online/step3");
   };
 
   return (
@@ -76,10 +148,7 @@ export const Step4 = () => {
           <div className="infos">
             <div className="stpe4">
               <InfoDetail label={"Nome:"} value={state.name} />
-              <InfoDetail
-                label={"Data nasc.:"}
-                value={formatBirthDate(state.birth_date)}
-              />
+              <InfoDetail label={"Data nasc.:"} value={state.birth_date} />
               <InfoDetail label={"Telefone:"} value={state.phone} />
               {state.isMenor ? (
                 <InfoDetail
@@ -92,13 +161,28 @@ export const Step4 = () => {
               <InfoDetail label={"Unidade:"} value={state.unitName} />
               <InfoDetail label={"Turma:"} value={state.className} />
               <InfoDetail label={"Plano:"} value={state.planName} />
-              <InfoDetail label={"Valor do plano:"} value={state.amount} />
+              <InfoDetail
+                label={"Valor da Matrícula:"}
+                value={`R$ ${handleEnrollmentValue()}`}
+              />
+              <InfoDetail
+                label={"Valor da Mensalidade:"}
+                value={state.isFamilia ? handleGetAmount() : state.amount}
+              />
             </div>
 
             <div className="terms">
-              <Checkbox checked={isChecked} onChange={handleCheckboxClick}>
-                Termos de uso
-              </Checkbox>
+              <input
+                type="checkbox"
+                className="input-check"
+                checked={isChecked}
+                onChange={() => setIsChecked(!isChecked)}
+              />
+
+              <p onClick={handleOpenModal}>
+                Aceito os <u>termos de uso</u>.
+              </p>
+
               {showModal && (
                 <div className="modal">
                   <div className="modal-content">
@@ -111,10 +195,12 @@ export const Step4 = () => {
               )}
             </div>
             <div className="buttons">
+              <Button label="Voltar" color="red" onClick={handleBack} />
               <Button
                 label="Confimar Matrícula"
                 color=""
                 onClick={handleSubmitEnrollment}
+                disabled={loading}
               />
             </div>
           </div>
@@ -133,7 +219,14 @@ export const Step4 = () => {
               <Link to={link} target="_blank">
                 Clique aqui para pagar
               </Link>
+              {linkGroup && (
+                <Link to={linkGroup} target="_blank">
+                  Entre no grupo de Alunos
+                </Link>
+              )}
             </div>
+
+            <div className="group"></div>
           </div>
         </>
       )}

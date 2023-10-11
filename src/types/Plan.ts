@@ -3,5 +3,6 @@ export type Plan = {
     name: string,
     installments?: number,
     amount: string,
+    is_familia:boolean
 
 }

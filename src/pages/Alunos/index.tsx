@@ -7,10 +7,12 @@ import { Header } from "../../components/Shared/Header";
 import "./style.css";
 import Checkbox from "../../components/Shared/Checkbox";
 import { Button } from "../../components/Shared/Buttons";
+import { Turmas } from "../../types/Turmas";
 
 export const Alunos = () => {
   const [loading, setLoading] = useState(false);
   const [students, setStudents] = useState<Aluno[]>([]);
+  const [title, setTitle] = useState("");
   const location = useLocation();
 
   useEffect(() => {
@@ -20,7 +22,9 @@ export const Alunos = () => {
   const loadStudents = async () => {
     setLoading(true);
     const course = new URLSearchParams(location.search).get("course");
+    var courseName = new URLSearchParams(location.search).get("name");
 
+    setTitle(`Alunos da turma ${courseName}`);
     const data = await api.get(`/courses/${course}/students`);
 
     setStudents(data.data.data);
@@ -28,7 +32,6 @@ export const Alunos = () => {
   };
 
   const setChecked = (id: number, selecionado: boolean) => {
-    console.log(id, selecionado);
     const newStudents = students.map((student) =>
       student.id === id ? { ...student, selecionado } : student
     );
@@ -63,7 +66,10 @@ export const Alunos = () => {
 
   return (
     <div className="container">
-      <Header title="Alunos turma [nome da turma]" />
+      <Header
+        title={title}
+        subtitle="Selecione o aluno para marcar frequência"
+      />
       <div className="actions">
         <Checkbox
           checked={students.every((student) => student.selecionado)}
@@ -74,15 +80,10 @@ export const Alunos = () => {
       <div className="students-wrapper">
         {students.map((student) => (
           <div className="student-item" key={student.id}>
-            <div className="student">
+            <div className="student-data">
               <img className="foto" src={student.img} alt="" />
-              <div className="student-infos">
-                <span>{student.name}</span>
-                <span>{student.customer}</span>
-                <span>{student.customer_phone}</span>
-              </div>
+              <span>{student.name}</span>
             </div>
-
             <div className="checkbox-wrapper">
               <Checkbox
                 children={""}
@@ -93,7 +94,7 @@ export const Alunos = () => {
           </div>
         ))}
       </div>
-      <Button label="Enviar" onClick={handleSendAttendance} />
+      <Button label="Registrar Frequência" onClick={handleSendAttendance} />
     </div>
   );
 };

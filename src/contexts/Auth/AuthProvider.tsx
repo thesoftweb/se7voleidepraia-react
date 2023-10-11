@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   const signin = async (cpf: string, password: string) => {
     try {
       const data = await api.signin(cpf, password);
-      console.log("CTX", data);
+
       if (data.login) {
         setUser(data.name);
         setToken(data.secret);
@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   const signout = async () => {
-    console.log("signout está sendo executada.");
     setUser(null);
     setToken("");
     await api.logout();

@@ -3,11 +3,12 @@ import React from "react";
 import "./styles.css";
 
 type PlanProps = {
-  title: string;
-  amount: string;
+  title?: string;
+  amount?: string;
   hour?: string[] | undefined;
   isSelected?: boolean;
-  onSelect: () => void;
+  onSelect?: () => void;
+
 };
 
 export const PlanItem = ({
@@ -18,7 +19,9 @@ export const PlanItem = ({
   onSelect,
 }: PlanProps) => {
   const handleClique = () => {
-    onSelect();
+    if (onSelect) {
+      onSelect();
+    }
   };
 
   return (

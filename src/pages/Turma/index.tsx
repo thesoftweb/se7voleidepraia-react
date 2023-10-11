@@ -7,6 +7,7 @@ import { Header } from "../../components/Shared/Header";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 
 import "./styles.css";
+import { PlanItem } from "../../components/PlanItem";
 
 export const Turma = () => {
   const auth = useContext(AuthContext);
@@ -27,7 +28,7 @@ export const Turma = () => {
   };
 
   const handleClick = (item: Turmas) => {
-    navigate(`/alunos?course=${item.id}`);
+    navigate(`/alunos?course=${item.id}&name=${item.name}`);
   };
 
   return (
@@ -39,12 +40,19 @@ export const Turma = () => {
       {loading && "Carregando.."}
       <div className="turmas-wrapper">
         {turmas.map((item, index) => (
-          <TurmasItem
+          // <TurmasItem
+          //   key={index}
+          //   nome={item.name}
+          //   categoria={item.category}
+          //   unit={item.unit}
+          //   onClick={() => handleClick(item)}
+          // />
+          <PlanItem
             key={index}
-            nome={item.name}
-            categoria={item.category}
-            unit={item.unit}
-            onClick={() => handleClick(item)}
+            title={item.name}
+            hour={item.schedules?.map((schedule) => schedule.day)}
+            amount={item.category}
+            onSelect={() => handleClick(item)}
           />
         ))}
       </div>

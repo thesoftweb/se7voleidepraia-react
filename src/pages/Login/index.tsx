@@ -27,9 +27,6 @@ export const Login = () => {
       setError("Usuario ou senha invalidos");
       return;
     }
-
-    console.log(isLogged);
-
     navigate("/turma");
   };
 
