@@ -10,6 +10,7 @@ import { Step3 } from "../components/FormWizard/Step3";
 import { Step4 } from "../components/FormWizard/Step4";
 
 import { RequireAuth } from "../contexts/Auth/RequireAuth";
+import { TurmasStep2 } from "../pages/TurmasStep2";
 
 export const MainRoutes = () => {
   return (
@@ -36,6 +37,7 @@ export const MainRoutes = () => {
       <Route path="/matricula-online/step2" element={<Step2 />} />
       <Route path="/matricula-online/step3" element={<Step3 />} />
       <Route path="/matricula-online/step4" element={<Step4 />} />
+      <Route path="/turmas" element={<TurmasStep2 />} />
     </Routes>
   );
 };
