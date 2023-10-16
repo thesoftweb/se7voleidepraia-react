@@ -29,7 +29,6 @@ export const PlanItem = ({
       className={`plan ${isSelected ? "plan-selected" : ""}`}
       onClick={handleClique}
     >
-
       <div className="plan-title">{title}</div>
       {Array.isArray(hour) && (
         <div className="plan-hour">

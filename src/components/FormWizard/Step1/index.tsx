@@ -15,6 +15,7 @@ export const Step1 = () => {
   const { state, dispatch } = useForm();
   const [isMenor, setIsMenor] = useState(state.isMenor);
   const [errors, setErrors] = useState<Erros>({});
+  const [btnDisabled, setBtnDisabled] = useState(false);
 
   useEffect(() => {
     dispatch({
@@ -74,34 +75,7 @@ export const Step1 = () => {
   };
 
   const handleIdadeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // const currentDate = new Date();
-    // const birthDate = new Date(e.target.value);
-    // let age = currentDate.getFullYear() - birthDate.getFullYear();
-
-    // const currentMonth = currentDate.getMonth();
-    // const birthMonth = birthDate.getMonth();
-    // const currentDay = currentDate.getDate();
-    // const birthDay = birthDate.getDate();
-
-    // if (
-    //   birthMonth > currentMonth ||
-    //   (birthMonth === currentMonth && birthDay > currentDay)
-    // ) {
-    //   age--;
-    // }
-    // console.log("IDADE", age);
-    // setIsMenor(age < 18);
-
-    // dispatch({ type: FormActions.setBirth_date, payload: e.target.value });
-
-    // if (age >= 18) {
-    //   dispatch({ type: FormActions.setIsMenor, payload: false });
-    // } else {
-    //   setIsMenor(true);
-    //   dispatch({ type: FormActions.setIsMenor, payload: true });
-    // }
     const valorInput = e.target.value;
-    // validarIdade(valorInput);
 
     dispatch({ type: FormActions.setBirth_date, payload: valorInput });
   };
@@ -217,6 +191,77 @@ export const Step1 = () => {
     setErrors(newErrors);
   };
 
+  const handleCheckCpf = () => {
+    const newErrors: Erros = {};
+    console.log("resp CPF +>>>>>>>", state.resp_cpf);
+    console.log("CPF +>>>>>>>", state.cpf);
+
+    let cpf = state.cpf ? state.cpf : state.resp_cpf;
+
+    console.log("vai validar o ", cpf);
+
+    if (validarCPF(cpf)) {
+      setErrors(newErrors);
+      setBtnDisabled(false);
+      // return alert("CPF é inv");
+    } else {
+      setBtnDisabled(true);
+      newErrors.cpf = "CPF é inválido!";
+      newErrors.resp_cpf = "CPF é inválido!";
+      setErrors(newErrors);
+      // return alert("invalido");
+    }
+  };
+
+  const validarCPF = (cpf: string) => {
+    // Remove qualquer formatação do CPF, como pontos e traços
+    cpf = cpf.replace(/[.-]/g, ""); // Remove formatação
+
+    if (cpf.length !== 11 || !/^\d{11}$/.test(cpf)) {
+      return false;
+    }
+
+    // Verifica se todos os dígitos são iguais
+    if (/^(\d)\1+$/.test(cpf)) {
+      return false;
+    }
+
+    let soma = 0;
+    let resto;
+
+    for (let i = 1; i <= 9; i++) {
+      soma += parseInt(cpf[i - 1]) * (11 - i);
+    }
+
+    resto = (soma * 10) % 11;
+
+    if (resto === 10 || resto === 11) {
+      resto = 0;
+    }
+
+    if (resto !== parseInt(cpf[9])) {
+      return false;
+    }
+
+    soma = 0;
+
+    for (let i = 1; i <= 10; i++) {
+      soma += parseInt(cpf[i - 1]) * (12 - i);
+    }
+
+    resto = (soma * 10) % 11;
+
+    if (resto === 10 || resto === 11) {
+      resto = 0;
+    }
+
+    if (resto !== parseInt(cpf[10])) {
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <div className="container">
       <Logo />
@@ -267,6 +312,7 @@ export const Step1 = () => {
                 type="text"
                 value={state.cpf}
                 onChange={handleCpfChange}
+                onBlur={handleCheckCpf}
                 required
               />
             </div>
@@ -289,6 +335,7 @@ export const Step1 = () => {
               placeholder="CPF do responsável"
               type="text"
               value={state.resp_cpf}
+              onBlur={handleCheckCpf}
               onChange={handleRespCpfChange}
             />
             {errors && (
@@ -314,7 +361,11 @@ export const Step1 = () => {
           </div>
         )}
         <div className="buttons-step1">
-          <Button onClick={handleSubmit} label="Avançar" />
+          <Button
+            onClick={handleSubmit}
+            label="Avançar"
+            disabled={btnDisabled}
+          />
         </div>
       </div>
     </div>
