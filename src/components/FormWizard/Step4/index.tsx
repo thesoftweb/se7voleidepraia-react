@@ -161,10 +161,12 @@ export const Step4 = () => {
               <InfoDetail label={"Unidade:"} value={state.unitName} />
               <InfoDetail label={"Turma:"} value={state.className} />
               <InfoDetail label={"Plano:"} value={state.planName} />
+              {/* dando erro */}
               <InfoDetail
                 label={"Valor da Matrícula:"}
                 value={`R$ ${handleEnrollmentValue()}`}
               />
+
               <InfoDetail
                 label={"Valor da Mensalidade:"}
                 value={state.isFamilia ? handleGetAmount() : state.amount}

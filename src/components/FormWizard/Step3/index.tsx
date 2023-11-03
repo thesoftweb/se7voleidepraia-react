@@ -62,7 +62,6 @@ export const Step3 = () => {
     console.log("State:", state);
     dispatch({ type: FormActions.setUnit_Id, payload: null });
     dispatch({ type: FormActions.setCategory, payload: "" });
-
     navigate("/matricula-online/step2");
   };
 
@@ -151,13 +150,6 @@ export const Step3 = () => {
 
       const [day, month, year] = novaPessoaDataNascimento.split("/");
       const formattedDate = `${year}-${month}-${day}`;
-
-      //TODO: remover codigo nao utilizado
-      // const newStudent = {
-      //   nome: novaPessoa,
-      //   birthdate: formattedDate,
-      //   course_id: course_id,
-      // };
 
       dispatch({
         type: FormActions.addFamiliaStudent,
@@ -340,9 +332,7 @@ export const Step3 = () => {
                   {turmas.map((item, key) => (
                     <PlanItem
                       key={item.id}
-                      hour={scheduleInfo[item.id]?.map(
-                        (schedule) => schedule.day
-                      )}
+                      description={item.description}
                       title={item.name}
                       amount={item.unit}
                       isSelected={selectedPlan === item.id}
@@ -401,6 +391,7 @@ export const Step3 = () => {
                 <PlanItem
                   key={item.id}
                   title={item.name}
+                  description={item.description}
                   amount={item.amount}
                   isSelected={selectedPlanValor === item.id}
                   onSelect={() =>

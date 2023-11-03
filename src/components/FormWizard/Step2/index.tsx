@@ -89,26 +89,45 @@ export const Step2 = () => {
     }
   };
 
+  // const fetchTurmas = async () => {
+  //   let url = `/courses?unit_id=${state.unit_id}&category=${state.category}&`;
+  //   const data = await api.get(url);
+  //   console.log("Oque tem", data.data.data);
+
+  //   setTurmas(data.data.data);
+
+  //   const scheduleData = data.data.data.reduce(
+  //     (acc: { [key: number]: { day: string }[] }, curr: Turmas) => {
+  //       acc[curr.id] = curr.schedules;
+  //       return acc;
+  //     },
+  //     {}
+  //   );
+  //   setScheduleInfo(scheduleData);
+
+
+
+  //   if (data.data.data.length > 0) {
+  //     setShowTurmas(true);
+  //   }
+  // };
   const fetchTurmas = async () => {
     let url = `/courses?unit_id=${state.unit_id}&category=${state.category}&`;
     const data = await api.get(url);
-    console.log("Oque tem", data.data.data);
-
-    setTurmas(data.data.data);
-    const scheduleData = data.data.data.reduce(
-      (acc: { [key: number]: { day: string }[] }, curr: Turmas) => {
-        acc[curr.id] = curr.schedules;
-        return acc;
-      },
-      {}
-    );
-    setScheduleInfo(scheduleData);
 
     if (data.data.data.length > 0) {
+      const turmasData = data.data.data.map((turma: Turmas) => ({
+        id: turma.id,
+        name: turma.name,
+        description: turma.description,
+        unit: turma.unit,
+        schedules: turma.schedules,
+      }));
+
+      setTurmas(turmasData);
       setShowTurmas(true);
     }
   };
-
   const confirmaTurmas = () => {
     fetchTurmas();
   };
@@ -163,9 +182,7 @@ export const Step2 = () => {
                 {turmas.map((item, key) => (
                   <PlanItem
                     key={item.id}
-                    hour={scheduleInfo[item.id]?.map(
-                      (schedule) => schedule.day
-                    )}
+                    description={item.description}
                     title={item.name}
                     amount={item.unit}
                     isSelected={selectedPlan === item.id}

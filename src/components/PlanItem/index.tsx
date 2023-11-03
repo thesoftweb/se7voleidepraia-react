@@ -3,6 +3,7 @@ import React from "react";
 import "./styles.css";
 
 type PlanProps = {
+  description?: string | null;
   title?: string;
   amount?: string;
   hour?: string[] | undefined;
@@ -12,6 +13,7 @@ type PlanProps = {
 };
 
 export const PlanItem = ({
+  description,
   title,
   amount,
   hour,
@@ -30,6 +32,7 @@ export const PlanItem = ({
       onClick={handleClique}
     >
       <div className="plan-title">{title}</div>
+      <p className="plan-description">{description || "Descrição não disponível"}</p>
       {Array.isArray(hour) && (
         <div className="plan-hour">
           {hour.map((schedule: string, index: number) => (

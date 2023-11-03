@@ -93,7 +93,7 @@ export const TurmasStep2 = () => {
         <Logo />
         <Header
           title="Consulte"
-          subtitle="Certifique-se os horários das turmas disponíveis para matrícula"
+          subtitle="Os horários das turmas disponíveis para matrícula"
         />
       </div>
       <div className="form-step2">
@@ -134,9 +134,7 @@ export const TurmasStep2 = () => {
                 {turmas.map((item, key) => (
                   <PlanItem
                     key={item.id}
-                    hour={scheduleInfo[item.id]?.map(
-                      (schedule) => schedule.day
-                    )}
+                    description={item.description}
                     title={item.name}
                     amount={item.unit}
                     onSelect={() => handleCourseSelected(item.id, item.name)}
