@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../../../services/api";
 import { Header } from "../../../components/Shared/Header";
 import { Logo } from "../../../components/Shared/Logo";
-
 import "./styles.css";
 import { Button } from "../../../components/Shared/Buttons";
 import { useNavigate } from "react-router-dom";
+import { Contrato } from "../../../components/Shared/Contrato";
+
 
 export const PortalStep2 = () => {
   const cpf = new URLSearchParams(location.search).get("cpf");
@@ -15,9 +16,11 @@ export const PortalStep2 = () => {
   const [enrollments, setEnrollments] = useState<EnrollmentCard[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const navigate = useNavigate();
 
-  async function fechBills() {
+  async function fetchBills() {
     setIsLoading(true);
     const response = await api.get(`customer/bills?cpf=${cpf}`);
 
@@ -43,9 +46,18 @@ export const PortalStep2 = () => {
     console.log(student_id);
     navigate(`/portal/aluno/upload-foto?student=${student_id}`);
   };
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+  const handleAcceptTerms = () => {
+    setTermsAccepted(true);
+    setShowModal(false);
+  };
+
   useEffect(() => {
     console.log(tabActive);
-    fechBills();
+    fetchBills();
   }, []);
 
   return (
@@ -86,13 +98,25 @@ export const PortalStep2 = () => {
         <div className="billWrapper">
           {enrollments.map((enroll: EnrollmentCard) => (
             <EnrollmentCard
+              key={enroll.student_id}
               student_id={enroll.student_id}
               course={enroll.course}
               student={enroll.student}
               photo={enroll.photo}
               onPress={() => handleUploadFoto(enroll.student_id)}
+              handleOpenModal={handleOpenModal}
             />
           ))}
+        </div>
+      )}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Termos de Uso</h3>
+            <hr />
+            <Contrato />
+            <Button label="Aceitar" onClick={handleAcceptTerms} />
+          </div>
         </div>
       )}
     </div>
@@ -115,6 +139,8 @@ type EnrollmentCard = {
   course: string;
   photo: string;
   onPress: () => void;
+  handleOpenModal?: () => void;
+  setShowModal?: ((show: boolean) => void) | undefined;
 };
 
 const BillCard = ({ id, dueDate, description, pdf, link, value }: BillCard) => {
@@ -143,6 +169,8 @@ const EnrollmentCard = ({
   course,
   onPress,
   photo,
+  setShowModal,
+  handleOpenModal,
 }: EnrollmentCard) => {
   return (
     <div className="enrollCard" key={student_id}>
@@ -153,7 +181,10 @@ const EnrollmentCard = ({
         <div className="info">Aluno: {student}</div>
         <div className="info">Curso: {course}</div>
         <Button onClick={onPress} label="Enviar Foto" />
-      </div>
-    </div>
+        {handleOpenModal && (
+          <Button label="Ver Contrato" onClick={handleOpenModal} />
+        )}
+      </div >
+    </div >
   );
 };
