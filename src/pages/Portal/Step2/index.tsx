@@ -7,7 +7,6 @@ import { Button } from "../../../components/Shared/Buttons";
 import { useNavigate } from "react-router-dom";
 import { Contrato } from "../../../components/Shared/Contrato";
 
-
 export const PortalStep2 = () => {
   const cpf = new URLSearchParams(location.search).get("cpf");
 
@@ -174,9 +173,11 @@ const EnrollmentCard = ({
 }: EnrollmentCard) => {
   return (
     <div className="enrollCard" key={student_id}>
-      <div className="photo">
-        <img src={photo} alt="" className="foto" />
-      </div>
+      {photo && (
+        <div className="photo">
+          <img src={photo} alt="" className="foto" />
+        </div>
+      )}
       <div className="infos">
         <div className="info">Aluno: {student}</div>
         <div className="info">Curso: {course}</div>
@@ -184,7 +185,7 @@ const EnrollmentCard = ({
         {handleOpenModal && (
           <Button label="Ver Contrato" onClick={handleOpenModal} />
         )}
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
