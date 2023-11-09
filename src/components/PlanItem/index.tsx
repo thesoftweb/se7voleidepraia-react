@@ -32,7 +32,8 @@ export const PlanItem = ({
       onClick={handleClique}
     >
       <div className="plan-title">{title}</div>
-      <p className="plan-description">{description || "Descrição não disponível"}</p>
+      {description && <p className="plan-description">{description}</p> }
+      
       {Array.isArray(hour) && (
         <div className="plan-hour">
           {hour.map((schedule: string, index: number) => (

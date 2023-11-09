@@ -390,8 +390,7 @@ export const Step3 = () => {
               plans.map((item: Plan, key) => (
                 <PlanItem
                   key={item.id}
-                  title={item.name}
-                  description={item.description}
+                  title={item.name}                  
                   amount={item.amount}
                   isSelected={selectedPlanValor === item.id}
                   onSelect={() =>
