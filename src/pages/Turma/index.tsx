@@ -39,19 +39,11 @@ export const Turma = () => {
       />
       {loading && "Carregando.."}
       <div className="turmas-wrapper">
-        {turmas.map((item, index) => (
-          // <TurmasItem
-          //   key={index}
-          //   nome={item.name}
-          //   categoria={item.category}
-          //   unit={item.unit}
-          //   onClick={() => handleClick(item)}
-          // />
+        {turmas.map((item, index) => (          
           <PlanItem
             key={index}
             title={item.name}
-            hour={item.schedules?.map((schedule) => schedule.day)}
-            amount={item.category}
+            description={item.description}                        
             onSelect={() => handleClick(item)}
           />
         ))}
