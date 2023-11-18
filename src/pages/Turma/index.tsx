@@ -21,8 +21,8 @@ export const Turma = () => {
 
   const loadTurmas = async () => {
     setLoading(true);
-
-    const data = await api.get("/courses");
+    const token = await localStorage.getItem("authToken");
+    const data = await api.get(`/courses?token=${token}`);
     setTurmas(data.data.data);
     setLoading(false);
   };
