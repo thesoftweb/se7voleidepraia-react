@@ -34,7 +34,7 @@ export const Login = () => {
     <div className="container">
       <Logo />
       <Header
-        title="Se7Volei de Praia"
+        title="SE7 Vôlei de Praia"
         subtitle="Informe seus dados de acesso"
       />
       <div className="form-wrapper">

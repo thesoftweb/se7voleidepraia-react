@@ -71,7 +71,7 @@ export const PortalStep2 = () => {
         <div className={tabActive === "enroll" ? "tab-active" : ""}>
           <Button
             onClick={() => handleTabChange("enroll")}
-            label="Matrículas"
+            label="Perfil"
           />
         </div>
       </div>

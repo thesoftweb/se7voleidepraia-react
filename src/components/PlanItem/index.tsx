@@ -44,7 +44,7 @@ export const PlanItem = ({
           ))}
         </div>
       )}
-      <div className="plan-amount">{amount}</div>
+      <div className="plan-amount">Valor: {amount}</div>
     </div>
 
 

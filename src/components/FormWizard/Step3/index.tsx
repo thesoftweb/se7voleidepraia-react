@@ -392,6 +392,7 @@ export const Step3 = () => {
                   key={item.id}
                   title={item.name}                  
                   amount={item.amount}
+                  description={item.description}
                   isSelected={selectedPlanValor === item.id}
                   onSelect={() =>
                     handlePlanSelected(

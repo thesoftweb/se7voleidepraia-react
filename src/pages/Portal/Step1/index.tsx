@@ -29,7 +29,7 @@ export const PortalStep1 = () => {
   return (
     <div className="container">
       <Logo />
-      <Header title="Se7Volei de Praia" subtitle="Acesso do Aluno" />
+      <Header title="SE7 Vôlei de Praia" subtitle="Acesso do Aluno" />
       <div className="form-wrapper">
         <p>{error}</p>
         <input
