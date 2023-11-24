@@ -11,6 +11,7 @@ import { PlanItem } from "../../PlanItem";
 import "./style.css";
 import { Erros } from "../../../types/Erros";
 import api from "../../../services/api";
+import { TurmasItem } from "../../TurmasItem";
 
 export const Step2 = () => {
   type Scheduler = {
@@ -182,9 +183,8 @@ export const Step2 = () => {
                 {turmas.map((item, key) => (
                   <PlanItem
                     key={item.id}
-                    description={item.description}
                     title={item.name}
-                    amount={item.unit}
+                    description={item.description}
                     isSelected={selectedPlan === item.id}
                     onSelect={() => handleCourseSelected(item.id, item.name)}
                   />

@@ -44,7 +44,8 @@ export const PlanItem = ({
           ))}
         </div>
       )}
-      <div className="plan-amount">Valor: {amount}</div>
+      {amount && <div className="plan-amount">{amount && `Valor: ${amount}`}</div> }
+      
     </div>
 
 

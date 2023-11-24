@@ -115,7 +115,7 @@ export const Step4 = () => {
       const valorTotal = quantidadeMatriculas * valorPadraoMatricula;
       return formatarValorBRL(valorTotal);
     } else {
-      return formatarValorBRL(valorPadraoMatricula);
+      return `R$ ${valorPadraoMatricula},00`;
     }
   };
 
@@ -164,7 +164,7 @@ export const Step4 = () => {
               {/* dando erro */}
               <InfoDetail
                 label={"Valor da Matrícula:"}
-                value={`R$ ${handleEnrollmentValue()}`}
+                value={handleEnrollmentValue()}
               />
 
               <InfoDetail

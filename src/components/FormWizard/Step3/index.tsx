@@ -334,7 +334,6 @@ export const Step3 = () => {
                       key={item.id}
                       description={item.description}
                       title={item.name}
-                      amount={item.unit}
                       isSelected={selectedPlan === item.id}
                       onSelect={() =>
                         handleFamiliaCourseSelected(item.id, item.name)
@@ -391,8 +390,8 @@ export const Step3 = () => {
                 <PlanItem
                   key={item.id}
                   title={item.name}                  
-                  amount={item.amount}
                   description={item.description}
+                  amount={item.amount}
                   isSelected={selectedPlanValor === item.id}
                   onSelect={() =>
                     handlePlanSelected(
