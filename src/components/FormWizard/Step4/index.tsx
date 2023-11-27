@@ -1,22 +1,26 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useReducer, useState, useRef } from "react";
 import { Button } from "../../Shared/Buttons";
 import { Header } from "../../Shared/Header";
 import { Logo } from "../../Shared/Logo";
 import { FormActions, useForm } from "../../../contexts/Form/FormContext";
 import { format } from "date-fns";
 import { Link, useNavigate } from "react-router-dom";
-
+import ClipboardJS from "clipboard";
 import "./styles.css";
 import { Contrato } from "../../Shared/Contrato";
 import api from "../../../services/api";
 import Checkbox from "../../Shared/Checkbox";
 
 export const Step4 = () => {
+  const pixUrl = useRef(null);
+
   const [title, setTitle] = useState("Confirme seus dados de matrícula");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [link, setLink] = useState("");
+  const [address, setAddress] = useState("");
+  const [value, setValue] = useState("");
   const [linkGroup, setLinkGroup] = useState("");
   const { state, dispatch } = useForm();
   const [errors, setErrors] = useState("");
@@ -61,28 +65,37 @@ export const Step4 = () => {
 
     const newDate = `${year}-${month}-${day}`;
 
-    const data = await api.post("/enrollment", {
-      name: state.name,
-      email: state.email,
-      birth_date: newDate,
-      cpf: state.cpf,
-      resp_name: state.resp_name,
-      resp_phone: state.resp_phone,
-      resp_cpf: state.resp_cpf,
-      course_id: state.course_id,
-      plan_id: state.plan_id,
-      unit_id: state.unit_id,
+    try {
+      const data = await api.post("/enrollment", {
+        name: state.name,
+        email: state.email,
+        birth_date: newDate,
+        cpf: state.cpf,
+        resp_name: state.resp_name,
+        resp_phone: state.resp_phone,
+        resp_cpf: state.resp_cpf,
+        course_id: state.course_id,
+        plan_id: state.plan_id,
+        unit_id: state.unit_id,
 
-      isMenor: state.isMenor,
-      isFamilia: state.isFamilia,
-      familiaStudents: state.familiaStudents,
-    });
+        isMenor: state.isMenor,
+        isFamilia: state.isFamilia,
+        familiaStudents: state.familiaStudents,
+      });
 
-    setSuccess(true);
-    setLoading(false);
-    setLink(data.data.data.link);
-    setLinkGroup(data.data.data.whatsapp_link);
-    setTitle("Efetue o pagamento da matrícula.");
+      setSuccess(true);
+      setLoading(false);
+      setLink(data.data.data.link);
+      setLinkGroup(data.data.data.whatsapp_link);
+      setAddress(data.data.data.address);
+      setValue(data.data.data.value);
+      setTitle("Efetue o pagamento da matrícula.");
+    } catch (error) {
+      setErrors("Não foi possível realizar sua matrícula");
+      setSuccess(false);
+      setLoading(false);
+      setTitle("Não foi possível realizar sua matrícula");
+    }
   };
 
   const handleGetAmount = () => {
@@ -137,6 +150,26 @@ export const Step4 = () => {
 
     // Navegar de volta ao Step3
     navigate("/matricula-online/step3");
+  };
+
+  const handleCopyClick = () => {
+    const clipboard = new ClipboardJS(".copy-button", {
+      text: () => pixUrl.current.innerText,
+    });
+
+    clipboard.on("success", () => {
+      alert("Pix copiado para área de transferência");
+      clipboard.destroy();
+    });
+
+    clipboard.on("error", () => {
+      alert("Erro ao copiar a chave");
+      clipboard.destroy();
+    });
+
+    clipboard.onClick({
+      delegateTarget: document.querySelector(".copy-button"),
+    });
   };
 
   return (
@@ -215,22 +248,21 @@ export const Step4 = () => {
         </>
       )}
       {success && !loading && (
-        <>
-          <div className="pega">
-            <div className="pegamais">
-              <Link to={link} target="_blank">
-                Clique aqui para pagar
-              </Link>
-              {linkGroup && (
-                <Link to={linkGroup} target="_blank">
-                  Entre no grupo de Alunos
-                </Link>
-              )}
-            </div>
+        <div className="pega">
+          <div className="payment-info">
+            <span>{`Pague a matricula através da chave PIX abaixo, no valor de ${value}`}</span>
+            <span ref={pixUrl}>ChavePix: {address}</span>
+            <button className="copy-button" onClick={handleCopyClick}>
+              Copiar Pix Copia e Cola
+            </button>
 
-            <div className="group"></div>
+            {linkGroup && (
+              <Link to={linkGroup} target="_blank">
+                Entre no grupo de Alunos
+              </Link>
+            )}
           </div>
-        </>
+        </div>
       )}
     </div>
   );
