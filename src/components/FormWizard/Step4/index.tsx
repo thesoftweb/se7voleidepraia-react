@@ -5,14 +5,13 @@ import { Logo } from "../../Shared/Logo";
 import { FormActions, useForm } from "../../../contexts/Form/FormContext";
 import { format } from "date-fns";
 import { Link, useNavigate } from "react-router-dom";
-import ClipboardJS from "clipboard";
 import "./styles.css";
 import { Contrato } from "../../Shared/Contrato";
 import api from "../../../services/api";
-import Checkbox from "../../Shared/Checkbox";
+import useClipboard from "../../../hooks/useClipboard";
 
 export const Step4 = () => {
-  const pixUrl = useRef(null);
+  const copyToCliboard = useClipboard();
 
   const [title, setTitle] = useState("Confirme seus dados de matrícula");
   const [loading, setLoading] = useState(false);
@@ -151,27 +150,6 @@ export const Step4 = () => {
     // Navegar de volta ao Step3
     navigate("/matricula-online/step3");
   };
-
-  const handleCopyClick = () => {
-    const clipboard = new ClipboardJS(".copy-button", {
-      text: () => pixUrl.current.innerText,
-    });
-
-    clipboard.on("success", () => {
-      alert("Pix copiado para área de transferência");
-      clipboard.destroy();
-    });
-
-    clipboard.on("error", () => {
-      alert("Erro ao copiar a chave");
-      clipboard.destroy();
-    });
-
-    clipboard.onClick({
-      delegateTarget: document.querySelector(".copy-button"),
-    });
-  };
-
   return (
     <div className="container">
       <Logo />
@@ -251,8 +229,11 @@ export const Step4 = () => {
         <div className="pega">
           <div className="payment-info">
             <span>{`Pague a matricula através da chave PIX abaixo, no valor de ${value}`}</span>
-            <span ref={pixUrl}>ChavePix: {address}</span>
-            <button className="copy-button" onClick={handleCopyClick}>
+            <span>ChavePix: {address}</span>
+            <button
+              className="copy-button"
+              onClick={() => copyToCliboard(link)}
+            >
               Copiar Pix Copia e Cola
             </button>
 
