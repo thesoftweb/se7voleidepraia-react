@@ -76,7 +76,7 @@ export const Step4 = () => {
         course_id: state.course_id,
         plan_id: state.plan_id,
         unit_id: state.unit_id,
-
+        phone: state.phone ? state.phone : state.resp_phone,
         isMenor: state.isMenor,
         isFamilia: state.isFamilia,
         familiaStudents: state.familiaStudents,

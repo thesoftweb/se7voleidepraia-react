@@ -22,6 +22,7 @@ export const Step3 = () => {
     null
   );
   const [plans, setPlans] = useState([]);
+  const [title, setTitle] = useState("Selecione um Plano");
   const [isLoading, setIsloading] = useState(true);
   const [showAddAnotherStudent, setShowAddAnotherStudent] = useState(false);
   const [showPlanList, setShowPlanList] = useState(true);
@@ -94,6 +95,8 @@ export const Step3 = () => {
       dispatch({ type: FormActions.setAmount, payload: amount });
       dispatch({ type: FormActions.setIsFamilia, payload: isFamilia });
       setShowPlanList(false);
+      setTitle("Adicione alunos ao Plano");
+      setIsFamilia(true);
       handleAddAnotherStudent();
     } else {
       dispatch({ type: FormActions.setPlan_Id, payload: id });
@@ -277,7 +280,7 @@ export const Step3 = () => {
   return (
     <div className="container">
       <Logo />
-      <Header title="Selecione um Plano" />
+      <Header title={title} />
       <div className="plan-wrapper">
         {!showPlanList && (
           <div className="add-student-wrapper">
@@ -286,7 +289,7 @@ export const Step3 = () => {
               type="text"
               value={novaPessoa}
               onChange={(e) => setNovaPessoa(e.target.value)}
-              placeholder="Nome da pessoa"
+              placeholder="Nome do Aluno(a)"
             />
             <InputMask
               mask="99/99/9999"
@@ -350,12 +353,22 @@ export const Step3 = () => {
               label="Adicionar Aluno"
             />
 
+            <div className="student-wrap">
+              <div className="student-familia">
+                <div className="student">
+                  <span>Nome: {state.name}</span>
+                  <span>Dt Nasc.: {state.birth_date}</span>
+                  <span>Turma: {state.className}</span>
+                </div>
+              </div>
+            </div>
+
             {state.familiaStudents.map((person, index) => (
               <div className="student-familia" key={index}>
                 <div className="student">
-                  <span>{person.nome}</span>
+                  <span>Aluno: {person.nome}</span>
 
-                  <span>{formatBirthDate(person.birthdate)}</span>
+                  <span>Data Nasc. {formatBirthDate(person.birthdate)}</span>
                   <span>{person.course}</span>
                 </div>
                 <button onClick={() => handleDeletePerson(index)}>x</button>
@@ -389,7 +402,7 @@ export const Step3 = () => {
               plans.map((item: Plan, key) => (
                 <PlanItem
                   key={item.id}
-                  title={item.name}                  
+                  title={item.name}
                   description={item.description}
                   amount={item.amount}
                   isSelected={selectedPlanValor === item.id}
