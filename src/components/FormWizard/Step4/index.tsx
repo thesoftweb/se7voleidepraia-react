@@ -239,7 +239,7 @@ export const Step4 = () => {
 
             {linkGroup && (
               <Link to={linkGroup} target="_blank">
-                Entre no grupo de Alunos
+                Entre no grupo de Alunos do Whatsapp
               </Link>
             )}
           </div>

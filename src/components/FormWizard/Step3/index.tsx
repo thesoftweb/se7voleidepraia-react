@@ -352,7 +352,7 @@ export const Step3 = () => {
               color="#67CCC5"
               label="Adicionar Aluno"
             />
-
+            <label>Alunos Adicionados</label>
             <div className="student-wrap">
               <div className="student-familia">
                 <div className="student">
@@ -366,7 +366,7 @@ export const Step3 = () => {
             {state.familiaStudents.map((person, index) => (
               <div className="student-familia" key={index}>
                 <div className="student">
-                  <span>Aluno: {person.nome}</span>
+                  <span>Nome: {person.nome}</span>
 
                   <span>Data Nasc. {formatBirthDate(person.birthdate)}</span>
                   <span>{person.course}</span>
