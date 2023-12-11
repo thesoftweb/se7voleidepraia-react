@@ -34,17 +34,6 @@ export const Step1 = () => {
     dispatch({ type: FormActions.setEmail, payload: e.target.value });
   };
 
-  // const formatDate = (data: Date): string => {
-  //   const day = data.getDate().toString().padStart(2, "0");
-  //   const month = (data.getMonth() + 1).toString().padStart(2, "0");
-  //   const year = data.getFullYear().toString();
-  //   return `${day}/${month}/${year}`;
-  // };
-  // const formatBirthDate = (birthDate: string): string => {
-  //   const date = new Date(birthDate);
-  //   return format(date, "dd/MM/yyyy");
-  // };
-
   const validarIdade = (dataNascimento: string) => {
     const dataNascimentoArray = dataNascimento.split("/");
     const diaNascimento = parseInt(dataNascimentoArray[0], 10);

@@ -72,6 +72,7 @@ export const Step4 = () => {
         cpf: state.cpf,
         resp_name: state.resp_name,
         resp_phone: state.resp_phone,
+        resp_email: state.resp_email,
         resp_cpf: state.resp_cpf,
         course_id: state.course_id,
         plan_id: state.plan_id,
@@ -150,6 +151,7 @@ export const Step4 = () => {
     // Navegar de volta ao Step3
     navigate("/matricula-online/step3");
   };
+
   return (
     <div className="container">
       <Logo />
@@ -242,6 +244,12 @@ export const Step4 = () => {
                 Entre no grupo de Alunos do Whatsapp
               </Link>
             )}
+          </div>
+
+          <div className="navigation">
+            <Link to={"/matricula-online"} className="home-button">
+              Voltar pro Início
+            </Link>
           </div>
         </div>
       )}
