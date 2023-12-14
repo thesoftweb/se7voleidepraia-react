@@ -247,7 +247,7 @@ export const Step4 = () => {
           </div>
 
           <div className="navigation">
-            <Link to={"/matricula-online"} className="home-button">
+            <Link to="https://se7voleidepraia.com.br" className="home-button">
               Voltar pro Início
             </Link>
           </div>

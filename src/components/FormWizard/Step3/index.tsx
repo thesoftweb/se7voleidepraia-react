@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Header } from "../../Shared/Header";
 import { PlanItem } from "../../PlanItem";
@@ -12,7 +12,6 @@ import { format } from "date-fns";
 import InputMask from "react-input-mask";
 import { useUnidades } from "../../../hooks/useUnidades";
 import { Turmas } from "../../../types/Turmas";
-import { Scheduler } from "timers/promises";
 import { Erros } from "../../../types/Erros";
 
 export const Step3 = () => {
@@ -60,16 +59,12 @@ export const Step3 = () => {
   }
 
   const handlePrevStep = () => {
-    console.log("State:", state);
     dispatch({ type: FormActions.setUnit_Id, payload: null });
     dispatch({ type: FormActions.setCategory, payload: "" });
     navigate("/matricula-online/step2");
   };
 
   const handleNextStep = () => {
-    console.log("State:", state);
-    console.log("Is Family:", state.isFamilia);
-
     if (state.isFamilia && state.familiaStudents.length === 0) {
       alert(
         "Por favor, insira os nomes dos integrantes da família antes de avançar."
@@ -114,8 +109,6 @@ export const Step3 = () => {
   };
 
   const AdicionarAlunoAoPlano = () => {
-    console.log("State:", state);
-
     const isAnyStudentFilled = state.familiaStudents.some(
       (student) => student.nome.trim() !== "" && student.birthdate.trim() !== ""
     );
@@ -131,9 +124,6 @@ export const Step3 = () => {
   };
 
   const VoltarPlanFamilia = () => {
-    console.log("Statessss:", state);
-    console.log("Is Family: ", isFamilia);
-
     // Verifica se há pessoas adicionadas e remove-as
     if (state.familiaStudents.length > 0) {
       dispatch({ type: FormActions.RemoverFamiliaStudent, payload: [] });
@@ -220,17 +210,11 @@ export const Step3 = () => {
     setSelectedPlan(id);
     setCourseNew(id);
     setClassName(className);
-    //talvez nao precise das linhas abaixo
-    // dispatch({ type: FormActions.setCourse_Id, payload: id });
-    // dispatch({ type: FormActions.setClassName, payload: className });
   };
 
   const fetchTurmas = async (unit_id: number, category: string) => {
     let url = `/courses?unit_id=${unit_id}&category=${category}&`;
-
     const data = await api.get(url);
-    console.log("Oque tem", data.data.data);
-
     setTurmas(data.data.data);
     const scheduleData = data.data.data.reduce(
       (acc: { [key: number]: { day: string }[] }, curr: Turmas) => {
@@ -250,7 +234,6 @@ export const Step3 = () => {
   const formatBirthDate = (birthdate: string): string => {
     const [year, month, day] = birthdate.split("-").map(Number);
     const date = new Date(year, month - 1, day);
-    console.log("dataaa", date);
     return format(date, "dd/MM/yyyy");
   };
 
@@ -266,14 +249,10 @@ export const Step3 = () => {
   };
 
   const getTurmaNome = (course_id: number) => {
-    console.log(state.familiaStudents);
-
     const turma = turmas.find((turma) => turma.id === course_id);
-
     if (!turmasCarregadas) {
       return "Carregando turmas...";
     }
-
     return turma ? turma.name : "Turma não encontrada";
   };
 
@@ -326,7 +305,11 @@ export const Step3 = () => {
               <option value="competitive">Competitivo</option>
             </select>
 
-            <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
+            <Button
+              onClick={confirmaTurmas}
+              label="Selecionar Turma"
+              color="grey"
+            />
 
             {showTurmas && (
               <>

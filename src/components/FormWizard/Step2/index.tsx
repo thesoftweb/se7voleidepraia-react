@@ -11,7 +11,6 @@ import { PlanItem } from "../../PlanItem";
 import "./style.css";
 import { Erros } from "../../../types/Erros";
 import api from "../../../services/api";
-import { TurmasItem } from "../../TurmasItem";
 
 export const Step2 = () => {
   type Scheduler = {
@@ -62,14 +61,12 @@ export const Step2 = () => {
 
   const handlePrevStep = () => {
     dispatch({ type: FormActions.setUnit_Id, payload: null });
-    dispatch({ type: FormActions.setCategory, payload: '' });
+    dispatch({ type: FormActions.setCategory, payload: "" });
     navigate("/matricula-online");
-    console.log("PREV STEP");
   };
 
   const newErrors: Erros = {};
   const handleNextStep = () => {
-    console.log("State:", state);
     if (
       state.unit_id !== 0 &&
       state.course_id !== 0 &&
@@ -79,7 +76,6 @@ export const Step2 = () => {
     ) {
       navigate("/matricula-online/step3");
     } else {
-
       if (state.unit_id === 0) {
         newErrors.unit_id = "Escolha a Unidade";
       }
@@ -90,28 +86,6 @@ export const Step2 = () => {
     }
   };
 
-  // const fetchTurmas = async () => {
-  //   let url = `/courses?unit_id=${state.unit_id}&category=${state.category}&`;
-  //   const data = await api.get(url);
-  //   console.log("Oque tem", data.data.data);
-
-  //   setTurmas(data.data.data);
-
-  //   const scheduleData = data.data.data.reduce(
-  //     (acc: { [key: number]: { day: string }[] }, curr: Turmas) => {
-  //       acc[curr.id] = curr.schedules;
-  //       return acc;
-  //     },
-  //     {}
-  //   );
-  //   setScheduleInfo(scheduleData);
-
-
-
-  //   if (data.data.data.length > 0) {
-  //     setShowTurmas(true);
-  //   }
-  // };
   const fetchTurmas = async () => {
     let url = `/courses?unit_id=${state.unit_id}&category=${state.category}&`;
     const data = await api.get(url);
@@ -173,7 +147,11 @@ export const Step2 = () => {
             </select>
           </div>
           {isSelectionComplete && (
-            <Button onClick={confirmaTurmas} label="Ver Turmas" color="grey" />
+            <Button
+              onClick={confirmaTurmas}
+              label="Selecionar Turma"
+              color="grey"
+            />
           )}
 
           {showTurmas && (
