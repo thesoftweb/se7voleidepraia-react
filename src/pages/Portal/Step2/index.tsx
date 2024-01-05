@@ -69,10 +69,7 @@ export const PortalStep2 = () => {
           <Button onClick={() => handleTabChange("bills")} label="Cobranças" />
         </div>
         <div className={tabActive === "enroll" ? "tab-active" : ""}>
-          <Button
-            onClick={() => handleTabChange("enroll")}
-            label="Perfil"
-          />
+          <Button onClick={() => handleTabChange("enroll")} label="Perfil" />
         </div>
       </div>
 
@@ -95,6 +92,12 @@ export const PortalStep2 = () => {
         </div>
       ) : (
         <div className="billWrapper">
+          <a
+            href="https://se7voleidepraia.com.br/wp-content/uploads/2024/01/calendario-SE7-2024.pdf"
+            className="btn-link"
+          >
+            Calendário 2024
+          </a>
           {enrollments.map((enroll: EnrollmentCard) => (
             <EnrollmentCard
               key={enroll.student_id}

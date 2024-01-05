@@ -230,8 +230,7 @@ export const Step4 = () => {
       {success && !loading && (
         <div className="pega">
           <div className="payment-info">
-            <span>{`Pague a matricula através da chave PIX abaixo, no valor de ${value}`}</span>
-            <span>ChavePix: {address}</span>
+            <span>{`Pague a matricula através da chave PIX copia/cola, no valor de ${value}`}</span>
             <button
               className="copy-button"
               onClick={() => copyToCliboard(link)}

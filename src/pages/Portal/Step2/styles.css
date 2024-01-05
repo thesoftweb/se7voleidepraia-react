@@ -71,3 +71,8 @@
     align-items: center;
     padding: 5px;
 }
+
+.btn-link {
+    background-color: transparent !important;
+    margin-bottom: 15px;
+}
