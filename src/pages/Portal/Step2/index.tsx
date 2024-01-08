@@ -93,8 +93,9 @@ export const PortalStep2 = () => {
       ) : (
         <div className="billWrapper">
           <a
-            href="https://se7voleidepraia.com.br/wp-content/uploads/2024/01/calendario-SE7-2024.pdf"
+            href="https://se7voleidepraia.com.br/wp-content/uploads/2024/01/calendario-SE7-2024-1.pdf"
             className="btn-link"
+            target="_blank"
           >
             Calendário 2024
           </a>

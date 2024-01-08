@@ -231,11 +231,24 @@ export const Step4 = () => {
         <div className="pega">
           <div className="payment-info">
             <span>{`Pague a matricula através da chave PIX copia/cola, no valor de ${value}`}</span>
+            <span>
+              Prazo de 24h para concluir o pagamento da matrícula, senão a vaga
+              na turma não é efetivada.
+            </span>
+
+            <span>
+              As mensalidades podem ser acessadas no "Portal do Aluno" em nosso
+              site
+            </span>
+
+            <textarea name="" id="" cols="30" rows="5">
+              {link}
+            </textarea>
             <button
               className="copy-button"
               onClick={() => copyToCliboard(link)}
             >
-              Copiar Pix Copia e Cola
+              Copiar Chave Pix
             </button>
 
             {linkGroup && (
