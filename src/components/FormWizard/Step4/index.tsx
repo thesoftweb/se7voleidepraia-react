@@ -241,7 +241,7 @@ export const Step4 = () => {
               site
             </span>
 
-            <textarea name="" id="" cols="30" rows="5">
+            <textarea name="" id="" cols={30} rows={5}>
               {link}
             </textarea>
             <button
