@@ -82,6 +82,7 @@ export const PortalStep2 = () => {
               <BillCard
                 id={bill.id}
                 url={bill.url}
+                status={bill.status}
                 dueDate={bill.dueDate}
                 description={bill.description}
                 value={bill.value}
@@ -92,13 +93,6 @@ export const PortalStep2 = () => {
         </div>
       ) : (
         <div className="billWrapper">
-          <a
-            href="https://se7voleidepraia.com.br/wp-content/uploads/2024/01/calendario-SE7-2024-1.pdf"
-            className="btn-link"
-            target="_blank"
-          >
-            Calendário 2024
-          </a>
           {enrollments.map((enroll: EnrollmentCard) => (
             <EnrollmentCard
               key={enroll.student_id}
@@ -130,6 +124,7 @@ type BillCard = {
   id: string;
   url: string;
   dueDate: string;
+  status:string;
   description: string;
   pdf: string;
   link: string;
@@ -146,11 +141,11 @@ type EnrollmentCard = {
   setShowModal?: ((show: boolean) => void) | undefined;
 };
 
-const BillCard = ({ id, dueDate, description, pdf, link, value }: BillCard) => {
+const BillCard = ({ id, dueDate, description, pdf, link, value,status }: BillCard) => {
   return (
     <div className="billCard" key={id}>
       <div className="infos">
-        <div className="info">Valor: {value}</div>
+        <div className="info">Valor: {value} ** <span className={`${status}-payment`}>{status}</span></div>
         <div className="info">Descrição: {description}</div>
         <div className="info">Vencimento: {dueDate}</div>
       </div>
@@ -182,14 +177,23 @@ const EnrollmentCard = ({
           <img src={photo} alt="" className="foto" />
         </div>
       )}
-      <div className="infos">
+      
         <div className="info">Aluno: {student}</div>
         <div className="info">Curso: {course}</div>
+        
         <Button onClick={onPress} label="Enviar Foto" />
+        
         {handleOpenModal && (
           <Button label="Ver Contrato" onClick={handleOpenModal} />
         )}
-      </div>
+        <a
+            href="https://se7voleidepraia.com.br/wp-content/uploads/2024/01/calendario-SE7-2024-1.pdf"
+            className="button-link"
+            target="_blank"
+          >
+            Calendário 2024
+          </a>
+         
     </div>
   );
 };
