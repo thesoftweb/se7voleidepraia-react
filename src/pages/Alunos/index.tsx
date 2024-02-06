@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Aluno } from "../../types/Aluno";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import api from "../../services/api";
 import { Header } from "../../components/Shared/Header";
 
@@ -95,6 +95,12 @@ export const Alunos = () => {
         ))}
       </div>
       <Button label="Registrar Frequência" onClick={handleSendAttendance} />
+
+      <div className="navigation">
+        <Link to="/turma" className="home-button">
+          Voltar para turmas
+        </Link>
+      </div>
     </div>
   );
 };

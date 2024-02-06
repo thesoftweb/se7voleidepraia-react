@@ -6,6 +6,7 @@ import { Logo } from "../../../components/Shared/Logo";
 
 import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import api from "../../../services/api";
 
 export const PortalStep1 = () => {
   const auth = useContext(AuthContext);
@@ -17,12 +18,15 @@ export const PortalStep1 = () => {
     if (!username) {
       setError("Digite o cpf");
     }
-    // const isLogged = true;
 
-    // if (!isLogged) {
-    //   setError("Usuario ou senha invalidos");
-    //   return;
-    // }
+    const { data } = await api.get(`customer/bills?cpf=${username}`);
+
+    console.log(data);
+
+    if (!data.success) {
+      return alert(data.message);
+    }
+
     navigate(`/portal/aluno/cobrancas?cpf=${username}`);
   };
 

@@ -237,8 +237,8 @@ export const Step4 = () => {
             </span>
 
             <span>
-              As mensalidades podem ser acessadas no "Portal do Aluno" em nosso
-              site
+              Em até 24h as mensalidades podem ser acessadas no PORTAL DO ALUNO
+              em nosso site
             </span>
 
             <textarea name="" id="" cols={30} rows={5}>
