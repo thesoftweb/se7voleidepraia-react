@@ -4,6 +4,7 @@
     align-items: center;
     text-align: center;
 }
+
 .billCard {
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
@@ -26,13 +27,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  
+
 }
+
 .tabs {
     display: flex;
     flex-direction: row;
     gap: 15px;
-    margin-bottom: 20px;        
+    margin-bottom: 20px;
 }
 
 .tab-active {
@@ -63,13 +65,14 @@
     color: white;
     background-color: #0094e9a9;
     border-radius: 5px;
-    
+
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
     padding: 5px;
 }
+
 .buttons {
     display: flex;
     flex-direction: column;
@@ -80,11 +83,11 @@
 }
 
 .Recebida-payment {
- color: white;
- background-color: green;
- border-radius: 5px;
- padding: 5px;
- font-weight: 400;
+    color: white;
+    background-color: green;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: 400;
 }
 
 .Pendente-payment {
@@ -96,17 +99,17 @@
 }
 
 .Confirmada-payment {
-  color: green;
-  background-color: white;
-  border-radius: 5px;
-  padding: 2px;
-  font-weight: 400;
+    color: green;
+    background-color: white;
+    border-radius: 5px;
+    padding: 2px;
+    font-weight: 400;
 }
 
 .Vencida-payment {
- color: white;
- background-color: red;
- border-radius: 5px;
- padding: 2px;
- font-weight: 400;
+    color: white;
+    background-color: red;
+    border-radius: 5px;
+    padding: 2px;
+    font-weight: 400;
 }

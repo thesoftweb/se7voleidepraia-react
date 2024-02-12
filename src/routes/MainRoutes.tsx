@@ -14,6 +14,9 @@ import { PortalStep1 } from "../pages/Portal/Step1";
 import { PortalStep2 } from "../pages/Portal/Step2";
 import { UploadFoto } from "../pages/Portal/UploadFoto";
 import { TurmasStep2 } from "../pages/TurmasStep2";
+import AddressForm from "../pages/Portal/AddressForm";
+;
+
 
 export const MainRoutes = () => {
   return (
@@ -36,6 +39,9 @@ export const MainRoutes = () => {
         }
       />
 
+
+
+
       <Route path="/matricula-online" element={<Step1 />} />
       <Route path="/matricula-online/step2" element={<Step2 />} />
       <Route path="/matricula-online/step3" element={<Step3 />} />
@@ -45,6 +51,7 @@ export const MainRoutes = () => {
       <Route path="/portal/aluno" element={<PortalStep1 />} />
       <Route path="/portal/aluno/cobrancas" element={<PortalStep2 />} />
       <Route path="/portal/aluno/upload-foto" element={<UploadFoto />} />
+      <Route path="/portal/aluno/Address-form" element={<AddressForm />} />
     </Routes>
   );
 };

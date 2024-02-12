@@ -6,9 +6,12 @@ import "./styles.css";
 import { Button } from "../../../components/Shared/Buttons";
 import { useNavigate } from "react-router-dom";
 import { Contrato } from "../../../components/Shared/Contrato";
+import AddressForm from "../AddressForm";
+// Importe o componente AddressForm
 
 export const PortalStep2 = () => {
   const cpf = new URLSearchParams(location.search).get("cpf");
+  console.log('teste cpf', cpf)
 
   const [tabActive, setTabActive] = useState("bills");
   const [bills, setBills] = useState<BillCard[]>([]);
@@ -53,6 +56,10 @@ export const PortalStep2 = () => {
     setTermsAccepted(true);
     setShowModal(false);
   };
+  const handleToggleAddressForm = () => {
+
+    navigate(`/portal/aluno/Address-form?adrress=${cpf}`);
+  };
 
   useEffect(() => {
     console.log(tabActive);
@@ -71,6 +78,7 @@ export const PortalStep2 = () => {
         <div className={tabActive === "enroll" ? "tab-active" : ""}>
           <Button onClick={() => handleTabChange("enroll")} label="Perfil" />
         </div>
+
       </div>
 
       {tabActive === "bills" ? (
@@ -102,6 +110,8 @@ export const PortalStep2 = () => {
               photo={enroll.photo}
               onPress={() => handleUploadFoto(enroll.student_id)}
               handleOpenModal={handleOpenModal}
+              handleAddressForm={() => handleToggleAddressForm()} // Adicione a função para abrir/fechar o formulário de endereço
+              setShowModal={setShowModal} // Forneça a função para controlar o modal
             />
           ))}
         </div>
@@ -116,7 +126,9 @@ export const PortalStep2 = () => {
           </div>
         </div>
       )}
+
     </div>
+
   );
 };
 
@@ -124,7 +136,7 @@ type BillCard = {
   id: string;
   url: string;
   dueDate: string;
-  status:string;
+  status: string;
   description: string;
   pdf: string;
   link: string;
@@ -138,10 +150,11 @@ type EnrollmentCard = {
   photo: string;
   onPress: () => void;
   handleOpenModal?: () => void;
+  handleAddressForm: () => void; // Adicione a função para abrir/fechar o formulário de endereço
   setShowModal?: ((show: boolean) => void) | undefined;
 };
 
-const BillCard = ({ id, dueDate, description, pdf, link, value,status }: BillCard) => {
+const BillCard = ({ id, dueDate, description, pdf, link, value, status }: BillCard) => {
   return (
     <div className="billCard" key={id}>
       <div className="infos">
@@ -169,6 +182,7 @@ const EnrollmentCard = ({
   photo,
   setShowModal,
   handleOpenModal,
+  handleAddressForm,
 }: EnrollmentCard) => {
   return (
     <div className="enrollCard" key={student_id}>
@@ -177,23 +191,26 @@ const EnrollmentCard = ({
           <img src={photo} alt="" className="foto" />
         </div>
       )}
-      
-        <div className="info">Aluno: {student}</div>
-        <div className="info">Curso: {course}</div>
-        
-        <Button onClick={onPress} label="Enviar Foto" />
-        
-        {handleOpenModal && (
-          <Button label="Ver Contrato" onClick={handleOpenModal} />
-        )}
-        <a
-            href="https://se7voleidepraia.com.br/wp-content/uploads/2024/01/calendario-SE7-2024-1.pdf"
-            className="button-link"
-            target="_blank"
-          >
-            Calendário 2024
-          </a>
-         
+
+      <div className="info">Aluno: {student}</div>
+      <div className="info">Curso: {course}</div>
+
+      <Button onClick={onPress} label="Enviar Foto" />
+
+      <Button onClick={handleAddressForm} label="Endereço" /> {/* Botão para abrir/fechar o formulário de endereço */}
+
+      {handleOpenModal && (
+        <Button label="Ver Contrato" onClick={handleOpenModal} />
+      )}
+      <a
+        href="https://se7voleidepraia.com.br/wp-content/uploads/2024/01/calendario-SE7-2024-1.pdf"
+        className="button-link"
+        target="_blank"
+      >
+        Calendário 2024
+      </a>
+
+
     </div>
   );
 };

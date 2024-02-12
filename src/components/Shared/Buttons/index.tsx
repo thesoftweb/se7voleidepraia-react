@@ -3,7 +3,7 @@ import "./styles.css";
 type ButtonProps = {
   label: string;
   color?: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
 };
 
