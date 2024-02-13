@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../components/Shared/Buttons';
 import './styles.css';
+import ReactInputMask from 'react-input-mask';
 
 interface AddressFormData {
     address_zipcode: string;
@@ -28,6 +29,28 @@ export const AddressForm: React.FC = () => {
         address_number: '',
         address_complement: ''
     });
+
+    useEffect(() => {
+        const fetchAddressData = async () => {
+            try {
+                const response = await fetch(`https://app.se7voleidepraia.com.br/api/get-address-customer?cpf=${adrress}`);
+                if (response.ok) {
+                    const responseData = await response.json();
+                    const addressData = responseData.data;
+                    setFormData(addressData);
+                } else {
+                    throw new Error('Falha ao buscar os dados do endereço.');
+                }
+            } catch (error) {
+                console.error('Erro ao buscar os dados do endereço:', error);
+                alert('Ocorreu um erro ao buscar os dados do endereço.');
+            }
+        };
+
+        if (adrress) {
+            fetchAddressData();
+        }
+    }, [adrress]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -62,7 +85,6 @@ export const AddressForm: React.FC = () => {
             }
         } catch (error) {
             console.error('Erro:', error);
-
             alert('Ocorreu um erro ao enviar o endereço.');
         }
     };
@@ -72,7 +94,9 @@ export const AddressForm: React.FC = () => {
             <h2>Formulário de Endereço do Aluno</h2>
             <form onSubmit={handleSubmit} className='Formteste '>
                 <label >CEP</label><br />
-                <input type="text" id="address_zipcode" name="address_zipcode" value={formData.address_zipcode} onChange={handleChange} required /><br />
+                <ReactInputMask mask="99999-999" type="text" id="address_zipcode" name="address_zipcode" value={formData.address_zipcode} onChange={handleChange} required>
+
+                </ReactInputMask><br />
 
                 <label >Rua</label><br />
                 <input type="text" id="street_name" name="street_name" value={formData.street_name} onChange={handleChange} required /><br />
