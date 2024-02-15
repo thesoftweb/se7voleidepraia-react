@@ -1,0 +1,10 @@
+.back-button {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  margin-top: 5px;
+}
+
+.select-uf {
+  width: 100%;
+}
