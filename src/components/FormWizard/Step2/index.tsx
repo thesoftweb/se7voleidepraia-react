@@ -101,6 +101,7 @@ export const Step2 = () => {
 
       setTurmas(turmasData);
       setShowTurmas(true);
+      console.log(turmasData);
     }
   };
   const confirmaTurmas = () => {

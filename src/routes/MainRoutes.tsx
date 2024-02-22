@@ -39,9 +39,6 @@ export const MainRoutes = () => {
         }
       />
 
-
-
-
       <Route path="/matricula-online" element={<Step1 />} />
       <Route path="/matricula-online/step2" element={<Step2 />} />
       <Route path="/matricula-online/step3" element={<Step3 />} />

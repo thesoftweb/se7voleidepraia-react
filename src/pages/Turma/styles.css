@@ -1,3 +1,13 @@
 .turmas-wrapper {
-    width:  100%;
+    width: 100%;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.filters>label {
+    margin-bottom: 15px;
 }
