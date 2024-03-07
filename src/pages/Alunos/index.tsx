@@ -79,7 +79,11 @@ export const Alunos = () => {
       </div>
       <div className="students-wrapper">
         {students.map((student) => (
-          <div className="student-item" key={student.id}>
+          <div
+            className="student-item"
+            key={student.id}
+            onClick={() => setChecked(student.id, !student.selecionado)}
+          >
             <div className="student-data">
               <img className="foto" src={student.img} alt="" />
               <span>{student.name}</span>
