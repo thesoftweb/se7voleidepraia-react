@@ -68,7 +68,7 @@ export const TurmasStep2 = () => {
       fetchTurmas();
     } else {
       if (state.unit_id === 0) {
-        newErrors.unit_id = "SELECIONE A UNIDADE";
+        newErrors.unit_id = "SELECIONE O ESPORTE";
       }
       if (state.category === "") {
         newErrors.category = "SELECIONE A CATEGORIA";
@@ -99,7 +99,7 @@ export const TurmasStep2 = () => {
       <div className="form-step2">
         <div className="testando">
           <div className="form-units">
-            <label>SELECIONE UMA UNIDADE</label>
+            <label>SELECIONE UM ESPORTE</label>
             {errors && <span className="error-message">{errors.unit_id}</span>}
 
             <select value={state.unit_id} onChange={handleUnidadeChange}>
@@ -146,7 +146,7 @@ export const TurmasStep2 = () => {
           <div className="buttons">
             <Button
               label="Faça sua matrícula"
-              color="#67CCC5"
+              color="#cbd741"
               onClick={FormRegister}
             />
           </div>

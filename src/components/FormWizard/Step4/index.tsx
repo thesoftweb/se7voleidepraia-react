@@ -167,7 +167,7 @@ export const Step4 = () => {
               ) : (
                 <InfoDetail label={"Email:"} value={state.email} />
               )}
-              <InfoDetail label={"Unidade:"} value={state.unitName} />
+              <InfoDetail label={"Esporte:"} value={state.unitName} />
               <InfoDetail label={"Turma:"} value={state.className} />
               <InfoDetail label={"Plano:"} value={state.planName} />
               {/* dando erro */}
@@ -255,7 +255,7 @@ export const Step4 = () => {
           </div>
 
           <div className="navigation">
-            <Link to="https://se7voleidepraia.com.br" className="home-button">
+            <Link to="https://baseesportespb.com.br" className="home-button">
               Voltar pro Início
             </Link>
           </div>

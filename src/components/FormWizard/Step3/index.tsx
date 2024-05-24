@@ -277,7 +277,7 @@ export const Step3 = () => {
               onChange={(e) => setNovaPessoaDataNascimento(e.target.value)}
               placeholder="Data de nascimento"
             />
-            <span>Escolha uma Unidade</span>
+            <span>Escolha uma Esporte</span>
 
             {errors && <span className="error-message">{errors.unit_id}</span>}
             <select
@@ -332,7 +332,7 @@ export const Step3 = () => {
 
             <Button
               onClick={handleAddPerson}
-              color="#67CCC5"
+              color="#cbd741"
               label="Adicionar Aluno"
             />
             <label>Alunos Adicionados</label>
@@ -366,7 +366,7 @@ export const Step3 = () => {
               />
               <Button
                 label="Avançar"
-                color="#67CCC5"
+                color="#cbd741"
                 onClick={AdicionarAlunoAoPlano}
               />
             </div>
@@ -404,7 +404,7 @@ export const Step3 = () => {
               <Button label="Voltar" color="red" onClick={handlePrevStep} />
               <Button
                 label="Avançar"
-                color="#67CCC5"
+                color="#cbd741"
                 onClick={handleNextStep}
               />
             </div>

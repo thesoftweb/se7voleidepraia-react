@@ -35,7 +35,7 @@ export const AddressForm: React.FC = () => {
     const fetchAddressData = async () => {
       try {
         const response = await fetch(
-          `https://app.se7voleidepraia.com.br/api/get-address-customer?cpf=${adrress}`
+          `https://app.baseesportespb.com.br/api/get-address-customer?cpf=${adrress}`
         );
         if (response.ok) {
           const responseData = await response.json();
@@ -74,7 +74,7 @@ export const AddressForm: React.FC = () => {
     }
     try {
       const response = await fetch(
-        `https://app.se7voleidepraia.com.br/api/update-address-customer?cpf=${adrress}`,
+        `https://app.baseesportespb.com.br/api/update-address-customer?cpf=${adrress}`,
         {
           method: "PUT",
           headers: {

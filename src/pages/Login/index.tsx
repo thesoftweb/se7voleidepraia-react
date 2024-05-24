@@ -33,10 +33,7 @@ export const Login = () => {
   return (
     <div className="container">
       <Logo />
-      <Header
-        title="SE7 Vôlei de Praia"
-        subtitle="Informe seus dados de acesso"
-      />
+      <Header title="Base Esportes" subtitle="Informe seus dados de acesso" />
       <div className="form-wrapper">
         <p>{error}</p>
         <input

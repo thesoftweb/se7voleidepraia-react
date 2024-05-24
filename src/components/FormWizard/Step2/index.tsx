@@ -120,13 +120,13 @@ export const Step2 = () => {
         <Logo />
         <Header
           title="Selecione uma Turma"
-          subtitle="Escolha uma unidade e uma categoria"
+          subtitle="Escolha uma esporte e uma categoria"
         />
       </div>
       <div className="form-step2">
         <div className="testando">
           <div className="form-units">
-            <label>Escolha uma Unidade</label>
+            <label>Escolha uma Esporte</label>
             {errors && <span className="error-message">{errors.unit_id}</span>}
             <select value={state.unit_id} onChange={handleUnidadeChange}>
               <option>SELECIONE</option>
@@ -173,7 +173,7 @@ export const Step2 = () => {
           )}
           <div className="buttons">
             <Button label="Voltar" color="red" onClick={handlePrevStep} />
-            <Button label="Avançar" color="#67CCC5" onClick={handleNextStep} />
+            <Button label="Avançar" color="#cbd741" onClick={handleNextStep} />
           </div>
         </div>
       </div>

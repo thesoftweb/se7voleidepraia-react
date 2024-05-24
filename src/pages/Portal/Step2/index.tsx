@@ -11,7 +11,7 @@ import AddressForm from "../AddressForm";
 
 export const PortalStep2 = () => {
   const cpf = new URLSearchParams(location.search).get("cpf");
-  console.log('teste cpf', cpf)
+  console.log("teste cpf", cpf);
 
   const [tabActive, setTabActive] = useState("bills");
   const [bills, setBills] = useState<BillCard[]>([]);
@@ -57,7 +57,6 @@ export const PortalStep2 = () => {
     setShowModal(false);
   };
   const handleToggleAddressForm = () => {
-
     navigate(`/portal/aluno/Address-form?adrress=${cpf}`);
   };
 
@@ -78,7 +77,6 @@ export const PortalStep2 = () => {
         <div className={tabActive === "enroll" ? "tab-active" : ""}>
           <Button onClick={() => handleTabChange("enroll")} label="Perfil" />
         </div>
-
       </div>
 
       {tabActive === "bills" ? (
@@ -126,9 +124,7 @@ export const PortalStep2 = () => {
           </div>
         </div>
       )}
-
     </div>
-
   );
 };
 
@@ -154,11 +150,22 @@ type EnrollmentCard = {
   setShowModal?: ((show: boolean) => void) | undefined;
 };
 
-const BillCard = ({ id, dueDate, description, pdf, link, value, status }: BillCard) => {
+const BillCard = ({
+  id,
+  dueDate,
+  description,
+  pdf,
+  link,
+  value,
+  status,
+}: BillCard) => {
   return (
     <div className="billCard" key={id}>
       <div className="infos">
-        <div className="info">Valor: {value} ** <span className={`${status}-payment`}>{status}</span></div>
+        <div className="info">
+          Valor: {value} **{" "}
+          <span className={`${status}-payment`}>{status}</span>
+        </div>
         <div className="info">Descrição: {description}</div>
         <div className="info">Vencimento: {dueDate}</div>
       </div>
@@ -191,26 +198,21 @@ const EnrollmentCard = ({
           <img src={photo} alt="" className="foto" />
         </div>
       )}
-
       <div className="info">Aluno: {student}</div>
       <div className="info">Curso: {course}</div>
-
       <Button onClick={onPress} label="Enviar Foto" />
-
-      <Button onClick={handleAddressForm} label="Endereço" /> {/* Botão para abrir/fechar o formulário de endereço */}
-
+      <Button onClick={handleAddressForm} label="Endereço" />{" "}
+      {/* Botão para abrir/fechar o formulário de endereço */}
       {handleOpenModal && (
         <Button label="Ver Contrato" onClick={handleOpenModal} />
       )}
-      <a
-        href="https://se7voleidepraia.com.br/wp-content/uploads/2024/01/calendario-SE7-2024-1.pdf"
+      {/* <a
+        href="https://baseesportespb.com.br/wp-content/uploads/2024/01/calendario-SE7-2024-1.pdf"
         className="button-link"
         target="_blank"
       >
         Calendário 2024
-      </a>
-
-
+      </a> */}
     </div>
   );
 };

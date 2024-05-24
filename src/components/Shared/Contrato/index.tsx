@@ -3,13 +3,14 @@ import "./style.css";
 export const Contrato = () => {
   return (
     <p className="contrato-text">
-      Contrato que entre si fazem, como CONTRATADA, SE7 Vôlei de Praia, com sede
-      na Rua Poeta Zé da Luz, 106 Cxpst 37, Expedicionários, CEP 58040-680, João
-      Pessoa/PB, devidamente inscrita no CNPJ 48.751.974/0001-33, e como
-      CONTRATANTE, doravante denominado (a) ATLETA ou RESPONSÁVEL PELO(S)
-      ALUNO(S), aqui devidamente cadastrado. As partes têm, entre si, justo e
-      acertado o presente Contrato de Prestação de Serviços Esportivos, que se
-      regerá pelas cláusulas seguintes e pelas condições descritas no presente.
+      Contrato que entre si fazem, como CONTRATADA, ASSOCIAÇÃO DESPORTIVA
+      PARAIBANA - ADP, com sede na Avenida João Cirilo da Silva - Altiplano
+      58.033-445 João Pessoa, PB, Brasil, devidamente inscrita no CNPJ:
+      35.792.722/0001-00, e como CONTRATANTE, doravante denominado (a) ATLETA ou
+      RESPONSÁVEL PELO(S) ALUNO(S), aqui devidamente cadastrado. As partes têm,
+      entre si, justo e acertado o presente Contrato de Prestação de Serviços
+      Esportivos, que se regerá pelas cláusulas seguintes e pelas condições
+      descritas no presente.
       <p>DO OBJETIVO: </p>
       <div className="contrato-title">Cláusula 1ª:</div> O presente contrato tem
       como objeto a prestação de serviços educacionais esportivos na modalidade
@@ -18,7 +19,7 @@ export const Contrato = () => {
       seus serviços em local, dias e horários pré-determinados.
       <p>DA MATRÍCULA E REQUISITOS:</p>
       <div className="contrato-title">Cláusula 3ª:</div>No ato da matrícula, o
-      CONTRATANTE efetuará os pagamentos referentes a matrícula (R$ 20,00) e a
+      CONTRATANTE efetuará os pagamentos referentes a matrícula (R$ 40,00) e a
       mensalidade, com o valor de acordo com o plano adquirido.{" "}
       <div className="contrato-title">Cláusula 4ª:</div> O CONTRATANTE deverá
       apresentar, caso seja portador de alguma doença que imponha limitações à
