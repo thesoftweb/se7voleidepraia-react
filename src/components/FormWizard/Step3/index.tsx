@@ -277,7 +277,7 @@ export const Step3 = () => {
               onChange={(e) => setNovaPessoaDataNascimento(e.target.value)}
               placeholder="Data de nascimento"
             />
-            <span>Escolha uma Esporte</span>
+            <span>Escolha um Esporte</span>
 
             {errors && <span className="error-message">{errors.unit_id}</span>}
             <select

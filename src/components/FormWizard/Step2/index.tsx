@@ -120,13 +120,13 @@ export const Step2 = () => {
         <Logo />
         <Header
           title="Selecione uma Turma"
-          subtitle="Escolha uma esporte e uma categoria"
+          subtitle="Escolha um esporte e uma categoria"
         />
       </div>
       <div className="form-step2">
         <div className="testando">
           <div className="form-units">
-            <label>Escolha uma Esporte</label>
+            <label>Escolha um Esporte</label>
             {errors && <span className="error-message">{errors.unit_id}</span>}
             <select value={state.unit_id} onChange={handleUnidadeChange}>
               <option>SELECIONE</option>
