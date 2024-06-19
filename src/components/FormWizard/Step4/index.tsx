@@ -86,7 +86,7 @@ export const Step4 = () => {
       setLinkGroup(data.data.data.whatsapp_link);
       setAddress(data.data.data.address);
       setValue(data.data.data.value);
-      setTitle("Efetue o pagamento da matrícula.");
+      setTitle("Pré-matrícula realizada.");
     } catch (error) {
       setErrors("Não foi possível realizar sua matrícula");
       setSuccess(false);
@@ -171,10 +171,10 @@ export const Step4 = () => {
               <InfoDetail label={"Turma:"} value={state.className} />
               <InfoDetail label={"Plano:"} value={state.planName} />
               {/* dando erro */}
-              <InfoDetail
+              {/* <InfoDetail
                 label={"Valor da Matrícula:"}
                 value={handleEnrollmentValue()}
-              />
+              /> */}
 
               <InfoDetail
                 label={"Valor da Mensalidade:"}
@@ -226,7 +226,7 @@ export const Step4 = () => {
       {success && !loading && (
         <div className="pega">
           <div className="payment-info">
-            <span>{`Pague a matricula através da chave PIX copia/cola, no valor de ${value}`}</span>
+            {/* <span>{`Pague a matricula através da chave PIX copia/cola, no valor de ${value}`}</span>
             <span>
               Prazo de 24h para concluir o pagamento da matrícula, senão a vaga
               na turma não é efetivada.
@@ -245,7 +245,7 @@ export const Step4 = () => {
               onClick={() => copyToCliboard(link)}
             >
               Copiar Chave Pix
-            </button>
+            </button> */}
 
             {linkGroup && (
               <Link to={linkGroup} target="_blank">
