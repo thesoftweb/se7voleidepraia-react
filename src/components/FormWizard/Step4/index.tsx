@@ -86,7 +86,7 @@ export const Step4 = () => {
       setLinkGroup(data.data.data.whatsapp_link);
       setAddress(data.data.data.address);
       setValue(data.data.data.value);
-      setTitle("Pré-matrícula realizada.");
+      setTitle("Matrícula realizada.");
     } catch (error) {
       setErrors("Não foi possível realizar sua matrícula");
       setSuccess(false);
