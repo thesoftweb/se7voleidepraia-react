@@ -204,10 +204,13 @@ const EnrollmentCard = ({
       <div className="info">Curso: {course}</div>
       <Button onClick={onPress} label="Enviar Foto" />
       <Button onClick={handleAddressForm} label="Endereço" />{" "}
-      {/* Botão para abrir/fechar o formulário de endereço */}
-      {handleOpenModal && (
-        <Button label="Ver Contrato" onClick={handleOpenModal} />
-      )}
+      <a
+        href="https://se7voleidepraia.com.br/wp-content/uploads/2025/01/Contrato-dos-alunos.pdf"
+        className="button-link"
+        target="_blank"
+      >
+        Contrato
+      </a>
       <a
         href="https://se7voleidepraia.com.br/wp-content/uploads/2025/01/CALENDARIO-2025.pdf"
         className="button-link"
