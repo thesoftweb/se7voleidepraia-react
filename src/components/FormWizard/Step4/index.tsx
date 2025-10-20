@@ -47,9 +47,6 @@ export const Step4 = () => {
   };
 
   const handleSubmitEnrollment = async () => {
-    console.log("ENVIAR MATRICULA");
-    console.log("ENVIAR MATRICULA", state);
-
     if (!isChecked) {
       setErrors("Aceite é obrigatório");
       return alert("Voce precisa aceitar os termos de uso!");
@@ -140,7 +137,6 @@ export const Step4 = () => {
   }
 
   const handleBack = async () => {
-    console.log("step4", state);
     // Redefinir todas as informações relevantes no estado
     dispatch({ type: FormActions.setPlan_Id, payload: null });
     dispatch({ type: FormActions.setPlanName, payload: "" });

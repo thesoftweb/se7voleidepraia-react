@@ -14,12 +14,13 @@ export const Turma = () => {
   const { units } = useUnidades();
   const { state, dispatch } = useForm();
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const [turmas, setTurmas] = useState<Turmas[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    loadTurmas();
-  }, []);
+  // useEffect(() => {
+  //   loadTurmas();
+  // }, []);
 
   const loadTurmas = async () => {
     setLoading(true);
@@ -40,24 +41,27 @@ export const Turma = () => {
 
   const handleUnidadeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: FormActions.setUnit_Id, payload: e.target.value });
-
   };
 
-  const handleCategoriaChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleCategoriaChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     dispatch({ type: FormActions.setCategory, payload: e.target.value });
-
   };
 
   const fetchTurmas = async () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("authToken");
-      const response = await api.get(`/courses?token=${token}&unit_id=${state.unit_id}&category=${state.category}`);
+      const response = await api.get(
+        `/courses?token=${token}&unit_id=${state.unit_id}&category=${state.category}`
+      );
       if (!response.data.data || response.data.data.length === 0) {
-        console.log("Não há turmas disponíveis para a unidade e categoria selecionadas.");
+        setMessage("Nenhuma Turma Encontrada");
+        setTurmas([]);
       } else {
+        setMessage("");
         setTurmas(response.data.data);
-        console.log(response.data.data);
       }
     } catch (error) {
       console.error("Erro ao carregar turmas:", error);
@@ -67,7 +71,7 @@ export const Turma = () => {
   };
 
   useEffect(() => {
-    if (state.unit_id !== 0) {
+    if (state.unit_id !== 0 && state.category) {
       fetchTurmas();
     }
   }, [state.unit_id, state.category]);
@@ -80,7 +84,6 @@ export const Turma = () => {
       />
       {loading && "Carregando.."}
       <div className="filters">
-        <label>Selecione sua unidade e faça sua frequencia</label>
         <select value={state.unit_id} onChange={handleUnidadeChange}>
           <option value="">SELECIONE</option>
           {units.map((item, key) => (
@@ -89,16 +92,17 @@ export const Turma = () => {
             </option>
           ))}
         </select>
-        {/* <select value={state.category} onChange={handleCategoriaChange}>
+        <select value={state.category} onChange={handleCategoriaChange}>
           <option value="">SELECIONE</option>
           <option value="kids">Crianças</option>
           <option value="teens">Adolescentes</option>
           <option value="adult">Adultos</option>
           <option value="competitive">Competitivo</option>
-        </select> */}
+        </select>
       </div>
 
       <div className="turmas-wrapper">
+        {message}
         {turmas.map((item, index) => (
           <PlanItem
             key={index}
