@@ -38,7 +38,6 @@ export const Step4 = () => {
   const formatBirthDate = (birthDate: string): string => {
     const [year, month, day] = birthDate.split("-").map(Number);
     const date = new Date(year, month - 1, day);
-    console.log("dataaa", date);
     return format(date, "dd/MM/yyyy");
   };
 

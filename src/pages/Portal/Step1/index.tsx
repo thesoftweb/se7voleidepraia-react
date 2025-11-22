@@ -21,8 +21,6 @@ export const PortalStep1 = () => {
 
     const { data } = await api.get(`customer/bills?cpf=${username}`);
 
-    console.log(data);
-
     if (!data.success) {
       return alert(data.message);
     }

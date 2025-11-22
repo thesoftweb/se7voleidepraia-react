@@ -12,7 +12,6 @@ import PdfViewer from "../../../components/Shared/ContratoPDF";
 
 export const PortalStep2 = () => {
   const cpf = new URLSearchParams(location.search).get("cpf");
-  console.log("teste cpf", cpf);
 
   const [tabActive, setTabActive] = useState("bills");
   const [bills, setBills] = useState<BillCard[]>([]);
@@ -46,7 +45,6 @@ export const PortalStep2 = () => {
   };
 
   const handleUploadFoto = (student_id: string) => {
-    console.log(student_id);
     navigate(`/portal/aluno/upload-foto?student=${student_id}`);
   };
 
@@ -62,7 +60,6 @@ export const PortalStep2 = () => {
   };
 
   useEffect(() => {
-    console.log(tabActive);
     fetchBills();
   }, []);
 

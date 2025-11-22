@@ -19,7 +19,6 @@ export const AddressForm: React.FC = () => {
   const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
   const adrress = new URLSearchParams(location.search).get("adrress");
-  console.log("adrress", adrress);
 
   const [formData, setFormData] = useState<AddressFormData>({
     address_zipcode: "",
@@ -84,11 +83,10 @@ export const AddressForm: React.FC = () => {
         }
       );
 
-      if (response.ok) {
-        setSubmitted(true);
-        alert("Endereço atualizado com sucesso!");
-        console.log("formdata", formData);
-      } else {
+        if (response.ok) {
+          setSubmitted(true);
+          alert("Endereço atualizado com sucesso!");
+        } else {
         throw new Error("Ocorreu um erro ao enviar o endereço.");
       }
     } catch (error) {
@@ -99,7 +97,6 @@ export const AddressForm: React.FC = () => {
 
   const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log("CHANGE CEP ===>", name, value);
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -108,7 +105,6 @@ export const AddressForm: React.FC = () => {
     try {
       const response = await fetch(`https://viacep.com.br/ws/${value}/json/`);
       const data = await response.json();
-      console.log(data);
 
       setFormData((prevData) => ({
         ...prevData,

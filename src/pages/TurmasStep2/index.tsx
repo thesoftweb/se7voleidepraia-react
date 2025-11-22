@@ -46,7 +46,6 @@ export const TurmasStep2 = () => {
   const fetchTurmas = async () => {
     let url = `/courses?unit_id=${state.unit_id}&category=${state.category}&`;
     const data = await api.get(url);
-    console.log("Oque tem", data.data.data);
 
     setTurmas(data.data.data);
     const scheduleData = data.data.data.reduce(

@@ -8,7 +8,6 @@ import "./styles.css";
 
 export const UploadFoto = () => {
   const student = new URLSearchParams(location.search).get("student");
-  console.log('cpf', student);
 
   const [file, setFile] = useState<File | null>(null);
 
@@ -53,8 +52,6 @@ export const UploadFoto = () => {
       );
 
       setUploadStatus("Foto enviada com sucesso!");
-      console.log(response.data); // Você pode manipular a resposta da API aqui.
-      console.log(student)
     } catch (error) {
       console.error("Erro ao enviar arquivo:", error);
       setUploadStatus("Erro ao enviar arquivo.");

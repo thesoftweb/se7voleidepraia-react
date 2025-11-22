@@ -49,8 +49,6 @@ export const Step1 = () => {
     const hoje = new Date();
 
     const diferencaAnos = hoje.getFullYear() - dataNascimentoDate.getFullYear();
-
-    console.log(dataNascimento, diferencaAnos);
     if (
       diferencaAnos > 18 ||
       (diferencaAnos === 18 && hoje >= dataNascimentoDate)
@@ -110,8 +108,6 @@ export const Step1 = () => {
 
   const handleSubmit = () => {
     const newErrors: Erros = {};
-    console.log("State:", state);
-    console.log("Is Menor:", isMenor);
 
     if (
       state.name !== "" &&
@@ -182,12 +178,8 @@ export const Step1 = () => {
 
   const handleCheckCpf = () => {
     const newErrors: Erros = {};
-    console.log("resp CPF +>>>>>>>", state.resp_cpf);
-    console.log("CPF +>>>>>>>", state.cpf);
 
     let cpf = state.cpf ? state.cpf : state.resp_cpf;
-
-    console.log("vai validar o ", cpf);
 
     if (validarCPF(cpf)) {
       setErrors(newErrors);

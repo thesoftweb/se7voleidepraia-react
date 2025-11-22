@@ -193,7 +193,6 @@ export const Step3 = () => {
   const handleFamiliaUnidadeChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    console.log(e.target.value);
     setUnityFamilySel(e.target.value);
     dispatch({ type: FormActions.setFamilyUnit, payload: e.target.value });
   };
@@ -201,7 +200,6 @@ export const Step3 = () => {
   const handleFamiliaCategoriaChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    console.log(e.target.value);
     setCourseyFamilySel(e.target.value);
     dispatch({ type: FormActions.setFamilyCategory, payload: e.target.value });
   };
