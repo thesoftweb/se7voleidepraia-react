@@ -1,4 +1,4 @@
-import logo from "../../../assets/setvolei.png";
+import logo from "../../../assets/logo_df.png";
 
 import "./style.css";
 

@@ -7,7 +7,7 @@ import { Header } from "../../components/Shared/Header";
 import "./style.css";
 import Checkbox from "../../components/Shared/Checkbox";
 import { Button } from "../../components/Shared/Buttons";
-import { Turmas } from "../../types/Turmas";
+
 
 export const Alunos = () => {
   const [loading, setLoading] = useState(false);

@@ -33,7 +33,7 @@ export const PortalStep1 = () => {
   return (
     <div className="container">
       <Logo />
-      <Header title="SE7 Vôlei de Praia" subtitle="Portal do Aluno" />
+      <Header title="DF Aqua" subtitle="Portal do Aluno" />
       <p>Entre com CPF do responsável financeiro</p>
       <div className="form-wrapper">
         <p>{error}</p>
