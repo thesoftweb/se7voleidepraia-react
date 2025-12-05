@@ -254,7 +254,7 @@ export const Step4 = () => {
           </div>
 
           <div className="navigation">
-            <Link to="https://se7voleidepraia.com.br" className="home-button">
+            <Link to="https://www.instagram.com/df_acqua/#" className="home-button">
               Voltar pro Início
             </Link>
           </div>
