@@ -205,14 +205,14 @@ const EnrollmentCard = ({
       <Button onClick={onPress} label="Enviar Foto" />
       <Button onClick={handleAddressForm} label="Endereço" />{" "}
       <a
-        href="https://se7voleidepraia.com.br/wp-content/uploads/2025/01/Contrato-dos-alunos.pdf"
+        href="https://se7voleidepraia.com.br/wp-content/uploads/2026/02/Contrato-dos-alunos-2026.pdf"
         className="button-link"
         target="_blank"
       >
         Contrato
       </a>
       <a
-        href="https://se7voleidepraia.com.br/wp-content/uploads/2025/01/CALENDARIO-2025.pdf"
+        href="https://se7voleidepraia.com.br/wp-content/uploads/2026/02/calendario-SE7-2026-1500-x-2500-px.pdf"
         className="button-link"
         target="_blank"
       >
