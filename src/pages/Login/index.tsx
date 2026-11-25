@@ -34,7 +34,7 @@ export const Login = () => {
     <div className="container">
       <Logo />
       <Header
-        title="DF Aqua"
+        title=""
         subtitle="Informe seus dados de acesso"
       />
       <div className="form-wrapper">

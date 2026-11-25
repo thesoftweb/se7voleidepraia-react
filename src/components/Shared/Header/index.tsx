@@ -8,7 +8,7 @@ type HeaderProps = {
 export const Header = ({ title, subtitle }: HeaderProps) => {
   return (
     <div className="header">
-      <h3>{title}</h3>
+      <h3>{title ?? ''}</h3>
       {subtitle && <p>{subtitle}</p>}
     </div>
   );
